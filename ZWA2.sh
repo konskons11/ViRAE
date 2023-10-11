@@ -121,7 +121,6 @@ elif ([ -z $input_reads ] && [ -z $input_ref ]) && [ ! -z $mapped_input ] ; then
                 exit
             else
                 echo -e "\n-u $unmapped_input\n-o $output"
-                #unmapped_input_filename=$(basename $unmapped_input .$unmapped_input_extension) 
             fi
         else
             echo -e "\n-o $output"
@@ -147,24 +146,15 @@ bwa_mapping() {
         echo -e "\nPerforming $alignment_stringency_mode BWA alignment, please wait..."
 
         # Bwa align input reads on reference
-        # mem1
         index=$(find $input_ref_dirname -maxdepth 1 -type f -name "$input_ref_filename.$input_ref_extension*.amb" -o -name "$input_ref_filename.$input_ref_extension*.ann" -o -name "$input_ref_filename.$input_ref_extension*.pac" -o -name "$input_ref_filename.$input_ref_extension*.bwt" -o -name "$input_ref_filename.$input_ref_extension*.sa")
-        # mem2
-        #index=$(find ./ -maxdepth 1 -type f -name "*.amb" -o -name "*.ann" -o -name "*.pac" -o -name "*.bwt*" -o -name "*.0123")
 
         if [[ $(wc -l <<< "$index" | bc) -eq 5 ]] ; then
             echo "Reference file already indexed, proceeding to next step"
         else
-        	# mem1
             bwa index $1 2>/dev/null
-        	# mem2
-            #bwa-mem2 index $1 2>/dev/null
         fi
 
-        # mem1
         bwa mem -t $threads_count -v 0 -T $alignment_stringency_value $1 $2 2>/dev/null > $output_directory/bwa.sam
-        # mem2
-        #bwa-mem2 mem -t $threads_count $1 $2 2>/dev/null > bwa.sam
 
         # Get BWA fully & partially mapped reads
         samtools view -b -F 4 $output_directory/bwa.sam > $output_directory/reads_mapped.bam
@@ -201,11 +191,6 @@ bwa_mapping() {
     
     fi
 
-    # FOR PAIRED-END > Calculate ratio mapped bases/read length, sort (ascending order) and deduplicate to keep the biggest unmapped part from chimeric read pairs
-    # TEST THIS
-    # samtools view $output_directory/sort_reads_mapped.bam | awk -F'\t' '$6 ~ /S/ {cigar=$6 ; mapped=0 ; while(match($6,/([0-9]+)M/)){ mapped+=substr($6,RSTART,RLENGTH); $6=substr($6,RSTART+RLENGTH) } $6=cigar ; print $1,$3,$6,$10,$11,length($10),mapped/length($10)*100}' OFS="\t" > $output_directory/softclipped.tsv
-    # sort -hk7 $output_directory/softclipped.tsv | cut -f1-6 | awk '{gsub(/\/[1-2]/,",&",$1)}1' OFS="\t" | awk -F',' '!seen[$1]++' | awk -F'\t' '{gsub(",","",$1)}1' OFS="\t" > tmp && mv tmp $output_directory/softclipped.tsv
-    
     samtools view $output_directory/sort_reads_mapped.bam | awk -F'\t' '$6 ~ /S/ {print $1,$3,$6,$10,$11,length($10)}' OFS="\t" > $output_directory/softclipped.tsv
     samtools view $output_directory/sort_reads_mapped.bam | awk -F'\t' '$6 !~ /S/ && $6 !~ /H/ {print $1,$3,$6,$10,length($10),$10,length($10),1,length($10),"-","-","-","-","-","-","-","-","-","-"}' OFS="\t" > $output_directory/fully_mapped.tsv
     
