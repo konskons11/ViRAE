@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZWA2 Tool - Virus Genome RNA-seq Read Decontamination</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        header {
+            background-color: #007BFF;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            position: relative; /* To position the logo */
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+        }
+        h2 {
+            font-size: 20px;
+        }
+        p {
+            font-size: 16px;
+        }
+        .documentation-button,
+        .contact-button {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .documentation-button:hover,
+        .contact-button:hover {
+            background-color: #0056b3;
+        }
+        .documentation-button + .contact-button {
+            margin-left: 10px; /* Add space between buttons */
+        }
+        .logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="DUTH_logo.png" alt="Democritus University of Thrace Logo" class="logo">
+        <h1>ZWA2 - Virus Genome RNA-seq Read Decontamination Tool</h1>
+        <a href="http://github.com" class="documentation-button">Documentation</a>
+        <a href="https://biology.med.duth.gr/" class="contact-button">Contact</a>
+    </header>
+    
+	<div class="container">
+        <p>ZWA2 is a context-based trimming bioinformatics tool for virus genome RNA-seq read-decontamination. The tool dissects chimera reads that arise during NGS, removing ribosomal chimeric moieties derived from the local microbiota of the sample. The reads are ready to be fed into de novo assemblers, increasing the availability of reads for more accurate de novo virus genome assembly.</p>
+    </div>
+
+	<h1>ZWA2 upload method selection</h1>
+	<form method="POST" action="ZWA2_FASTX_upload.html">
+		<dl>
+			<h2>Method 1</h2>
+			<table>
+				<tr>
+					<td><input type="submit" value="Run ZWA2 with input FASTQ NGS reads and FASTA reference files"></td>
+				</tr>
+			</table>
+		</dl>
+	</form>
+
+	<form method="POST" action="ZWA2_BAM_upload.html">
+		<dl>
+			<h2>Method 2</h2>
+			<table>
+				<tr>
+					<td><input type="submit" value="Run ZWA2 with input BAM file only"></td>
+				</tr>
+			</table>
+		</dl>
+	</form>
+
+</body>
+</html>
