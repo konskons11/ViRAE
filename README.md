@@ -29,7 +29,7 @@ The parameters of the ZWA2 standalone application are summarised in the followin
 
 |Optional argument flags|Description|Deployment|
 |:---|:---|:---|
-|`-l <integer>`|BWA alignment stringency value (default value 30 | <30 loose, >30 stringent)|Full|
+|`-l <integer>`|BWA alignment stringency value (default value 30 \| <30 loose, >30 stringent)|Full|
 
 ### Run examples
 Full ZWA2 deployment run examples:
