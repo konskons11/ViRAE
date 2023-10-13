@@ -13,12 +13,12 @@ print_usage() {
 # -o <string>,	directory of OUTPUT folder
 
 # REQUIRED ARGUMENTS (PARTIAL ZWA2 DEPLOYMENT):
-# -m <string>,   directory of MAPPED NGS READS on REFERENCE file (.bam extension)
+# -m <string>,	directory of MAPPED NGS READS on REFERENCE file (.bam extension)
 # -o <string>,	directory of OUTPUT folder
 
 # OPTIONAL ARGUMENTS:
-# -u <string>,   directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension)
-# -l <integer>,	alignment stringency value (default 30 / BWA equivalent flag -T )
+# -u <string>,	directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension)
+# -l <integer>,	BWA alignment stringency value (default 30 / BWA equivalent flag -T )
 
 # EXAMPLES:
 ./ZWA2.sh -i reads.fastq -r ref.fasta -o ./
