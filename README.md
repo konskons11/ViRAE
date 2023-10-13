@@ -24,7 +24,7 @@ ZWA2 standalone application may be fully or partially deployed upon execution. I
 | `-r <string>` | directory of INPUT REFERENCE file (.fasta, .fa, .fna, .fsta or .gz extension) |
 | `-o <string>` | directory of OUTPUT folder |
 | `-m <string>` | directory of MAPPED NGS READS on REFERENCE file (.bam extension) |
-| `-u <string>` | directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension) (ZWA2 partial deployment ONLY) |
+| `-u <string>` | directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension) |
 | `-l <integer>` | BWA alignment stringency value (default value 30) |
 
 ### Run examples
