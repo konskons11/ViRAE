@@ -7,7 +7,7 @@ ZWA2 is a context-based trimming bioinformatics tool for virus genome RNA-seq re
 
 Installation of the standalone application
 ---------------
-The ZWA2 standalone application may be exetuced under Linux or MacOS systems, but firstly requires the installation of the following prerequisites in order to work properly.
+The ZWA2 standalone application may be exetuced under Linux or MacOS systems after download, but firstly requires the installation of the following prerequisites in order to work properly.
 
 _Prerequisites:_
 - [bwa](http://bio-bwa.sourceforge.net/)
