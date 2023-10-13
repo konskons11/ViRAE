@@ -5,3 +5,6 @@ _Dependencies:_
 - [bwa](http://bio-bwa.sourceforge.net/)
 - [samtools](http://www.htslib.org/)
 
+### Typical run
+
+` ./zwa.sh etc...`
