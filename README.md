@@ -16,14 +16,11 @@ _Dependencies:_
 Usage
 ---------------
 
-ZWA2 standalone application may be fully or partially deployed upon execution. In the case of ZWA2 full deployment, the directories of NGS reads (FASTQ format) and an appropriate reference (FASTA format) must be provided after the -i and -r flags respectively, in order to be able to perform the necessary alignments. For the alternative and faster partial deployment of ZWA2, the directory of a BAM file can only be provided, instead of FASTQ and FASTA files, after the -m flag as the user may have already carried out the desired alignment with the mapping software of preference. Alongside the input BAM file, the user may also provide - if available - the output unmapped reads of the performed alignment in FASTQ or BAM format after the -u flag, for later use by the algorithm. The user also has the ability to adjust the alignment stringency of the incorporated BWA software at the desired level by passing the desired value as an integer number after the -l flag.
+ZWA2 standalone application may be fully or partially deployed upon execution. In the case of ZWA2 full deployment, the directories of NGS reads (FASTQ format) and an appropriate reference (FASTA format) must be provided as arguments after the -i and -r flags respectively, in order to be able to perform all necessary alignments. For the alternative and faster partial deployment of ZWA2, the directory of a BAM file can only be passed as an argument after the -m flag, instead of FASTQ and FASTA files, as the user may have already carried out the desired alignment with the mapping software of preference. Alongside the input BAM file, the user may also pass as an argument - if available - the output unmapped reads of the performed alignment in FASTQ or BAM format after the -u flag, for later use by the algorithm. Lastly, the user has the ability to adjust the mapping sensitivity of the incorporated BWA software by passing the desired level of alignment stringency as an integer number after the -l flag (default value: 30).
 
 ### Run examples
-
+Full ZWA2 deployment run example:
 ```sh
-./ZWA2.sh bafaa
+./ZWA2.sh -i reads.fastq -r ref.fasta -o ./
 ```
 
-asdasd
-sdasda
-asdasd
