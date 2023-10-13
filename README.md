@@ -1,7 +1,7 @@
 ZWA2
 =======
 
-[![Downloads](https://img.shields.io/github/downloads/voutcn/megahit/total?style=flat-square)](https://github.com/voutcn/megahit/releases)
+[![Downloads](https://img.shields.io/github/downloads/voutcn/megahit/total?style=flat-square)]([https://github.com/voutcn/megahit/releases](https://github.com/konskons11/ZWA2/releases))
 
 ZWA2 is a context-based trimming bioinformatics tool for virus genome RNA-seq read decontamination based on a given reference. The tool dissects chimera reads that arise during NGS, removing chimeric moieties with the user input reference. The clean output reads are then ready to be fed into _de novo_ assemblers, increasing the availability of reads for more accurate and more efficacious _de novo_ virus genome assembly.
 
