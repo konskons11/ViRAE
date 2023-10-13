@@ -5,6 +5,9 @@ _Dependencies:_
 - [bwa](http://bio-bwa.sourceforge.net/)
 - [samtools](http://www.htslib.org/)
 
-### Typical run
+### Before running
+Make sure to properly install
+
+### Typical run examples
 
 ` ./zwa.sh etc...`
