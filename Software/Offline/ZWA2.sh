@@ -18,7 +18,7 @@ The clean output reads are then ready to be fed into de novo assemblers, increas
 
 # OPTIONAL ARGUMENTS:
 -u <string>,	directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension) (ZWA2 partial deployment ONLY)
--l <integer>,	BWA alignment stringency value (default value 30)
+-l <integer>,	BWA alignment stringency value (default value 30 | <30 loose, >30 stringent)
 
 # RUN EXAMPLES:
 ./ZWA2.sh -i reads.fastq -r ref.fasta -o ./
