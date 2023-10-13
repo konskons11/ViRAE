@@ -30,6 +30,3 @@ Partial ZWA2 deployment run example:
 ./ZWA2.sh -m mapped.bam -u unmapped.bam -o ./
 ./ZWA2.sh -m mapped.bam -u unmapped.fq.gz -o ./
 ```
-
-_!!!**LIMITATIONS**!!!_
-> The ZWA tool has been tested on single-end reads ONLY. However, this does not suggest that it will not work for paired-end reads after pairing them so use with caution.
