@@ -3,24 +3,24 @@
 print_usage() {
 	echo "
 # DESCRIPTION:
-# ZWA2 is a context-based trimming bioinformatics tool for virus genome RNA-seq read decontamination based on a given reference.
-# The tool dissects chimera reads that arise during NGS, removing chimeric moieties with the user input reference. 
-# The clean output reads are then ready to be fed into de novo assemblers, increasing the availability of reads for more accurate and more efficacious de novo virus genome assembly.
+ZWA2 is a context-based trimming bioinformatics tool for virus genome RNA-seq read decontamination based on a given reference.
+The tool dissects chimera reads that arise during NGS, removing chimeric moieties with the user input reference. 
+The clean output reads are then ready to be fed into de novo assemblers, increasing the availability of reads for more accurate and more efficacious de novo virus genome assembly.
 
 # REQUIRED ARGUMENTS (FULL ZWA2 DEPLOYMENT):
-# -i <string>,	directory of INPUT NGS READS file (.fastq, .fq or .gz extension)
-# -r <string>,	directory of INPUT REFERENCE file (.fasta, .fa, .fna, .fsta or .gz extension)
-# -o <string>,	directory of OUTPUT folder
+-i <string>,	directory of INPUT NGS READS file (.fastq, .fq or .gz extension)
+-r <string>,	directory of INPUT REFERENCE file (.fasta, .fa, .fna, .fsta or .gz extension)
+-o <string>,	directory of OUTPUT folder
 
 # REQUIRED ARGUMENTS (PARTIAL ZWA2 DEPLOYMENT):
-# -m <string>,	directory of MAPPED NGS READS on REFERENCE file (.bam extension)
-# -o <string>,	directory of OUTPUT folder
+-m <string>,	directory of MAPPED NGS READS on REFERENCE file (.bam extension)
+-o <string>,	directory of OUTPUT folder
 
 # OPTIONAL ARGUMENTS:
-# -u <string>,	directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension) (ZWA2 partial deployment ONLY)
-# -l <integer>,	BWA alignment stringency value (default value 30)
+-u <string>,	directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension) (ZWA2 partial deployment ONLY)
+-l <integer>,	BWA alignment stringency value (default value 30)
 
-# EXAMPLES:
+# RUN EXAMPLES:
 ./ZWA2.sh -i reads.fastq -r ref.fasta -o ./
 ./ZWA2.sh -m mapped.bam -o ./
 ./ZWA2.sh -m mapped.bam -u unmapped.bam -o ./
