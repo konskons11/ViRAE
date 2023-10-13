@@ -2,8 +2,10 @@
 ### SCRIPT EXECUTION PARAMETERS
 print_usage() {
 	echo "
-# DESCRIPTION:
-# ZWA2 CHIMERIC READS CLEANER
+# Description:
+# ZWA2 is a context-based trimming bioinformatics tool for virus genome RNA-seq read decontamination based on a given reference.
+# The tool dissects chimera reads that arise during NGS, removing chimeric moieties with the user input reference. 
+# The clean output reads are then ready to be fed into de novo assemblers, increasing the availability of reads for more accurate and more efficacious de novo virus genome assembly.
 
 # ARGUMENTS if FASTQ & FASTA input files
 # -i,	directory of INPUT NGS READS file (.fastq, .fq or .gz extension)
