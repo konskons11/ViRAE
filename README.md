@@ -29,13 +29,14 @@ The parameters of the ZWA2 standalone application are summarised in the followin
 
 |Optional argument flags|Description|Deployment|
 |:---|:---|:---|
-|`-l <integer>`|BWA alignment stringency value (default value 30)|Full|
+|`-l <integer>`|BWA alignment stringency value (default value 30 | <30 loose, >30 stringent)|Full|
 
 ### Run examples
 Full ZWA2 deployment run examples:
 ```sh
 ./ZWA2.sh -i reads.fastq -r ref.fasta -o ./
 ./ZWA2.sh -i reads.fq.gz -r ref.fasta.gz -o ./
+./ZWA2.sh -i reads.fq.gz -r ref.fasta.gz -l 40 -o ./
 ```
 Partial ZWA2 deployment run example:
 ```sh
