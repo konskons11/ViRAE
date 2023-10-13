@@ -7,7 +7,7 @@ ZWA2 is a context-based trimming bioinformatics tool for virus genome RNA-seq re
 
 Installation of the standalone application
 ---------------
-ZWA2 standalone application may be exetuced under Linux or MacOS systems, but firstly requires the installation of the following prerequisites in order to work properly.
+The ZWA2 standalone application may be exetuced under Linux or MacOS systems, but firstly requires the installation of the following prerequisites in order to work properly.
 
 _Dependencies:_
 - [bwa](http://bio-bwa.sourceforge.net/)
@@ -16,9 +16,9 @@ _Dependencies:_
 Usage
 ---------------
 
-ZWA2 standalone application may be fully or partially deployed upon execution. In the case of ZWA2 full deployment, the directories of NGS reads (FASTQ format) and appropriate reference file (FASTA format) must be provided as arguments after the -i and -r flags respectively, in order to be able to perform all necessary alignments. For the alternative and faster partial deployment of ZWA2, the directory of a BAM file can only be passed as an argument after the -m flag, instead of FASTQ and FASTA files, as the user may have already carried out the desired alignment with the mapping software of preference. Alongside the input BAM file, the user may also pass as an argument - if available - the output unmapped reads of the performed alignment in FASTQ or BAM format after the -u flag, for later use by the algorithm. Lastly, the user has the ability to adjust the mapping sensitivity of the incorporated BWA software by passing the desired level of alignment stringency as an integer number after the -l flag (default value: 30). 
+The ZWA2 standalone application may be fully or partially deployed upon execution. In the case of ZWA2 full deployment, the directories of NGS reads (FASTQ format) and appropriate reference file (FASTA format) must be provided as arguments after the -i and -r flags respectively, in order to be able to perform all necessary alignments. For the alternative and faster partial deployment of ZWA2, the directory of a BAM file can only be passed as an argument after the -m flag, instead of FASTQ and FASTA files, as the user may have already carried out the desired alignment with the mapping software of preference. Alongside the input BAM file, the user may also pass as an argument - if available - the output unmapped reads of the performed alignment in FASTQ or BAM format after the -u flag, for later use by the algorithm. Lastly, the user has the ability to adjust the mapping sensitivity of the incorporated BWA software by passing the desired level of alignment stringency as an integer number after the -l flag (default value: 30). 
 
-The program parameters are summarised in the following table:
+The parameters of the ZWA2 software are summarised in the following table:
 |Required argument flags|Description|Deployment|
 |:---|:---|:---|
 |`-i <string>`|directory of INPUT NGS READS file (.fastq, .fq or .gz extension)|Full|
