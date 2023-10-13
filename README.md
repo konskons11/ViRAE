@@ -18,14 +18,14 @@ Usage
 
 ZWA2 standalone application may be fully or partially deployed upon execution. In the case of ZWA2 full deployment, the directories of NGS reads (FASTQ format) and an appropriate reference (FASTA format) must be provided as arguments after the -i and -r flags respectively, in order to be able to perform all necessary alignments. For the alternative and faster partial deployment of ZWA2, the directory of a BAM file can only be passed as an argument after the -m flag, instead of FASTQ and FASTA files, as the user may have already carried out the desired alignment with the mapping software of preference. Alongside the input BAM file, the user may also pass as an argument - if available - the output unmapped reads of the performed alignment in FASTQ or BAM format after the -u flag, for later use by the algorithm. Lastly, the user has the ability to adjust the mapping sensitivity of the incorporated BWA software by passing the desired level of alignment stringency as an integer number after the -l flag (default value: 30).
 
-| Argument flags | Description | A |
+|Argument flags|Description|Run type|
 |:---|:---|:---|
-|`-i <string>`|directory of INPUT NGS READS file (.fastq, .fq or .gz extension)|
-|`-r <string>`|directory of INPUT REFERENCE file (.fasta, .fa, .fna, .fsta or .gz extension)|
-|`-m <string>`|directory of MAPPED NGS READS on REFERENCE file (.bam extension)|
-|`-u <string>`|directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension)|
-|`-o <string>`|directory of OUTPUT folder|
-|`-l <integer>`|BWA alignment stringency value (default value 30)|
+|`-i <string>`|directory of INPUT NGS READS file (.fastq, .fq or .gz extension)|Full|
+|`-r <string>`|directory of INPUT REFERENCE file (.fasta, .fa, .fna, .fsta or .gz extension)|Full|
+|`-m <string>`|directory of MAPPED NGS READS on REFERENCE file (.bam extension)|Partial|
+|`-u <string>`|directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension)|Partial|
+|`-o <string>`|directory of OUTPUT folder|Full & Partial|
+|`-l <integer>`|BWA alignment stringency value (default value 30)|Full|
 
 ### Run examples
 Full ZWA2 deployment run examples:
