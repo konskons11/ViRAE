@@ -22,6 +22,7 @@ The clean output reads are then ready to be fed into de novo assemblers, increas
 
 # RUN EXAMPLES:
 ./ZWA2.sh -i reads.fastq -r ref.fasta -o ./
+./ZWA2.sh -i reads.fastq -r ref.fasta -l 40 -o ./
 ./ZWA2.sh -m mapped.bam -o ./
 ./ZWA2.sh -m mapped.bam -u unmapped.bam -o ./
 "
