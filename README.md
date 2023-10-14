@@ -29,12 +29,12 @@ The parameters of the ZWA2 standalone application are summarised in the followin
 |`-i <string>`|directory of INPUT NGS READS file (.fastq, .fq or .gz extension)|Full|
 |`-r <string>`|directory of INPUT REFERENCE file (.fasta, .fa, .fna, .fsta or .gz extension)|Full|
 |`-m <string>`|directory of MAPPED NGS READS on REFERENCE file (.bam extension)|Partial|
-|`-u <string>`|directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension)|Partial|
 |`-o <string>`|directory of OUTPUT folder|Full & Partial|
 
 |Optional argument flags|Description|Deployment|
 |:---|:---|:---|
 |`-l <integer>`|alignment stringency value (default value 30 \| <30 loose, >30 stringent)|Full|
+|`-u <string>`|directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension)|Partial|
 
 ### Run examples
 Full ZWA2 deployment run examples:
