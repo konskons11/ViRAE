@@ -13,8 +13,8 @@ Installation of the standalone application
 The ZWA2 standalone application may be exetuced under Linux or MacOS systems after download, but firstly requires the installation of the following prerequisites in order to work properly.
 
 _Prerequisites:_
-- [bwa](https://github.com/lh3/bwa)
-- [samtools](https://github.com/samtools/samtools)
+- [bwa](https://github.com/lh3/bwa/releases/tag/v0.7.17)
+- [samtools](https://github.com/samtools/samtools/releases/tag/1.13)
 
 Usage
 ---------------
