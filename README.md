@@ -10,7 +10,7 @@ The main concept behind the ZWA2 pipeline is outlined in the figure below:
 
 Installation of the standalone application
 ---------------
-The ZWA2 standalone application is distributed for Linux and MacOS systems and may be executed directly after download. The prerequisites of ZWA2 ([bwa 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) and [samtools 1.13](https://github.com/samtools/samtools/releases/tag/1.13)) will be examined automatically by the program upon execution.
+The ZWA2 standalone application is distributed for Linux and MacOS systems and may be executed directly after download. The prerequisites of ZWA2 ([bwa 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) and [samtools 1.13](https://github.com/samtools/samtools/releases/tag/1.13)) will be validated by the program upon execution and if missing, they will be downloaded automatically.
 
 Usage
 ---------------
