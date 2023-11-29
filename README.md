@@ -10,7 +10,7 @@ The concept behind the ZWA2 pipeline is outlined in the figure below:
 
 >_WARNING:_
 >
-> ZWA2 revolves around the identification of partially mapped (chimeric) NGS reads on any given reference sequence(s) and their decontamination. For optimum results, we highly recommend using the SILVA rRNA database (LINK HERE) as the user input reference file. Noteworthy, _de novo_ assembly of the clean output reads after decontamination is optional, and therefore is not included in the main ZWA2 pipeline or the program's prerequisites. However, if this is the case, the user may separately perform _de novo_ assembly on the clean output reads using the software of preference, though we highly recommend using MEGAHIT _de novo_ assembler (LINK HERE).
+> ZWA2 focuses on the identification of partially mapped (chimeric) NGS reads on any given reference sequence(s) and their decontamination. For optimum results, we highly recommend using the SILVA rRNA database (LINK HERE) as the user input reference file. Noteworthy, _de novo_ assembly of the clean output reads after decontamination is optional, and therefore is not included in the main ZWA2 pipeline or the program's prerequisites. However, if this is the case, the user may separately perform _de novo_ assembly on the clean output reads using the software of preference, though we highly recommend using MEGAHIT _de novo_ assembler (LINK HERE).
 
 Installation of the standalone application
 ---------------
