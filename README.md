@@ -10,7 +10,15 @@ The main concept behind the ZWA2 pipeline is outlined in the figure below:
 
 Installation of the standalone application
 ---------------
-The ZWA2 standalone application is distributed for Linux and MacOS systems and may be executed directly after download. The prerequisites of ZWA2 ([bwa 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) and [samtools 1.13](https://github.com/samtools/samtools/releases/tag/1.13)) will be verified for installation upon ZWA2 execution and if not installed, they will be downloaded automatically by the program.
+The ZWA2 standalone application is distributed for Linux and MacOS systems and may be executed directly after download. The prerequisites of ZWA2 ([bwa 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) and [samtools 1.13](https://github.com/samtools/samtools/releases/tag/1.13)) will be verified for installation upon ZWA2 execution and if not installed, they will be downloaded automatically by the program. 
+
+_!!!**IMPORTANT NOTES**!!!_
+
+> 1)This is an unoptimized proof of concept pipeline. It is quite slow
+
+> 2)If your raw reads contain the letter 'S' in the contig name you should replace it before running the pipeline (eg. use sed)
+
+> 3)This script has been tested on single-end raw reads only. Nothing suggests that it will not work for paired-end reads after pairing them.
 
 Usage
 ---------------
