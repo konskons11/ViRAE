@@ -3,7 +3,7 @@ ZWA2
 
 [![Downloads](https://img.shields.io/github/downloads/konskons11/ZWA2/total?style=flat-square)](https://github.com/konskons11/ZWA2/releases)
 
-ZWA2 is a context-based trimming bioinformatics tool developed for viral metagenomics, which allows Next Generation Sequencing (NGS) read decontamination based on any given reference. The tool relies on well-established bioinformatics software to dissect partially mapped/chimeric reads, removing the moieties which aligned to sequences of the given reference. The clean output reads enhance _de novo_ assembly performance, increasing the availability of reads for more accurate and more efficacious _de novo_ virus genome assembly. 
+ZWA2 is a context-based trimming bioinformatics tool especially developed for viral metagenomics, which allows Next Generation Sequencing (NGS) read decontamination based on any given reference sequences. ZWA2 relies on well-established bioinformatics software to dissect partially mapped reads (chimeric reads) by removing their non-viral moieties, which align to sequences of the given reference. The curated output reads enhance _de novo_ assembly performance, increasing the availability of reads for more accurate and more efficacious _de novo_ virus genome assembly. 
 
 The concept behind the ZWA2 pipeline is outlined in the figure below:
 ![ZWA2_pipeline](https://i.imgur.com/0WLQ1o0.png "ZWA2_pipeline")
