@@ -8,13 +8,13 @@ ZWA2 is a context-based trimming bioinformatics tool, especially developed for v
 The concept behind the ZWA2 pipeline is outlined in the figure below:
 ![ZWA2_pipeline](https://i.imgur.com/0WLQ1o0.png "ZWA2_pipeline")
 
+>_WARNING:_
+>
+> ZWA2 revolves around the identification of partially mapped (chimeric) NGS reads on any given reference sequence(s) and their decontamination. For the best possible decontamination, we recommend using the provided SILVA rRNA database (LINK HERE) as the user input reference file. Noteworthy, _de novo_ assembly of the curated reads after decontamination is optional and, therefore is not included in the main ZWA2 pipeline or the application's prerequisites. In this case, the _de novo_ assembly software of preference may be downloaded and executed separately by the user, though we recommend using MEGAHIT _de novo_ assembly software (LINK HERE).
+
 Installation of the standalone application
 ---------------
 The ZWA2 standalone application is distributed for Linux and MacOS systems and may be executed directly after download. The prerequisites of ZWA2 ([bwa 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) and [samtools 1.13](https://github.com/samtools/samtools/releases/tag/1.13)) will be verified for installation upon ZWA2 execution and if not installed, they will be downloaded automatically by the program. 
-
->_WARNING:_
->
-> ZWA2 revolves around the identification of partially mapped/chimeric NGS reads based on a given reference and their decontamination. For the best possible decontamination, we recommend using the provided SILVA rRNA database (LINK HERE) as the user input reference. Notably, _de novo_ assembly after NGS reads decontamination is optional and, therefore is not included in the main ZWA2 pipeline or the program's prerequisites. In this case, the _de novo_ assembly software of preference may be downloaded and executed separately by the user, though we recommend using MEGAHIT _de novo_ assembly software (LINK HERE).
 
 Usage
 ---------------
