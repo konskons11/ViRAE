@@ -13,6 +13,7 @@ Installation of the standalone application
 The ZWA2 standalone application is distributed for Linux and MacOS systems and may be executed directly after download. The prerequisites of ZWA2 ([bwa 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) and [samtools 1.13](https://github.com/samtools/samtools/releases/tag/1.13)) will be verified for installation upon ZWA2 execution and if not installed, they will be downloaded automatically by the program. 
 
 >_WARNING:_
+>
 > ZWA2 revolves around the identification of partially mapped/chimeric NGS reads based on a given reference and their subsequent decontamination. Notably, _de novo_ assembly after NGS reads decontamination is optional and not included in the main ZWA2 pipeline or the program's prerequisites.
 
 Usage
