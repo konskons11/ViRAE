@@ -3,14 +3,14 @@ ZWA2
 
 [![Downloads](https://img.shields.io/github/downloads/konskons11/ZWA2/total?style=flat-square)](https://github.com/konskons11/ZWA2/releases)
 
-ZWA2 is a context-based trimming bioinformatics tool, especially developed for viral metagenomics, which allows Next Generation Sequencing (NGS) read decontamination based on any given reference sequence(s). ZWA2 incorporates ready-to-use well-established bioinformatics software to detect and dissect partially mapped reads (chimeric reads) by specifically removing the moieties, which align to the given reference sequence(s). The curated output reads enhance _de novo_ assembly performance, increasing the availability of reads for more accurate and more efficacious _de novo_ virus genome assembly.
+ZWA2 is a context-based trimming bioinformatics tool, especially developed for viral metagenomics, which allows Next Generation Sequencing (NGS) read decontamination based on any given reference sequence(s). ZWA2 incorporates ready-to-use well-established bioinformatics software to detect and dissect partially mapped reads (chimeric reads) by specifically removing the moieties, which align to the given reference sequence(s). The clean output reads enhance _de novo_ assembly performance, increasing the availability of reads for more accurate and more efficacious _de novo_ virus genome assembly.
 
 The concept behind the ZWA2 pipeline is outlined in the figure below:
 ![ZWA2_pipeline](https://i.imgur.com/0WLQ1o0.png "ZWA2_pipeline")
 
 >_WARNING:_
 >
-> ZWA2 revolves around the identification of partially mapped (chimeric) NGS reads on any given reference sequence(s) and their decontamination. For optimum results, we recommend using the SILVA rRNA database (LINK HERE) as the user input reference file. Noteworthy, _de novo_ assembly of the curated reads after decontamination is optional and, therefore is not included in the main ZWA2 pipeline or the application's prerequisites. In this case, the _de novo_ assembly software of preference may be downloaded and executed separately by the user, though we recommend using MEGAHIT _de novo_ assembly software (LINK HERE).
+> ZWA2 revolves around the identification of partially mapped (chimeric) NGS reads on any given reference sequence(s) and their decontamination. For optimum results, we recommend using the SILVA rRNA database (LINK HERE) as the user input reference file. Noteworthy, _de novo_ assembly of the clean reads after decontamination is optional and, therefore is not included in the main ZWA2 pipeline or the application's prerequisites. In this case, the _de novo_ assembly software of preference may be downloaded and executed separately by the user, though we recommend using MEGAHIT _de novo_ assembly software (LINK HERE).
 
 Installation of the standalone application
 ---------------
