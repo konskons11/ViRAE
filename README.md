@@ -14,7 +14,7 @@ The ZWA2 standalone application is distributed for Linux and MacOS systems and m
 
 >_WARNING:_
 >
-> ZWA2 revolves around the identification of partially mapped/chimeric NGS reads based on a given reference and their subsequent decontamination. Notably, _de novo_ assembly after NGS reads decontamination is optional and not included in the main ZWA2 pipeline or the program's prerequisites.
+> ZWA2 revolves around the identification of partially mapped/chimeric NGS reads based on a given reference and their decontamination. For the best possible decontamination, we recommend using the provided SILVA rRNA database (LINK HERE) as the user input reference. Notably, _de novo_ assembly after NGS reads decontamination is optional and, therefore is not included in the main ZWA2 pipeline or the program's prerequisites. In this case, the _de novo_ assembly software of preference may be downloaded and executed separately by the user, though we recommend using MEGAHIT _de novo_ assembly software (LINK HERE), which is suitable for viral metagenomics.
 
 Usage
 ---------------
