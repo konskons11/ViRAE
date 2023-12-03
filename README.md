@@ -77,7 +77,27 @@ ZWA2 outputs the clean reads after processing in a GZIPPED FASTQ file with the s
 |Right_unmapped_seq_quality|Read sequence quality after right-side trimming|
 |Right_unmapped_seqlength|Read sequence length after right-side trimming|
 
-In addition, at the end of the report file an overall summary of the mapping analysis is provided, which has the following format:
+At the end of the generated report file, an overall summary of the mapping analysis is also provided line-by-line, which has the following format:
+|Line header|Description|
+|:---|:---|
+|BWA alignment stringency||
+|Total input reads||
+|Total unmapped reads||
+|Total mapped reads||
+|Fully mapped reads||
+|Fully mapped reads/Total mapped reads (%)||
+|Partially mapped (chimeric) reads||
+|Partially mapped (chimeric) reads/Total mapped reads (%)||
+|Average mapped bases||
+|Average mapped bases/Average read length (%)||
+|ZWA2 cleaned chimeric reads||
+|ZWA2 cleaned chimeric reads/Chimeric reads (%)||
+|Total clean reads (Unmapped+ZWA2 cleaned)||
+|ZWA2 discarded chimeric reads||
+|ZWA2 discarded chimeric reads/Chimeric reads (%)||
+|Total discarded reads (Fully mapped+ZWA2 discarded)||
+|Execution time||
+
 
 
 Use of the ZWA2 online tool
