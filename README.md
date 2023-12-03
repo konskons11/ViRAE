@@ -56,6 +56,9 @@ Partial ZWA2 deployment run example:
 ./ZWA2.sh -m mapped.bam -u unmapped.fq.gz -o ./
 ```
 
+ZWA2 output
+---------------
+
 ZWA2 outputs the clean reads after processing in a GZIPPED FASTQ file with the suffix "_ZWA2_cleaned.fastq.gz_" as well as a detailed cleaning report file named "_ZWA2_cleaning_report.out.gz_". The generated report file is a multi-column file, which provides further insights on mapped reads and their cleaning by ZWA2, consisting of the following columns:
 |Column header|Description|
 |:---|:---|
@@ -100,9 +103,7 @@ At the end of the generated report file, an overall summary of the mapping analy
 |Total discarded reads (Fully mapped+ZWA2 discarded)||
 |Execution time||
 
-
-
-Use of the ZWA2 online tool
+ZWA2 online tutorial
 ---------------
 
 Apart from the ZWA2 standalone application, the user may utilize the online ZWA2 tool (https://srv-inseqt.med.duth.gr/ZWA2/HTML/ZWA2_method_selection.html), which does not require the installation of any software but solely the provision of the appropriate input files.
