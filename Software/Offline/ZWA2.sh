@@ -171,7 +171,7 @@ verify_zwa2_installation() {
         #macOS
         if [[ "$system_type" == "Darwin" ]] ; then
             if [ -z "$(man brew 2>/dev/null)" ] ; then
-                echo "ERROR !!! Please make sure you have Homebrew installed, then try again"
+                echo "ERROR !!! Please make sure you have Homebrew installed, exiting now"
                 exit
             else
                 if [ "$prerequisite" == "bwa" ] ; then
@@ -185,7 +185,7 @@ verify_zwa2_installation() {
 
                 installed_version=$(man "$prerequisite" 2>/dev/null | awk 'END{gsub("'"$prerequisite"'-","",$1) ; print $1}')
                 if [ -z "$installed_version" ] ; then
-                    echo "ERROR !!! Please make sure your internet connection is fine, then try again"
+                    echo "ERROR !!! Please make sure your connected to the internet, exiting now"
                     exit
                 else
                     echo "$prerequisite $installed_version correctly installed !!!"
@@ -194,7 +194,7 @@ verify_zwa2_installation() {
         #Linux Ubuntu
         elif [[ "$system_type" == "Linux" ]] ; then
             if [ -z "$(man apt-get 2>/dev/null)" ] ; then
-                echo "ERROR !!! Please make sure you have apt-get installed, then try again"
+                echo "ERROR !!! Please make sure you have apt-get installed, exiting now"
                 exit
             else
                 if [ "$prerequisite" == "bwa" ] ; then
@@ -205,7 +205,7 @@ verify_zwa2_installation() {
                 installed_version=$(man "$prerequisite" 2>/dev/null | awk 'END{gsub("'"$prerequisite"'-","",$1) ; print $1}')
 
                 if [ -z "$installed_version" ] ; then
-                    echo "ERROR !!! Please make sure your internet connection is fine and provide root privileges for installation, then try again"
+                    echo "ERROR !!! Please make sure you are connected to the internet and have provide root privileges for installation, exiting now"
                     exit
                 else
                     echo "$prerequisite $installed_version correctly installed !!!"
