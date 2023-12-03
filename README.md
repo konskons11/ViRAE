@@ -35,7 +35,9 @@ The parameters of the ZWA2 standalone application are summarised in the followin
 |`-u <string>`|directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension)|Partial|
 |`-t`|run ZWA2 on a test dataset to verify installation|TEST MODE|
 
-### Run examples
+Run examples
+---------------
+
 The ZWA2 standalone application may be fully or partially deployed upon execution depending on the available user input files. In the case of ZWA2 full deployment, the directories of NGS reads (FASTQ format) and appropriate reference file (FASTA format) must be provided as arguments after the -i and -r flags respectively, in order to be able to perform all necessary alignments. The user also has the ability to adjust the mapping sensitivity of the incorporated BWA software by passing the desired level of alignment stringency as an integer number after the -l flag (default value 30 \| <30 loose, >30 stringent). 
 
 Full ZWA2 deployment run examples:
