@@ -80,15 +80,15 @@ ZWA2 outputs the clean reads after processing in a GZIPPED FASTQ file with the s
 At the end of the generated report file, an overall summary of the mapping analysis is also provided line-by-line, which has the following format:
 |Line header|Description|
 |:---|:---|
-|BWA alignment stringency||
-|Total input reads||
-|Total unmapped reads||
-|Total mapped reads||
-|Fully mapped reads||
-|Fully mapped reads/Total mapped reads (%)||
-|Partially mapped (chimeric) reads||
-|Partially mapped (chimeric) reads/Total mapped reads (%)||
-|Average mapped bases||
+|BWA alignment stringency|Alignment stringency value of BWA (default value 30 \| <30 loose, >30 stringent)|
+|Total input reads|Total number of user input reads|
+|Total unmapped reads|Total number of unmapped reads|
+|Total mapped reads|Total number of mapped reads|
+|Fully mapped reads|Total number of fully mapped reads only|
+|Fully mapped reads/Total mapped reads (%)|Ratio of fully mapped reads/total number of mapped reads|
+|Partially mapped (chimeric) reads|Total number of partially mapped (chimeric) reads only|
+|Partially mapped (chimeric) reads/Total mapped reads (%)|Ratio of partially mapped (chimeric) reads/total number of mapped reads|
+|Average mapped bases|Average number of mapped bases|
 |Average mapped bases/Average read length (%)||
 |ZWA2 cleaned chimeric reads||
 |ZWA2 cleaned chimeric reads/Chimeric reads (%)||
