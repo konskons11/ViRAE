@@ -54,9 +54,9 @@ Partial ZWA2 deployment run example:
 ./ZWA2.sh -m mapped.bam -u unmapped.fq.gz -o ./
 ```
 
-ZWA2 outputs the clean reads after processing in a GZIPPED FASTQ file with the suffix "ZWA2_cleaned.fastq.gz" as well as a detailed cleaning report in a separate file named "ZWA2_cleaning_report.out.gz". The generated report file is a multi-column file which provides further insights on the cleaning process carried out by ZWA2.
+ZWA2 outputs the clean reads after processing in a GZIPPED FASTQ file with the suffix "ZWA2_cleaned.fastq.gz" as well as a detailed cleaning report in a separate file named "ZWA2_cleaning_report.out.gz". The generated report file is a multi-column file which provides further insights on the cleaning process carried out by ZWA2 and has the following format.
 
-Read_ID	RefID	CIGAR	Read_seq	Read_seqlength	Mapped_seq	Mapped_seq_length	Mapped_start	Mapped_end	Left_unmapped_seq_start	Left_unmapped_seq_end	Left_unmapped_seq	Left_unmapped_seq_quality	Left_unmapped_seqlength	Right_unmapped_seq_start	Right_unmapped_seq_end	Right_unmapped_seq	Right_unmapped_seq_quality	Right_unmapped_seqlength
+Read_ID  RefID	CIGAR	Read_seq	Read_seqlength	Mapped_seq	Mapped_seq_length	Mapped_start	Mapped_end	Left_unmapped_seq_start	Left_unmapped_seq_end	Left_unmapped_seq	Left_unmapped_seq_quality	Left_unmapped_seqlength	Right_unmapped_seq_start	Right_unmapped_seq_end	Right_unmapped_seq	Right_unmapped_seq_quality	Right_unmapped_seqlength
 
 which corresponds to the detailed features of either fully or partially mapped reads on the given reference and an overall mapping analysis at the end of the file.
 
