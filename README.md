@@ -11,11 +11,14 @@ The concept behind the ZWA2 pipeline is outlined in the figure below:
 _**IMPORTANT NOTE:**_
 ZWA2 focuses on the identification and decontamination of partially mapped (chimeric) NGS reads on any given reference sequence(s). For optimum decontamination, we highly recommend downloading and inputting our [custom SILVA rRNA database](https://github.com/konskons11/ZWA2/blob/main/Software/Offline/SILVA_LSU%2BSSU_rRNA.prinseq-ns_max_p1.fasta.gz) (603370 seqs of 16S, 18S, 23S and 28S rRNA from a wide variety of _Archaea_, _Bacteria_ and _Eukarya_ organisms) as reference file. Noteworthy, _de novo_ assembly of the clean output reads after decontamination is optional, and therefore is not included in the main ZWA2 pipeline or the program's prerequisites. However, if this is the case, the user may separately perform _de novo_ assembly on the clean output reads using the software of preference, though we highly recommend using [MEGAHIT _de novo_ assembler](https://github.com/voutcn/megahit/releases/tag/v1.2.9).
 
+User's manual
+=======
+
 Installation of the standalone application
 ---------------
 The ZWA2 standalone application is distributed for Linux and MacOS systems and may be executed directly after download. The prerequisites of ZWA2 ([bwa 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) and [samtools 1.13](https://github.com/samtools/samtools/releases/tag/1.13)) will be verified for installation upon ZWA2 execution and if not installed, they will be downloaded automatically by the program. 
 
-Usage
+Execution
 ---------------
 
 The parameters of the ZWA2 standalone application are summarised in the following table:
