@@ -55,27 +55,27 @@ Partial ZWA2 deployment run example:
 ```
 
 ZWA2 outputs the clean reads after processing in a GZIPPED FASTQ file with the suffix "ZWA2_cleaned.fastq.gz" as well as a detailed cleaning report file named "ZWA2_cleaning_report.out.gz". The generated report file is a multi-column file which provides further insights on the cleaning process carried out by ZWA2 and consist of the following columns:
-|Name of column|Description|
+|Column header|Description|
 |:---|:---|
-|Read_ID||
-|RefID||
-|CIGAR|
-|Read_seq||
-|Read_seqlength||
-|Mapped_seq||
-|Mapped_seq_length||
-|Mapped_start||
-|Mapped_end||
-|Left_unmapped_seq_start||
-|Left_unmapped_seq_end||
-|Left_unmapped_seq||
-|Left_unmapped_seq_quality||
-|Left_unmapped_seqlength||
-|Right_unmapped_seq_start||
-|Right_unmapped_seq_end||
-|Right_unmapped_seq||
-|Right_unmapped_seq_quality||
-|Right_unmapped_seqlength||
+|Read_ID|Unique read sequence identifier|
+|RefID|Unique reference sequence identifier|
+|CIGAR|Compact Idiosyncratic Gapped Alignment Report|
+|Read_seq|Complete read sequence|
+|Read_seqlength|Total read sequence length|
+|Mapped_seq|Mapped sequence of read|
+|Mapped_seq_length|Mapped sequence length of read|
+|Mapped_start|Start position of read mapping|
+|Mapped_end|End position of read mapping|
+|Left_unmapped_seq_start|Start position of read sequence after trimming|
+|Left_unmapped_seq_end|End position of read sequence after trimming|
+|Left_unmapped_seq|Read sequence after trimming|
+|Left_unmapped_seq_quality|Read sequence quality after trimming|
+|Left_unmapped_seqlength|Read sequence length after trimming|
+|Right_unmapped_seq_start|Start position of read sequence after trimming|
+|Right_unmapped_seq_end|End position of read sequence after trimming|
+|Right_unmapped_seq|Read sequence after trimming|
+|Right_unmapped_seq_quality|Read sequence quality after trimming|
+|Right_unmapped_seqlength|Read sequence length after trimming|
 
 which corresponds to the detailed features of either fully or partially mapped reads on the given reference and an overall mapping analysis at the end of the file.
 
