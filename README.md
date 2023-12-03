@@ -55,6 +55,7 @@ Partial ZWA2 deployment run example:
 ```
 
 ZWA2 outputs the clean reads after processing in a GZIPPED FASTQ file with the suffix "ZWA2_cleaned.fastq.gz" as well as a detailed cleaning report file named "ZWA2_cleaning_report.out.gz". The generated report file is a multi-column file which provides further insights on the cleaning process carried out by ZWA2 and consist of the following columns:
+|Name of column|Description|
 |:---|:---|
 |Read_ID||
 |RefID||
