@@ -64,7 +64,7 @@ ZWA2 outputs the clean reads after processing in a GZIPPED FASTQ file with the s
 |:---|:---|
 |Read_ID|Unique read sequence identifier|
 |RefID|Unique reference sequence identifier|
-|CIGAR|Compact Idiosyncratic Gapped Alignment Report|
+|CIGAR|Compact Idiosyncratic Gapped Alignment Report string|
 |Read_seq|Complete read sequence|
 |Read_seqlength|Total read sequence length|
 |Mapped_seq|Mapped sequence of read|
