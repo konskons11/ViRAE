@@ -54,4 +54,9 @@ Partial ZWA2 deployment run example:
 ./ZWA2.sh -m mapped.bam -u unmapped.fq.gz -o ./
 ```
 
+EXPLAIN OUTPUT FILES
+
+Use of the ZWA2 online tool
+---------------
+
 Apart from the ZWA2 standalone application, the user may utilize the online ZWA2 tool (https://srv-inseqt.med.duth.gr/ZWA2/HTML/ZWA2_method_selection.html), which does not require the installation of any software but solely the provision of the appropriate input files.
