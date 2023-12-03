@@ -66,16 +66,16 @@ ZWA2 outputs the clean reads after processing in a GZIPPED FASTQ file with the s
 |Mapped_seq_length|Mapped sequence length of read|
 |Mapped_start|Start position of read mapping|
 |Mapped_end|End position of read mapping|
-|Left_unmapped_seq_start|Start position of read sequence after trimming|
-|Left_unmapped_seq_end|End position of read sequence after trimming|
-|Left_unmapped_seq|Read sequence after trimming|
-|Left_unmapped_seq_quality|Read sequence quality after trimming|
-|Left_unmapped_seqlength|Read sequence length after trimming|
-|Right_unmapped_seq_start|Start position of read sequence after trimming|
-|Right_unmapped_seq_end|End position of read sequence after trimming|
-|Right_unmapped_seq|Read sequence after trimming|
-|Right_unmapped_seq_quality|Read sequence quality after trimming|
-|Right_unmapped_seqlength|Read sequence length after trimming|
+|Left_unmapped_seq_start|Start position of read sequence after left-side trimming|
+|Left_unmapped_seq_end|End position of read sequence after left-side trimming|
+|Left_unmapped_seq|Read sequence after left-side trimming|
+|Left_unmapped_seq_quality|Read sequence quality after left-side trimming|
+|Left_unmapped_seqlength|Read sequence length after left-side trimming|
+|Right_unmapped_seq_start|Start position of read sequence after right-side trimming|
+|Right_unmapped_seq_end|End position of read sequence after right-side trimming|
+|Right_unmapped_seq|Read sequence after right-side trimming|
+|Right_unmapped_seq_quality|Read sequence quality after right-side trimming|
+|Right_unmapped_seqlength|Read sequence length after right-side trimming|
 
 which corresponds to the detailed features of either fully or partially mapped reads on the given reference and an overall mapping analysis at the end of the file.
 
