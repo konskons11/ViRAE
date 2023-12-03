@@ -54,7 +54,8 @@ Partial ZWA2 deployment run example:
 ./ZWA2.sh -m mapped.bam -u unmapped.fq.gz -o ./
 ```
 
-EXPLAIN OUTPUT FILES
+ZWA2 outputs the clean reads after processing in a GZIPPED FASTQ file with the suffix "ZWA2_cleaned.fastq.gz" as well as a detailed cleaning report in a separate file named "ZWA_cleaning_report.out.gz"
+
 
 Use of the ZWA2 online tool
 ---------------
