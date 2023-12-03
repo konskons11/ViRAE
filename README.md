@@ -54,7 +54,7 @@ Partial ZWA2 deployment run example:
 ./ZWA2.sh -m mapped.bam -u unmapped.fq.gz -o ./
 ```
 
-ZWA2 outputs the clean reads after processing in a GZIPPED FASTQ file with the suffix "ZWA2_cleaned.fastq.gz" as well as a detailed cleaning report file named "ZWA2_cleaning_report.out.gz". The generated report file is a multi-column file which provides further insights on the cleaning process carried out by ZWA2 and consist of the following columns:
+ZWA2 outputs the clean reads after processing in a GZIPPED FASTQ file with the suffix "ZWA2_cleaned.fastq.gz" as well as a detailed cleaning report file named "ZWA2_cleaning_report.out.gz". The generated report file is a multi-column file which provides further insights on the cleaning process carried out by ZWA2 and consists of the following columns:
 |Column header|Description|
 |:---|:---|
 |Read_ID|Unique read sequence identifier|
