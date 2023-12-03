@@ -103,7 +103,7 @@ At the end of the generated report file, an overall summary of the mapping analy
 |Total discarded reads (Fully mapped+ZWA2 discarded)||
 |Execution time||
 
-ZWA2 online tutorial
+ZWA2 online guidelines
 ---------------
 
 Apart from the ZWA2 standalone application, the user may utilize the online ZWA2 tool (https://srv-inseqt.med.duth.gr/ZWA2/HTML/ZWA2_method_selection.html), which does not require the installation of any software but solely the provision of the appropriate input files.
