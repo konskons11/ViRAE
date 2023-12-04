@@ -128,4 +128,6 @@ As regards to the partial ZWA2 deployment (Method 2), there are two available up
 
 Submission of the required input files triggers the upload process and redirects to a new webpage, where the user is informed about the upload progression in real time. In case of upload failure, the user is redirected automatically back to the upload webpage after clicking "OK" on the prompted warning message.
 
-**C) ZWA2 implementation and output:** After successful upload of the appropriate input files, the back-end script execution of ZWA2 begins and the user is informed about its progression in real time. Upon ZWA2 run completion, an overall summary is displayed at the current webpage, along with a download link corresponding to a zipped folder containing the clean reads and generated report files by ZWA2.
+**C) ZWA2 implementation and output:** After successful upload of the appropriate input files, the back-end script execution of ZWA2 begins and the user is informed about its progression in real time as displayed below. Upon ZWA2 run completion, an overall summary is displayed at the current webpage, along with a download link corresponding to a zipped folder containing the clean reads and generated report files by ZWA2.
+
+![ZWA2_online guide](https://i.imgur.com/g3pWaUG.png "ZWA2 online - ZWA2 execution and download page")
