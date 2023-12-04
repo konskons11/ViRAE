@@ -69,8 +69,8 @@ ZWA2 outputs 2 files, which are: i) the clean reads after processing as a GZIPPE
 |Read_seqlength|Total read sequence length|
 |Mapped_seq|Mapped sequence of read|
 |Mapped_seq_length|Mapped sequence length of read|
-|Mapped_start|Start position of read mapping|
-|Mapped_end|End position of read mapping|
+|Mapped_start|Mapping start position of read|
+|Mapped_end|Mapping end position of read|
 |Left_unmapped_seq_start|New start position of read sequence after left-side trimming|
 |Left_unmapped_seq_end|New end position of read sequence after left-side trimming|
 |Left_unmapped_seq|New read sequence after left-side trimming|
