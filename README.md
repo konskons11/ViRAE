@@ -93,8 +93,8 @@ An overall summary of the mapping analysis is also provided at the end of the ge
 |Fully mapped reads/Total mapped reads (%)|Percentage of fully mapped reads/total number of mapped reads|
 |Partially mapped (chimeric) reads|Total number of partially mapped (chimeric) reads only|
 |Partially mapped (chimeric) reads/Total mapped reads (%)|Percentage of partially mapped (chimeric) reads/total number of mapped reads|
-|Average mapped bases|Average number of mapped bases|
-|Average mapped bases/Average read length (%)||
+|Average mapped bases|Average mapped bases of partialy mapped (chimeric) reads|
+|Average mapped bases/Average read length (%)|Percentage of average mapped bases of partialy mapped (chimeric) reads/average read length|
 |ZWA2 cleaned chimeric reads||
 |ZWA2 cleaned chimeric reads/Chimeric reads (%)||
 |Total clean reads (Unmapped+ZWA2 cleaned)||
