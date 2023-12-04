@@ -120,7 +120,7 @@ Apart from the ZWA2 standalone application, the user may utilize the ZWA2 online
 
 ![ZWA2_online guide](https://i.imgur.com/WrGnmVz.png "ZWA2 online - Method 1 upload selection")
 
-As regards to the partial ZWA2 deployment (Method 2), there are two available upload options, which are i) selection of the necessary BAM input file from a prompt file dialog, and ii) provision of the appropriate link address, where the necessary BAM input file is stored.
+As regards to the partial ZWA2 deployment (Method 2), there are two available upload options, which are i) selection of the necessary BAM input file from a prompt file dialog, or ii) provision of the appropriate link address, where the necessary BAM input file is stored.
 
 ![ZWA2_online guide](https://i.imgur.com/OBRQJ7z.png "ZWA2 online - Method 2 upload selection")
 
