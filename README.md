@@ -120,10 +120,10 @@ Apart from the ZWA2 standalone application, the user may utilize the ZWA2 online
 
 ![ZWA2_online guide](https://i.imgur.com/WrGnmVz.png "ZWA2 online - Method 1 upload selection")
 
-As regards to the partial ZWA2 deployment (Method 2), there are two available upload options, which are i) selection of the necessary BAM input file from a prompt file dialog, and ii) provision of the appropriate link address, where the necessary BAM input file is stored. Submission of the required input files triggers the upload process and redirects to a new webpage, where the user is informed about the upload progression in real time. 
+As regards to the partial ZWA2 deployment (Method 2), there are two available upload options, which are i) selection of the necessary BAM input file from a prompt file dialog, and ii) provision of the appropriate link address, where the necessary BAM input file is stored.
 
 ![ZWA2_online guide](https://i.imgur.com/OBRQJ7z.png "ZWA2 online - Method 2 upload selection")
 
-In case of upload failure, the user is redirected automatically back to the upload webpage after clicking "OK" on the prompted warning message.
+Submission of the required input files triggers the upload process and redirects to a new webpage, where the user is informed about the upload progression in real time. In case of upload failure, the user is redirected automatically back to the upload webpage after clicking "OK" on the prompted warning message.
 
 **C) ZWA2 implementation and output:** After successful upload of the appropriate input files, the back-end script execution of ZWA2 begins and the user is informed about its progression in real time. Upon ZWA2 run completion, an overall summary is displayed at the current webpage, along with a download link corresponding to a zipped folder containing the clean reads and generated report files by ZWA2.
