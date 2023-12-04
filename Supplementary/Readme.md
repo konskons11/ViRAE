@@ -20,4 +20,6 @@ Here you will find the supplementary material related to the ZWA2 scientific pap
 
 **Supplementary file 6:**
 
-**Supplementary tables:**
+**Supplementary table 1:**
+
+**Supplementary table 2:**
