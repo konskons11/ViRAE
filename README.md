@@ -90,7 +90,7 @@ An overall summary of the ZWA2 analysis is also provided at the end of the gener
 |Total unmapped reads|Total number of unmapped reads|
 |Total mapped reads|Total number of mapped reads|
 |Fully mapped reads|Total number of fully mapped reads only|
-|Fully mapped reads/Total mapped reads (%)|Percentage of the total number of fully mapped reads/total number of mapped reads|
+|Fully mapped reads/<br />Total mapped reads (%)|Percentage of the total number of fully mapped reads/<br />total number of mapped reads|
 |Partially mapped (chimeric) reads|Total number of partially mapped (chimeric) reads only|
 |Partially mapped (chimeric) reads/Total mapped reads (%)|Percentage of the total number of partially mapped (chimeric) reads/total number of mapped reads|
 |Average mapped bases|Numnber of average mapped bases in partialy mapped (chimeric) reads|
