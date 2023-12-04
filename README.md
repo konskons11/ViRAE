@@ -18,11 +18,11 @@ User's manual
 ZWA2 standalone application
 ---------------
 
-## Installation 
+### Installation 
 
 The ZWA2 standalone application is a Bash shell script distributed for Linux and MacOS systems and may be executed directly after making the downloaded ZWA2.sh file executable (e.g. command `chmod +x`). The prerequisites of ZWA2 ([bwa 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) and [samtools 1.13](https://github.com/samtools/samtools/releases/tag/1.13)) will be verified for installation upon ZWA2 execution and if not installed, they will be downloaded automatically by the program.
 
-## Execution
+### Execution
 
 The parameters of the ZWA2 standalone application are summarised in the following table:
 |Required argument flags|Description|Deployment|
@@ -38,7 +38,7 @@ The parameters of the ZWA2 standalone application are summarised in the followin
 |`-u <string>`|directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension)|Partial|
 |`-t`|run ZWA2 on a test dataset to verify installation|TEST MODE|
 
-## Run examples
+### Run examples
 
 The ZWA2 standalone application may be fully or partially deployed upon execution depending on the available user input files. In the case of ZWA2 full deployment, the directories of NGS reads (FASTQ format) and appropriate reference file (FASTA format) must be provided as arguments after the -i and -r flags respectively, in order to be able to perform all necessary alignments. The user also has the ability to adjust the mapping sensitivity of the incorporated BWA software by passing the desired level of alignment stringency as an integer number after the -l flag (default value 30 \| <30 loose, >30 stringent). 
 
@@ -58,7 +58,7 @@ Partial ZWA2 deployment run example:
 ./ZWA2.sh -m mapped.bam -u unmapped.fq.gz -o ./
 ```
 
-## ZWA2 output
+### ZWA2 output
 
 ZWA2 outputs 2 files, which are: i) the clean reads after processing as a GZIPPED FASTQ file with the suffix "_ZWA2_cleaned.fastq.gz_", and ii) a detailed cleaning report file named "_ZWA2_cleaning_report.out.gz_". The generated GZIPPED FASTQ file contains all the clean reads by ZWA2 and may be used separately for _de novo_ assembly or other downstream analysis. The generated report file is a multi-column file, which provides further information and details on the cleaning performed by ZWA2, in the following format:
 |Column header|Description|
