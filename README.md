@@ -118,9 +118,11 @@ Apart from the ZWA2 standalone application, the user may utilize the ZWA2 online
 2) submission of a valid SRA accession number (in the case of FASTQ input) or selection from a dropdown menu list of recommended reference files (in the case of FASTA input), or
 3) provision of the appropriate link address, where the FASTQ or FASTA input file is stored.
 
-![ZWA2_online guide](https://i.imgur.com/WrGnmVz.png "ZWA2 online - Upload method selection")
+![ZWA2_online guide](https://i.imgur.com/WrGnmVz.png "ZWA2 online - Method 1 upload selection")
 
 As regards to the partial ZWA2 deployment (Method 2), there are two available upload options, which are i) selection of the necessary BAM input file from a prompt file dialog, and ii) provision of the appropriate link address, where the necessary BAM input file is stored. Submission of the required input files triggers the upload process and redirects to a new webpage, where the user is informed about the upload progression in real time. 
+
+![ZWA2_online guide](https://i.imgur.com/OBRQJ7z.png "ZWA2 online - Method 2 upload selection")
 
 In case of upload failure, the user is redirected automatically back to the upload webpage after clicking "OK" on the prompted warning message.
 
