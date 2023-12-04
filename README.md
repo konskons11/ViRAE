@@ -82,7 +82,7 @@ ZWA2 outputs the clean reads after processing in a GZIPPED FASTQ file with the s
 |Right_unmapped_seq_quality|New read sequence quality after right-side trimming|
 |Right_unmapped_seqlength|New read sequence length after right-side trimming|
 
-An overall summary of the analysis is also provided at the end of the generated report file, which has the following line-by-line format:
+An overall summary of the ZWA2 analysis is also provided at the end of the generated report file, which has the following line-by-line format:
 |Line header|Description|
 |:---|:---|
 |BWA alignment stringency|Alignment stringency value of BWA (default value 30 \| <30 loose, >30 stringent)|
