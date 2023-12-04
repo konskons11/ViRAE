@@ -20,6 +20,6 @@ Here you will find the supplementary material related to the ZWA2 scientific pap
 
 **Supplementary file 6:**
 
-**Supplementary table 1:**
+**Supplementary table 1:** Virus taxonomy and representation by RNA-seq samples in the analyzed data of this study.
 
-**Supplementary table 2:**
+**Supplementary table 2:** Frequency and taxonomy of the most contaminant species in the examined RNA-seq samples.
