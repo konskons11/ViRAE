@@ -92,15 +92,15 @@ An overall summary of the ZWA2 analysis is also provided at the end of the gener
 |Total mapped reads|Total number of mapped reads|
 |Fully mapped reads|Total number of fully mapped reads only|
 |Fully mapped reads/<br />Total mapped reads (%)|Percentage of the total number of fully mapped reads <br />to total number of mapped reads|
-|Partially mapped (chimeric) reads|Total number of partially mapped (chimeric) reads only|
-|Partially mapped (chimeric) reads/<br />Total mapped reads (%)|Percentage of the total number of partially mapped (chimeric) reads <br /> to total number of mapped reads|
-|Average mapped bases|Numnber of average mapped bases in partialy mapped (chimeric) reads|
-|Average mapped bases/<br />Average read length (%)|Percentage of the number of average mapped bases in partialy mapped (chimeric) reads <br /> to average length of partialy mapped (chimeric) reads|
-|ZWA2 cleaned chimeric reads|Number of partialy mapped (chimeric) reads cleaned by ZWA2|
-|ZWA2 cleaned chimeric reads/<br />Chimeric reads (%)|Percentage of the number of partialy mapped (chimeric) reads cleaned by ZWA2 <br /> to total number of partialy mapped (chimeric) reads|
+|Partially mapped (chimeric) reads|Total number of chimeric reads only|
+|Partially mapped (chimeric) reads/<br />Total mapped reads (%)|Percentage of the total number of chimeric reads <br /> to total number of mapped reads|
+|Average mapped bases|Numnber of average mapped bases in chimeric reads|
+|Average mapped bases/<br />Average read length (%)|Percentage of the number of average mapped bases in chimeric reads <br /> to average length of chimeric reads|
+|ZWA2 cleaned chimeric reads|Number of chimeric reads cleaned by ZWA2|
+|ZWA2 cleaned chimeric reads/<br />Chimeric reads (%)|Percentage of the number of chimeric reads cleaned by ZWA2 <br /> to total number of chimeric reads|
 |Total clean reads <br />(Unmapped+ZWA2 cleaned)|Total number of clean reads <br />(equal to the sum of unmapped reads and chimeric reads cleaned by ZWA2)|
-|ZWA2 discarded chimeric reads|Number of partialy mapped (chimeric) reads discarded by ZWA2|
-|ZWA2 discarded chimeric reads/<br />Chimeric reads (%)|Percentage of the number of partialy mapped (chimeric) reads discarded by ZWA2 <br /> to total number of partialy mapped (chimeric) reads|
+|ZWA2 discarded chimeric reads|Number of chimeric reads discarded by ZWA2|
+|ZWA2 discarded chimeric reads/<br />Chimeric reads (%)|Percentage of the number of chimeric reads discarded by ZWA2 <br /> to total number of chimeric reads|
 |Total discarded reads <br />(Fully mapped+ZWA2 discarded)|Total number of discarded reads <br />(equal to the sum of fully mapped reads and chimeric reads discarded by ZWA2)|
 |Execution time|Total execution time of ZWA2 (wall clock run time)|
 
