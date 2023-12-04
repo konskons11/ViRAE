@@ -101,7 +101,7 @@ An overall summary of the mapping analysis is also provided at the end of the ge
 |ZWA2 discarded chimeric reads|Number of partialy mapped (chimeric) reads discarded by ZWA2|
 |ZWA2 discarded chimeric reads/Chimeric reads (%)|Percentage of the number of partialy mapped (chimeric) reads discarded by ZWA2/total number of partialy mapped (chimeric) reads|
 |Total discarded reads (Fully mapped+ZWA2 discarded)|Total number of discarded reads (equal to the sum of fully mapped reads and discarded partialy mapped (chimeric) reads by ZWA2)|
-|Execution time|Total run time of ZWA2 (wall clock time)|
+|Execution time|Total execution time of ZWA2 (wall clock run time)|
 
 ZWA2 online guide
 ---------------
