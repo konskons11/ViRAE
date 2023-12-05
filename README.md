@@ -101,7 +101,7 @@ An overall summary of the ZWA2 analysis is also provided at the end of the gener
 |ZWA2 discarded chimeric reads|Number of chimeric reads discarded by ZWA2|
 |ZWA2 discarded chimeric reads/<br />Chimeric reads (%)|Percentage of the number of chimeric reads discarded by ZWA2 <br /> to total number of chimeric reads|
 |Total discarded reads <br />(Fully mapped+ZWA2 discarded)|Total number of discarded reads <br />(equal to the sum of fully mapped reads + chimeras discarded by ZWA2)|
-|Execution time (seonds)|Total execution time of ZWA2 (wall clock run time)|
+|Execution time (seconds)|Total execution time of ZWA2 (wall clock run time)|
 
 ## ZWA2 online guide
 
