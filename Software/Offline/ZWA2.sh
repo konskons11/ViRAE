@@ -276,25 +276,15 @@ bwa_mapping() {
 
         echo -e "\nPerforming $alignment_stringency_mode BWA alignment, please wait..."
 
-        # Bwa align input reads on reference
-        # mem1
         index=$(find $input_ref_dirname -maxdepth 1 -type f -name "$input_ref_filename.$input_ref_extension*.amb" -o -name "$input_ref_filename.$input_ref_extension*.ann" -o -name "$input_ref_filename.$input_ref_extension*.pac" -o -name "$input_ref_filename.$input_ref_extension*.bwt" -o -name "$input_ref_filename.$input_ref_extension*.sa")
-        # mem2
-        #index=$(find ./ -maxdepth 1 -type f -name "*.amb" -o -name "*.ann" -o -name "*.pac" -o -name "*.bwt*" -o -name "*.0123")
 
         if [[ $(wc -l <<< "$index" | bc) -eq 5 ]] ; then
             echo "Reference file already indexed, proceeding to next step"
         else
-        	# mem1
             bwa index $1 2>/dev/null
-        	# mem2
-            #bwa-mem2 index $1 2>/dev/null
         fi
 
-        # mem1
         bwa mem -t $threads_count -v 0 -T $alignment_stringency_value $1 $2 2>/dev/null > $output_directory/bwa.sam
-        # mem2
-        #bwa-mem2 mem -t $threads_count $1 $2 2>/dev/null > bwa.sam
 
         # Get BWA fully & partially mapped reads
         samtools view -b -F 4 $output_directory/bwa.sam > $output_directory/reads_mapped.bam
@@ -329,18 +319,14 @@ bwa_mapping() {
         fi
     
     fi
-
-    # FOR PAIRED-END > Calculate ratio mapped bases/read length, sort (ascending order) and deduplicate to keep the biggest unmapped part from chimeric read pairs
-    # TEST THIS
-    # samtools view $output_directory/sort_reads_mapped.bam | awk -F'\t' '$6 ~ /S/ {cigar=$6 ; mapped=0 ; while(match($6,/([0-9]+)M/)){ mapped+=substr($6,RSTART,RLENGTH); $6=substr($6,RSTART+RLENGTH) } $6=cigar ; print $1,$3,$6,$10,$11,length($10),mapped/length($10)*100}' OFS="\t" > $output_directory/softclipped.tsv
-    # sort -hk7 $output_directory/softclipped.tsv | cut -f1-6 | awk '{gsub(/\/[1-2]/,",&",$1)}1' OFS="\t" | awk -F',' '!seen[$1]++' | awk -F'\t' '{gsub(",","",$1)}1' OFS="\t" > tmp && mv tmp $output_directory/softclipped.tsv
     
     samtools view $output_directory/sort_reads_mapped.bam | awk -F'\t' '$6 ~ /S/ {print $1,$3,$6,$10,$11,length($10)}' OFS="\t" > $output_directory/softclipped.tsv
     samtools view $output_directory/sort_reads_mapped.bam | awk -F'\t' '$6 !~ /S/ && $6 !~ /H/ {print $1,$3,$6,$10,length($10),$10,length($10),1,length($10),"-","-","-","-","-","-","-","-","-","-"}' OFS="\t" > $output_directory/fully_mapped.tsv
     
     ) 3>&2 2>$output_directory/mapping_time.txt
     
-    bwa_mapping_execution_time=$(awk '$1 == "real" {print $NF}' $output_directory/mapping_time.txt)
+    bwa_mapping_execution_time=$(awk '$1 == "real" {print $NF}' $output_directory/mapping_time.txt | awk -F'm|s' '{total=($1*60)+$2 ; print total}')
+    
 
 }
 ###
@@ -385,7 +371,7 @@ chimeric_reads_cleaning() {
     fi
     ) 3>&2 2>$output_directory/cleaning_time.txt
     
-    chimeric_reads_cleaning_execution_time=$(awk '$1 == "real" {print $NF}' $output_directory/cleaning_time.txt)
+    chimeric_reads_cleaning_execution_time=$(awk '$1 == "real" {print $NF}' $output_directory/cleaning_time.txt | awk -F'm|s' '{total=($1*60)+$2 ; print total}')
 
 }
 ###
@@ -437,14 +423,14 @@ write_report() {
     echo "Cleaned reads:   $zwa2_cleaned_softclipped_reads_count ($percent_zwa2_cleaned_softclipped_reads_count% of chimeric reads)"
     echo "ZWA clean reads: $total_clean_reads_count"
 
-    zwa2_execution_time=$(echo -e "$bwa_mapping_execution_time\n$chimeric_reads_cleaning_execution_time" | awk -F'm|s' '{m+=$1 ; s+=$2} END {print m"minutes",s"seconds"}')
+    zwa2_execution_time=$(echo "$bwa_mapping_execution_time + $chimeric_reads_cleaning_execution_time" | bc -l)
     
     header=$(echo -e "Read_ID\tRefID\tCIGAR\tRead_seq\tRead_seqlength\tMapped_seq\tMapped_seq_length\tMapped_start\tMapped_end\tLeft_unmapped_seq_start\tLeft_unmapped_seq_end\tLeft_unmapped_seq\tLeft_unmapped_seq_quality\tLeft_unmapped_seqlength\tRight_unmapped_seq_start\tRight_unmapped_seq_end\tRight_unmapped_seq\tRight_unmapped_seq_quality\tRight_unmapped_seqlength" )
-    footer=$(echo -e "(-) Sequence discarded\nBWA alignment stringency\t$alignment_stringency_value\nTotal input reads\t$total_input_reads_count\nTotal unmapped reads\t$total_unmapped_reads_count\nTotal mapped reads\t$total_mapped_reads_count\nFully mapped reads\t$fully_mapped_reads_count\nFully mapped reads/Total mapped reads (%)\t$percent_fully_mapped_reads_count\nPartially mapped (chimeric) reads\t$softclipped_reads_count\nPartially mapped (chimeric) reads/Total mapped reads (%)\t$percent_softclipped_reads_count\nAverage mapped bases\t$average_mapped_bases_of_softclipped_reads\nAverage mapped bases/Average read length (%)\t$percent_average_mapped_bases_of_softclipped_reads\nZWA2 cleaned chimeric reads\t$zwa2_cleaned_softclipped_reads_count\nZWA2 cleaned chimeric reads/Chimeric reads (%)\t$percent_zwa2_cleaned_softclipped_reads_count\nTotal clean reads (Unmapped+ZWA2 cleaned)\t$total_clean_reads_count\nZWA2 discarded chimeric reads\t$zwa_discarded_softclipped_reads_count\nZWA2 discarded chimeric reads/Chimeric reads (%)\t$percent_zwa_discarded_softclipped_reads_count\nTotal discarded reads (Fully mapped+ZWA2 discarded)\t$total_discarded_reads_count\nExecution time\t$zwa2_execution_time" )
+    footer=$(echo -e "(-) Sequence discarded\nBWA alignment stringency\t$alignment_stringency_value\nTotal input reads\t$total_input_reads_count\nTotal unmapped reads\t$total_unmapped_reads_count\nTotal mapped reads\t$total_mapped_reads_count\nFully mapped reads\t$fully_mapped_reads_count\nFully mapped reads/Total mapped reads (%)\t$percent_fully_mapped_reads_count\nPartially mapped (chimeric) reads\t$softclipped_reads_count\nPartially mapped (chimeric) reads/Total mapped reads (%)\t$percent_softclipped_reads_count\nAverage mapped bases\t$average_mapped_bases_of_softclipped_reads\nAverage mapped bases/Average read length (%)\t$percent_average_mapped_bases_of_softclipped_reads\nZWA2 cleaned chimeric reads\t$zwa2_cleaned_softclipped_reads_count\nZWA2 cleaned chimeric reads/Chimeric reads (%)\t$percent_zwa2_cleaned_softclipped_reads_count\nTotal clean reads (Unmapped+ZWA2 cleaned)\t$total_clean_reads_count\nZWA2 discarded chimeric reads\t$zwa_discarded_softclipped_reads_count\nZWA2 discarded chimeric reads/Chimeric reads (%)\t$percent_zwa_discarded_softclipped_reads_count\nTotal discarded reads (Fully mapped+ZWA2 discarded)\t$total_discarded_reads_count\nExecution time (seconds)\t$zwa2_execution_time" )
 
-    cat <(echo "$header") $output_directory/fully_mapped.tsv $output_directory/chimeric.tsv <(echo "$footer") > $output_directory/ZWA_cleaning_report.out
+    cat <(echo "$header") $output_directory/fully_mapped.tsv $output_directory/chimeric.tsv <(echo "$footer") > $output_directory/ZWA2_cleaning_report.out
 
-    gzip $output_directory/ZWA_cleaning_report.out &
+    gzip $output_directory/ZWA2_cleaning_report.out &
     zip_zwa_report_process_id=$!
     
     wait $zip_zwa_report_process_id
