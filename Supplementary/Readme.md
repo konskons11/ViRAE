@@ -12,9 +12,9 @@ Here you will find the supplementary material related to the ZWA2 scientific pap
 
 **Supplementary file 2:** Metadata of RNA-seq samples and their corresponding viruses analysed in this study.
 
-**Supplementary file 3:**
+**Supplementary file 3:** Analysis of ribosomal RNA contamination in the examined RNA-seq samples of this study.
 
-**Supplementary file 4:**
+**Supplementary file 4:** Comparative analysis of virus mapping performance based on the metrics "Virus mapped reads", "Virus coverage (%)" and "Mean depth of virus mapped reads" across the 4 examined methods in this study.
 
 **Supplementary file 5:**
 
