@@ -8,9 +8,9 @@ Here you will find the supplementary material related to the ZWA2 scientific pap
 
 **Supplementary figure 4:** Comparison of the mean depth of reads mapped on viral sequences, as calculated after the implementation of each method (RAW, BWA, SORTMERNA and ZWA2) separately on the examined RNA-seq samples and subsequent mapping of the treated RNA-seq data on the corresponding viral genes/genomes by BWA. The median values for this metric are displayed within the bar plots. The statistical analysis of the mean differences across the studied methods was performed by RM-ANOVA and Tukey’s multiple comparison testing, and the output statistical significance of ZWA2 is indicated by (**** p-value < 0.0001).
 
-**Supplementary file 1:**
+**Supplementary file 1:** Selection and filtering of Next Generation Sequencing data related to viral metagenomics research for the purposes of this study.
 
-**Supplementary file 2:**
+**Supplementary file 2:** Metadata of RNA-seq samples and their corresponding viruses analysed in this study.
 
 **Supplementary file 3:**
 
