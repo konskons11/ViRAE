@@ -251,12 +251,14 @@ function download_zwa_files($reads_file_path, $ref_file_path) {
 
     $reads_file_name = pathinfo($reads_file_path, PATHINFO_FILENAME);
     $ref_file_name = pathinfo($ref_file_path, PATHINFO_FILENAME);
-    $downloadFileName = "ZWA-${reads_file_name}_ON_${ref_file_name}.tar.gz";
+    #$downloadFileName = "ZWA2-${reads_file_name}_ON_${ref_file_name}.tar.gz";
+    $downloadFileName = "ZWA2-${reads_file_name}_ON_${ref_file_name}.zip";
 
-    $command = "cd $downloadDir ; tar -czvf $downloadFileName ZWA-${reads_file_name}_ON_${ref_file_name} ; rm -rf ZWA-${reads_file_name}_ON_${ref_file_name} ";
+    #$command = "cd $downloadDir ; tar -czvf $downloadFileName ZWA2-${reads_file_name}_ON_${ref_file_name} ; rm -rf ZWA2-${reads_file_name}_ON_${ref_file_name} ";
+    $command = "cd $downloadDir ; zip -r $downloadFileName ZWA2-${reads_file_name}_ON_${ref_file_name} ; rm -rf ZWA2-${reads_file_name}_ON_${ref_file_name} ";
     shell_exec($command);
     
-    echo "<p><a href='https://srv-inseqt.med.duth.gr/ZWA2/FILE_STORAGE/ZWA2_downloads/$downloadFileName' download='$downloadFileName'>Download ZWA files</a></p>";
+    echo "<p><a href='https://srv-inseqt.med.duth.gr/ZWA2/FILE_STORAGE/ZWA2_downloads/$downloadFileName' download='$downloadFileName'>Download ZWA2 files</a></p>";
 }
 
 // Main code
