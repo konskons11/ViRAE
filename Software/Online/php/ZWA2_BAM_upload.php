@@ -195,12 +195,13 @@ function downloadZwaFiles($file_path) {
     $file_name = $file_info['filename'];
     $file_extension = pathinfo($file_path, PATHINFO_EXTENSION);
 
-    $downloadFileDir = "ZWA-" . $file_name;
+    $downloadFileDir = "ZWA2-" . $file_name;
 
-    shell_exec("cd $downloadDir ; tar -czvf ZWA-$file_name.tar.gz $downloadFileDir && rm -rf $downloadFileDir ");
-    $downloadFileName = "ZWA-" . $file_name . ".tar.gz";
+    #shell_exec("cd $downloadDir ; tar -czvf ZWA2-$file_name.tar.gz $downloadFileDir && rm -rf $downloadFileDir ");
+    shell_exec("cd $downloadDir ; zip -r ZWA2-$file_name.zip $downloadFileDir && rm -rf $downloadFileDir ");
+    $downloadFileName = "ZWA2-" . $file_name . ".zip";
 
-    echo "<p><a href='https://srv-inseqt.med.duth.gr/ZWA2/FILE_STORAGE/ZWA2_downloads/$downloadFileName' download='$downloadFileName'>Download ZWA files</a></p>";
+    echo "<p><a href='https://srv-inseqt.med.duth.gr/ZWA2/FILE_STORAGE/ZWA2_downloads/$downloadFileName' download='$downloadFileName'>Download ZWA2 files</a></p>";
 }
 
 // MAIN
