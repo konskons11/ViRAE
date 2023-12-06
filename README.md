@@ -39,7 +39,7 @@ The parameters of the ZWA2 standalone application are summarised in the followin
 
 ### Run examples
 
-The ZWA2 standalone application may be fully or partially deployed upon execution depending on the available user input files. In the case of ZWA2 full deployment, the directories of NGS reads (FASTQ format) and appropriate reference file (FASTA format) must be provided as arguments after the -i and -r flags respectively, in order to be able to perform all necessary alignments. The user also has the ability to adjust the mapping sensitivity of the incorporated BWA software by passing the desired level of alignment stringency as an integer number after the -l flag (default value 30 \| <30 loose, >30 stringent). 
+In order to better comprehend the use and output of the ZWA2 standalone application, we highly recommend inputting the -t flag only first so as to verify the installation of all prerequisites and deploy ZWA2 on a small test dataset as follows `./ZWA2.sh -t`. The ZWA2 standalone application may be fully or partially deployed upon execution depending on the available user input files. In the case of ZWA2 full deployment, the directories of NGS reads (FASTQ format) and appropriate reference file (FASTA format) must be provided as arguments after the -i and -r flags respectively, in order to be able to perform all necessary alignments. The user also has the ability to adjust the mapping sensitivity of the incorporated BWA software by passing the desired level of alignment stringency as an integer number after the -l flag (default value 30 \| <30 loose, >30 stringent). 
 
 Full ZWA2 deployment run examples:
 ```sh
