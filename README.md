@@ -39,7 +39,7 @@ The parameters of the ZWA2 standalone application are summarised in the followin
 
 ### Run examples
 
-In order to better comprehend the use and output of the ZWA2 standalone application, we highly recommend inputting the -t flag only the first time you run the standolne application so as to deploy ZWA2 on a small test dataset, wchih also verifies the installation of all prerequisites and downloads them automatically if needed.
+In order to better comprehend the use and output of the ZWA2 standalone application, we highly recommend inputting the -t flag only the first time you run it so as to deploy ZWA2 on a small test dataset, wchih also verifies the installation of all prerequisites and downloads them automatically if needed.
 
 ZWA2 test mode run example:
 ```sh
