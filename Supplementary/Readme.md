@@ -20,6 +20,8 @@ Here you will find the supplementary material related to the ZWA2 scientific pap
 
 **Supplementary file 6:** Enhanced viral genome assembly observed after the implementation of ZWA2 on a small RNA-seq virome dataset.
 
-**Supplementary table 1:** Virus taxonomy and representation by RNA-seq samples in the analyzed data of this study.
+**Supplementary Table 1:** Comparison of the pilot version of ZWA (ZWA1) against the evolved ZWA2 version in terms of software features as well as virus mapping and de novo assembly performance.
 
-**Supplementary table 2:** Frequency and taxonomy of the most contaminant species in the examined RNA-seq samples.
+**Supplementary table 2:** Virus taxonomy and representation by RNA-seq samples in the analyzed data of this study.
+
+**Supplementary table 3:** Frequency and taxonomy of the most contaminant species in the examined RNA-seq samples.
