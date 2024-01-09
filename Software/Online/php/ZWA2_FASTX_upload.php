@@ -125,7 +125,7 @@ function upload_method($html_parameter, $uploadDir) {
     elseif (isset($_POST[$html_parameter . "_dropdown_menu_options"])) {
         $uploadDropdownMenu = $_POST[$html_parameter . "_dropdown_menu_options"];
         if ($uploadDropdownMenu == "silva_ref_file") {
-            echo "<p>SILVA SSU+LSU rRNA (v138.1) selected, please wait...</p>";
+            echo "<p>RiDB (SILVA SSU+LSU rRNA v138.1) selected, please wait...</p>";
             flush();
 
             $uploadFilePath = "/mnt/14C608D4C608B7CE/blast/HYBRID_READS-ZWA/DATA/HOST_GENOMES/SILVA_LSU+SSU_rRNA.prinseq-ns_max_p1.fasta.gz";
