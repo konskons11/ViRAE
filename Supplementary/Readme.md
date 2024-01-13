@@ -27,4 +27,4 @@ accession number MW520377) genome used for testing.
 
 **Supplementary table 3:** Frequency and taxonomy of the most contaminant species in the examined RNA-seq samples.
 
-**Supplementary table 4** Accession numbers and titles of the viral sequences deposited by Gil P. et al. in the NCBI GenBank database along with their corresponding SRS data accession numbers in the NCBI SRA database.
+**Supplementary table 4:** Accession numbers and titles of the viral sequences deposited by Gil P. et al. in the NCBI GenBank database along with their corresponding SRS data accession numbers in the NCBI SRA database.
