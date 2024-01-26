@@ -15,7 +15,7 @@ ZWA2 focuses on the identification and decontamination of partially mapped (chim
 User manual
 =======
 
-## ZWA2 standalone application
+## ZWA2 standalone application (offline)
 
 ### Installation 
 
@@ -110,7 +110,7 @@ An overall summary of the ZWA2 analysis is also provided at the end of the gener
 |Total discarded reads <br />(Fully mapped+ZWA2 discarded)|Total number of discarded reads <br />(equal to the sum of fully mapped reads + chimeras discarded by ZWA2)|
 |Execution time (seconds)|Total execution time of ZWA2 (wall clock run time)|
 
-## ZWA2 online guide
+## ZWA2 web-based application (online)
 
 Apart from the ZWA2 standalone application, the user may utilize the ZWA2 online tool (https://srv-inseqt.med.duth.gr/ZWA2/HTML/ZWA2_method_selection.html), which does not require the installation of any software but solely the provision of the appropriate input files according to the following 3 steps:
 
