@@ -34,7 +34,7 @@ The parameters of the ZWA2 standalone application are summarised in the followin
 |Optional arguments|Description|Deployment|
 |:---|:---|:---|
 |`-l <integer>`|alignment stringency value (default value 30 \| <30 loose, >30 stringent)|Full|
-|`-u <string>`|directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension)|Partial|
+|`-u <string>`|directory of UNMAPPED NGS READS on INPUT REFERENCE file (.bam, .fastq, .fq or .gz extension)|Partial|
 |`-t`|run ZWA2 on a test dataset to verify installation|TEST MODE|
 
 ### Run examples
