@@ -112,7 +112,7 @@ An overall summary of the ZWA2 analysis is also provided at the end of the gener
 
 ## ZWA2 web-based application (online)
 
-Apart from the ZWA2 standalone application, the user may utilize the ![ZWA2 online tool](https://srv-inseqt.med.duth.gr/ZWA2/HTML/ZWA2_method_selection.html), which does not require the installation of any software but solely the provision of the appropriate input files according to the following 3 steps:
+Apart from the ZWA2 standalone application, the user may utilize the [ZWA2 online tool](https://srv-inseqt.med.duth.gr/ZWA2/HTML/ZWA2_method_selection.html), which does not require the installation of any software but solely the provision of the appropriate input files according to the following 3 steps:
 
 **A) Deployment method selection:** Similarly to the standalone application, the user may choose to fully or partially deploy ZWA2 depending on the available input through our online platform. If NGS reads and reference files are available in FASTQ and FASTA formats respectively, then the user should choose “Method 1” as displayed below, which corresponds to full ZWA2 deployment. Alternatively, if the user has already performed the desired alignment between the NGS reads and reference file of preference, then “Method 2” should be selected, which stands for the faster partial deployment of ZWA2, with the sole input of the appropriate BAM file.
 
