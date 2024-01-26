@@ -57,7 +57,7 @@ Full ZWA2 deployment run examples:
 
 For the alternative and faster partial deployment of ZWA2, in which the user may have already carried out the desired alignment with the mapping software of preference, the directory of a BAM file may only be provided after the -m flag, instead of FASTQ and FASTA files. Alongside the input BAM file, the user may optionally pass the output unmapped reads of the performed alignment in FASTQ or BAM format after the -u flag, for later use by the algorithm. 
 
-Partial ZWA2 deployment run example:
+Partial ZWA2 deployment run examples:
 ```sh
 ./ZWA2.sh -m mapped.bam -o ./
 ./ZWA2.sh -m mapped.bam -u unmapped.bam -o ./
