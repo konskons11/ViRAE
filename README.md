@@ -1,4 +1,4 @@
-ZWA2
+Zero-Waste Algorithm 2 (ZWA2)
 =======
 
 [![Downloads](https://img.shields.io/github/downloads/konskons11/ZWA2/total?style=flat-square)](https://github.com/konskons11/ZWA2/releases)
