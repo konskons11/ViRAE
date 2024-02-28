@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViRAE - NGS Read Decontamination Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        header {
+            background-color: #007BFF;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            position: relative; /* To position the logo */
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+        }
+        h2 {
+            font-size: 20px;
+        }
+        p {
+            font-size: 16px;
+        }
+        
+        input[type="submit"] {
+            font-size: 20px; /* Adjust the font size as needed */
+            padding: 10px 20px; /* Adjust the padding for height and width */
+        }
+
+        .documentation-button,
+        .contact-button {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .documentation-button:hover,
+        .contact-button:hover {
+            background-color: #0056b3;
+        }
+        .documentation-button + .contact-button {
+            margin-left: 10px; /* Add space between buttons */
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 10px;
+        }
+
+        .hover-info {
+            display: inline-block;
+            cursor: help;
+            position: relative;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="../IMAGES/DUTH_logo.png" alt="Democritus University of Thrace Logo" class="logo" height="100" >
+        <h1>ViRAE - NGS Read Decontamination Tool</h1>
+        <a href="https://github.com/konskons11/ViRAE/tree/main" class="documentation-button">Documentation</a>
+        <a href="https://biology.med.duth.gr/" class="contact-button">Contact</a>
+    </header>
+    
+	<div class="container">
+        <p>Viral Reads Assembly Enhancer (VIRAE) is a context-based trimming bioinformatics tool, especially designed for viral metagenomics, which allows Next Generation Sequencing (NGS) read decontamination based on any given reference sequence(s). VIRAE is powered by an updated version of <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1009304">Zero-Waste Algorithm (ZWA)</a> and incorporates ready-to-use well-established bioinformatics software to detect and dissect partially mapped reads (chimeric reads) by specifically removing the moieties, which align to the given reference sequence(s). The clean output reads enhance de novo assembly performance, increasing the availability of reads for more accurate and more efficacious de novo virus genome assembly.</p>
+    </div>
+
+	<h1>ViRAE deployment method selection</h1>
+	<form method="POST" action="ViRAE_FASTX_upload.html">
+		<dl>
+			<table>
+				<tr>
+					<td><input type="submit" value="Method 1"><img src="../IMAGES/help_icon.png" height="25" class="hover-info" title="HELP INFO&#13;&#10;If NGS reads and reference files are available in FASTQ and FASTA formats respectively, then Method 1 should be selected for full deployment of ViRAE."></td>
+				</tr>
+			</table>
+		</dl>
+	</form>
+
+	<form method="POST" action="ViRAE_BAM_upload.html">
+		<dl>
+			<table>
+				<tr>
+					<td><input type="submit" value="Method 2"><img src="../IMAGES/help_icon.png" height="25" class="hover-info" title="HELP INFO&#13;&#10;if the desired alignment between the NGS reads and reference file of preference has already been performed and stored in BAM format, then Method 2 should be selected for partial deployment of ViRAE."></td>
+				</tr>
+			</table>
+		</dl>
+	</form>
+
+</body>
+</html>
