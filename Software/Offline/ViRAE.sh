@@ -3,35 +3,35 @@
 print_usage() {
 	echo "
 # DESCRIPTION:
-ZWA2 is a context-based trimming bioinformatics tool for virus genome RNA-seq read decontamination based on a given reference.
-The tool dissects chimera reads that arise during NGS, removing chimeric moieties with the user input reference. 
+ViRAE is a context-based trimming bioinformatics tool for virus genome RNA-seq read decontamination based on a given reference.
+The tool is powered by an updated version of Zero-Waste Algorithm (ZWA), which dissects chimera reads that arise during NGS, removing chimeric moieties with the user input reference. 
 The clean output reads are then ready to be fed into de novo assemblers, increasing the availability of reads for more accurate and more efficacious de novo virus genome assembly.
 
-ZWA2 may be fully or partially deployed upon execution depending on the available user input files as shown below: 
+ViRAE may be fully or partially deployed upon execution depending on the available user input files as shown below: 
 
-# REQUIRED ARGUMENTS (FULL ZWA2 DEPLOYMENT):
+# REQUIRED ARGUMENTS (FULL ViRAE DEPLOYMENT):
 -i <string>,	directory of INPUT NGS READS file (.fastq, .fq or .gz extension)
 -r <string>,	directory of INPUT REFERENCE file (.fasta, .fa, .fna, .fsta or .gz extension)
 -o <string>,	directory of OUTPUT folder
 
-# REQUIRED ARGUMENTS (PARTIAL ZWA2 DEPLOYMENT):
+# REQUIRED ARGUMENTS (PARTIAL ViRAE DEPLOYMENT):
 -m <string>,	directory of MAPPED NGS READS on REFERENCE file (.bam extension)
 -o <string>,	directory of OUTPUT folder
 
 # OPTIONAL ARGUMENTS:
--u <string>,	directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension) (ZWA2 partial deployment ONLY)
+-u <string>,	directory of UNMAPPED NGS READS on REFERENCE file (.bam, .fastq, .fq or .gz extension) (ViRAE partial deployment ONLY)
 -l <integer>,	alignment stringency value (default value 30 | <30 loose, >30 stringent)
--t,             run ZWA2 on a test dataset to verify installation
+-t,             run ViRAE on a test dataset to verify installation
 
 # RUN EXAMPLES:
-./ZWA2.sh -i reads.fastq -r ref.fasta -o ./
-./ZWA2.sh -i reads.fastq -r ref.fasta -l 40 -o ./
-./ZWA2.sh -m mapped.bam -o ./
-./ZWA2.sh -m mapped.bam -u unmapped.bam -o ./
-./ZWA2.sh -t
+./ViRAE.sh -i reads.fastq -r ref.fasta -o ./
+./ViRAE.sh -i reads.fastq -r ref.fasta -l 40 -o ./
+./ViRAE.sh -m mapped.bam -o ./
+./ViRAE.sh -m mapped.bam -u unmapped.bam -o ./
+./ViRAE.sh -t
 
-More information on ZWA2 can be found here:
-https://github.com/konskons11/ZWA2/
+More information on ViRAE can be found here:
+https://github.com/konskons11/ViRAE/
 "
 }
 
@@ -89,7 +89,7 @@ fi
 
 # Check type of user input files
 if ([ ! -z "$input_reads" ] && [ ! -z "$input_ref" ]) && ([ -z "$mapped_input" ] && [ -z "$unmapped_input" ]) && [ ! -z $output ] ; then
-    echo "##### ZWA2 #####"
+    echo "##### ViRAE #####"
     echo -e "\nCOMMAND LINE INPUT\n-i $input_reads\n-r $input_ref\n-o $output\n-l $alignment_stringency_value"
 
     # Check if input files have valid extensions
@@ -106,7 +106,7 @@ if ([ ! -z "$input_reads" ] && [ ! -z "$input_ref" ]) && ([ -z "$mapped_input" ]
         input_reads_filename=$(basename $input_reads .$input_reads_extension)
         input_ref_filename=$(basename $input_ref .$input_ref_extension) 
 
-        output_directory="$output/ZWA2-${input_reads_filename}_ON_${input_ref_filename}"
+        output_directory="$output/ViRAE-${input_reads_filename}_ON_${input_ref_filename}"
         mkdir -m a=rwx $output_directory
     fi
 
@@ -118,12 +118,12 @@ elif ([ -z $input_reads ] && [ -z $input_ref ]) && [ ! -z $mapped_input ] && [ !
         echo "Invalid mapped reads file !!! Make sure file has .bam extension"
         exit
     else
-        echo "##### ZWA2 #####"
+        echo "##### ViRAE #####"
         echo -e "\nCOMMAND LINE INPUT\n-m $mapped_input"
 
         mapped_input_filename=$(basename $mapped_input .$mapped_input_extension)
 
-        output_directory="$output/ZWA2-${mapped_input_filename}"
+        output_directory="$output/ViRAE-${mapped_input_filename}"
         mkdir -m a=rwx $output_directory
 
         if [ ! -z $unmapped_input ] ; then
@@ -141,10 +141,10 @@ elif ([ -z $input_reads ] && [ -z $input_ref ]) && [ ! -z $mapped_input ] && [ !
     fi
 
 elif [[ -n $test_flag ]] ; then
-    echo "##### ZWA2 #####"
+    echo "##### ViRAE #####"
     echo -e "\nCOMMAND LINE INPUT\n-t TRUE"
 
-    output_directory="$PWD/ZWA2-test_reads_ON_test_ref"
+    output_directory="$PWD/ViRAE-test_reads_ON_test_ref"
     mkdir -m a=rwx $output_directory
 
 else
@@ -156,8 +156,8 @@ fi
 
 
 ### MAIN SCRIPT
-### FUNCTION DOWNLOAD ZWA2 PREREQUISITES
-verify_zwa2_installation() {
+### FUNCTION DOWNLOAD ViRAE PREREQUISITES
+verify_virae_installation() {
 
     prerequisite="$1"
     desired_version="$2"
@@ -276,6 +276,7 @@ bwa_mapping() {
 
         echo -e "\nPerforming $alignment_stringency_mode BWA alignment, please wait..."
 
+        # Bwa align input reads on reference
         index=$(find $input_ref_dirname -maxdepth 1 -type f -name "$input_ref_filename.$input_ref_extension*.amb" -o -name "$input_ref_filename.$input_ref_extension*.ann" -o -name "$input_ref_filename.$input_ref_extension*.pac" -o -name "$input_ref_filename.$input_ref_extension*.bwt" -o -name "$input_ref_filename.$input_ref_extension*.sa")
 
         if [[ $(wc -l <<< "$index" | bc) -eq 5 ]] ; then
@@ -298,7 +299,7 @@ bwa_mapping() {
         samtools view $output_directory/reads_unmapped.bam | awk -F'\t' '{print "@"$1"\n"$10"\n+\n"$11}' > $output_directory/unmapped.fastq 
 
         # Transfer unmapped sequences into clean FASTQ
-        cat $output_directory/unmapped.fastq > $output_directory/$input_reads_filename.ZWA2_cleaned.fastq
+        cat $output_directory/unmapped.fastq > $output_directory/$input_reads_filename.ViRAE_cleaned.fastq
                 
     elif [[ $1 == "$mapped_input" ]] ; then
         
@@ -308,18 +309,18 @@ bwa_mapping() {
         if [[ $2 == "$unmapped_input" ]] ; then
             if [[ $unmapped_input_extension == "bam" ]] ; then
                 samtools view $2 | awk -F'\t' '{print "@"$1"\n"$10"\n+\n"$11}' > $output_directory/unmapped.fastq 
-                cat $output_directory/unmapped.fastq > $output_directory/$mapped_input_filename.ZWA2_cleaned.fastq
+                cat $output_directory/unmapped.fastq > $output_directory/$mapped_input_filename.ViRAE_cleaned.fastq
             elif [[ $unmapped_input_extension == "fastq" || $unmapped_input_extension == "fq" ]] ; then
                 cat $2 > $output_directory/unmapped.fastq
-                cat $output_directory/unmapped.fastq > $output_directory/$mapped_input_filename.ZWA2_cleaned.fastq
+                cat $output_directory/unmapped.fastq > $output_directory/$mapped_input_filename.ViRAE_cleaned.fastq
             elif [[ $unmapped_input_extension == "gz" ]] ; then
                 zcat < $2 > $output_directory/unmapped.fastq
-                zcat < $2 > $output_directory/$mapped_input_filename.ZWA2_cleaned.fastq
+                zcat < $2 > $output_directory/$mapped_input_filename.ViRAE_cleaned.fastq
             fi
         fi
     
     fi
-    
+
     samtools view $output_directory/sort_reads_mapped.bam | awk -F'\t' '$6 ~ /S/ {print $1,$3,$6,$10,$11,length($10)}' OFS="\t" > $output_directory/softclipped.tsv
     samtools view $output_directory/sort_reads_mapped.bam | awk -F'\t' '$6 !~ /S/ && $6 !~ /H/ {print $1,$3,$6,$10,length($10),$10,length($10),1,length($10),"-","-","-","-","-","-","-","-","-","-"}' OFS="\t" > $output_directory/fully_mapped.tsv
     
@@ -359,14 +360,14 @@ chimeric_reads_cleaning() {
     
     # Send to clean FASTQ
     if [ ! -z $input_reads ] && [ ! -z $input_ref ] ; then
-        cat  $output_directory/left_softclipped.fastq  $output_directory/right_softclipped.fastq  >> $output_directory/$input_reads_filename.ZWA2_cleaned.fastq
+        cat  $output_directory/left_softclipped.fastq  $output_directory/right_softclipped.fastq  >> $output_directory/$input_reads_filename.ViRAE_cleaned.fastq
         
-        gzip $output_directory/$input_reads_filename.ZWA2_cleaned.fastq &
+        gzip $output_directory/$input_reads_filename.ViRAE_cleaned.fastq &
         zip_clean_fastq_process_id=$!
     elif [ ! -z $mapped_input ] ; then
-        cat  $output_directory/left_softclipped.fastq  $output_directory/right_softclipped.fastq  >> $output_directory/$mapped_input_filename.ZWA2_cleaned.fastq
+        cat  $output_directory/left_softclipped.fastq  $output_directory/right_softclipped.fastq  >> $output_directory/$mapped_input_filename.ViRAE_cleaned.fastq
         
-        gzip $output_directory/$mapped_input_filename.ZWA2_cleaned.fastq &
+        gzip $output_directory/$mapped_input_filename.ViRAE_cleaned.fastq &
         zip_clean_fastq_process_id=$!
     fi
     ) 3>&2 2>$output_directory/cleaning_time.txt
@@ -410,30 +411,30 @@ write_report() {
     average_mapped_bases_of_softclipped_reads=$(awk -F'\t' '{mapped+=$7} END {print mapped/NR}' $output_directory/chimeric.tsv )
     percent_average_mapped_bases_of_softclipped_reads=$(awk -F'\t' '{percent+=$7/$5*100} END {print percent/NR}' $output_directory/chimeric.tsv )
 
-    zwa_discarded_softclipped_reads_count=$(awk -F'\t' '$10 == "-" && $15 == "-"' $output_directory/chimeric.tsv | wc -l | bc )
-    percent_zwa_discarded_softclipped_reads_count=$(LC_NUMERIC="en_US.UTF-8" printf "%.2f" $(bc -l <<< $zwa_discarded_softclipped_reads_count/$softclipped_reads_count*100))
-    total_discarded_reads_count=$((zwa_discarded_softclipped_reads_count+fully_mapped_reads_count))
+    virae_discarded_softclipped_reads_count=$(awk -F'\t' '$10 == "-" && $15 == "-"' $output_directory/chimeric.tsv | wc -l | bc )
+    percent_virae_discarded_softclipped_reads_count=$(LC_NUMERIC="en_US.UTF-8" printf "%.2f" $(bc -l <<< $virae_discarded_softclipped_reads_count/$softclipped_reads_count*100))
+    total_discarded_reads_count=$((virae_discarded_softclipped_reads_count+fully_mapped_reads_count))
 
-    zwa2_cleaned_softclipped_reads_count=$((softclipped_reads_count-zwa_discarded_softclipped_reads_count))
-    percent_zwa2_cleaned_softclipped_reads_count=$(LC_NUMERIC="en_US.UTF-8" printf "%.2f" $(bc -l <<< $zwa2_cleaned_softclipped_reads_count/$softclipped_reads_count*100))
-    total_clean_reads_count=$((zwa2_cleaned_softclipped_reads_count+total_unmapped_reads_count))
+    virae_cleaned_softclipped_reads_count=$((softclipped_reads_count-virae_discarded_softclipped_reads_count))
+    percent_virae_cleaned_softclipped_reads_count=$(LC_NUMERIC="en_US.UTF-8" printf "%.2f" $(bc -l <<< $virae_cleaned_softclipped_reads_count/$softclipped_reads_count*100))
+    total_clean_reads_count=$((virae_cleaned_softclipped_reads_count+total_unmapped_reads_count))
 
     echo -e "\nCleaning results"
-    echo "Discarded reads: $zwa_discarded_softclipped_reads_count ($percent_zwa_discarded_softclipped_reads_count% of chimeric reads)"
-    echo "Cleaned reads:   $zwa2_cleaned_softclipped_reads_count ($percent_zwa2_cleaned_softclipped_reads_count% of chimeric reads)"
-    echo "ZWA clean reads: $total_clean_reads_count"
+    echo "Discarded reads: $virae_discarded_softclipped_reads_count ($percent_virae_discarded_softclipped_reads_count% of chimeric reads)"
+    echo "Cleaned reads:   $virae_cleaned_softclipped_reads_count ($percent_virae_cleaned_softclipped_reads_count% of chimeric reads)"
+    echo "ViRAE clean reads: $total_clean_reads_count"
 
-    zwa2_execution_time=$(echo "$bwa_mapping_execution_time + $chimeric_reads_cleaning_execution_time" | bc -l)
+    virae_execution_time=$(echo "$bwa_mapping_execution_time + $chimeric_reads_cleaning_execution_time" | bc -l)
     
     header=$(echo -e "Read_ID\tRefID\tCIGAR\tRead_seq\tRead_seqlength\tMapped_seq\tMapped_seq_length\tMapped_start\tMapped_end\tLeft_unmapped_seq_start\tLeft_unmapped_seq_end\tLeft_unmapped_seq\tLeft_unmapped_seq_quality\tLeft_unmapped_seqlength\tRight_unmapped_seq_start\tRight_unmapped_seq_end\tRight_unmapped_seq\tRight_unmapped_seq_quality\tRight_unmapped_seqlength" )
-    footer=$(echo -e "(-) Sequence discarded\nBWA alignment stringency\t$alignment_stringency_value\nTotal input reads\t$total_input_reads_count\nTotal unmapped reads\t$total_unmapped_reads_count\nTotal mapped reads\t$total_mapped_reads_count\nFully mapped reads\t$fully_mapped_reads_count\nFully mapped reads/Total mapped reads (%)\t$percent_fully_mapped_reads_count\nPartially mapped (chimeric) reads\t$softclipped_reads_count\nPartially mapped (chimeric) reads/Total mapped reads (%)\t$percent_softclipped_reads_count\nAverage mapped bases\t$average_mapped_bases_of_softclipped_reads\nAverage mapped bases/Average read length (%)\t$percent_average_mapped_bases_of_softclipped_reads\nZWA2 cleaned chimeric reads\t$zwa2_cleaned_softclipped_reads_count\nZWA2 cleaned chimeric reads/Chimeric reads (%)\t$percent_zwa2_cleaned_softclipped_reads_count\nTotal clean reads (Unmapped+ZWA2 cleaned)\t$total_clean_reads_count\nZWA2 discarded chimeric reads\t$zwa_discarded_softclipped_reads_count\nZWA2 discarded chimeric reads/Chimeric reads (%)\t$percent_zwa_discarded_softclipped_reads_count\nTotal discarded reads (Fully mapped+ZWA2 discarded)\t$total_discarded_reads_count\nExecution time (seconds)\t$zwa2_execution_time" )
+    footer=$(echo -e "(-) Sequence discarded\nBWA alignment stringency\t$alignment_stringency_value\nTotal input reads\t$total_input_reads_count\nTotal unmapped reads\t$total_unmapped_reads_count\nTotal mapped reads\t$total_mapped_reads_count\nFully mapped reads\t$fully_mapped_reads_count\nFully mapped reads/Total mapped reads (%)\t$percent_fully_mapped_reads_count\nPartially mapped (chimeric) reads\t$softclipped_reads_count\nPartially mapped (chimeric) reads/Total mapped reads (%)\t$percent_softclipped_reads_count\nAverage mapped bases\t$average_mapped_bases_of_softclipped_reads\nAverage mapped bases/Average read length (%)\t$percent_average_mapped_bases_of_softclipped_reads\nViRAE cleaned chimeric reads\t$virae_cleaned_softclipped_reads_count\nViRAE cleaned chimeric reads/Chimeric reads (%)\t$percent_virae_cleaned_softclipped_reads_count\nTotal clean reads (Unmapped+ViRAE cleaned)\t$total_clean_reads_count\nViRAE discarded chimeric reads\t$virae_discarded_softclipped_reads_count\nViRAE discarded chimeric reads/Chimeric reads (%)\t$percent_virae_discarded_softclipped_reads_count\nTotal discarded reads (Fully mapped+ViRAE discarded)\t$total_discarded_reads_count\nExecution time (seconds)\t$virae_execution_time" )
 
-    cat <(echo "$header") $output_directory/fully_mapped.tsv $output_directory/chimeric.tsv <(echo "$footer") > $output_directory/ZWA2_cleaning_report.out
+    cat <(echo "$header") $output_directory/fully_mapped.tsv $output_directory/chimeric.tsv <(echo "$footer") > $output_directory/ViRAE_cleaning_report.out
 
-    gzip $output_directory/ZWA2_cleaning_report.out &
-    zip_zwa_report_process_id=$!
+    gzip $output_directory/ViRAE_cleaning_report.out &
+    zip_virae_report_process_id=$!
     
-    wait $zip_zwa_report_process_id
+    wait $zip_virae_report_process_id
     wait $zip_clean_fastq_process_id
 
     chmod 777 $output_directory/*.gz
@@ -443,11 +444,11 @@ write_report() {
 
 
 ### MAIN - CALL FUNCTIONS
-echo -e "\nExecuting ZWA2..."
-echo -e "\nVerifying installation of ZWA2 prerequites (bwa & samtools), please wait..."
+echo -e "\nExecuting ViRAE..."
+echo -e "\nVerifying installation of ViRAE prerequites (bwa & samtools), please wait..."
 
-verify_zwa2_installation "bwa" "0.7.17"
-verify_zwa2_installation "samtools" "1.13"
+verify_virae_installation "bwa" "0.7.17"
+verify_virae_installation "samtools" "1.13"
 
 if [ ! -z $input_reads ] && [ ! -z $input_ref ] ; then
     bwa_mapping $input_ref $input_reads
@@ -460,7 +461,7 @@ elif [ ! -z $mapped_input ] ; then
 # Check if test flag was input
 elif [[ -n $test_flag ]] ; then
 
-    echo -e "\n!!! ZWA2 test mode !!!"
+    echo -e "\n!!! ViRAE test mode !!!"
     echo "!!! INPUT READS: 10 reads from Anopheles sacharovi mosquito sample (SRA: SRR13449040) !!!"
     echo "!!! INPUT REF: Anopheles sacharovi 28S (GenBank: MT808434) and 18S (GenBank: MT808462) rRNAs !!!"
     test_reads="@H6FZJ:00138:04153
@@ -530,7 +531,7 @@ if [[ $softclipped_reads_count -gt 0 ]] ; then
     chimeric_reads_cleaning
     write_report
 
-    echo -e "\nZWA2 script completed successfully !!!"
+    echo -e "\nViRAE script completed successfully !!!"
     echo -e "\nResults in $output_directory"
     
     # Cleanup unnecessary files 
@@ -539,7 +540,7 @@ if [[ $softclipped_reads_count -gt 0 ]] ; then
 
 # if there are no chimeric reads but only unmapped, then keep only unmapped as clean
 elif [[ $softclipped_reads_count -eq 0 && $total_unmapped_reads_count -gt 0 ]] ; then
-    echo -e "\nAll reads unmapped against $input_ref_filename database, no chimeric reads for ZWA2 cleaning !!!"
+    echo -e "\nAll reads unmapped against $input_ref_filename database, no chimeric reads for ViRAE cleaning !!!"
 
     # Cleanup unnecessary files 
     rm -rf $output_directory/*softclipped* $output_directory/*mapped*
@@ -547,7 +548,7 @@ elif [[ $softclipped_reads_count -eq 0 && $total_unmapped_reads_count -gt 0 ]] ;
 
 # if all reads are fully mapped with no chimeric, then no need to clean
 elif [[ $softclipped_reads_count -eq 0 && $total_unmapped_reads_count -eq 0 ]] ; then
-    echo -e "\nAll reads fully aligned against $input_ref_filename database, no chimeric reads for ZWA2 cleaning !!!"
+    echo -e "\nAll reads fully aligned against $input_ref_filename database, no chimeric reads for ViRAE cleaning !!!"
     rm -rf $output_directory
     exit
 fi
