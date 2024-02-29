@@ -181,7 +181,7 @@ function run_virae($file_path, $output_dir) {
     echo "<p>Running ViRAE now, please wait...</p>";
     flush();
 
-    $command = "/home/inseqt/COSTAS_CON/TOOLS/SCRIPTS/ViRAE-NIKOLAS-LIKE-BWA_ONLY.sh -m $file_path -o $output_dir ";
+    $command = "/home/inseqt/COSTAS_CON/TOOLS/SCRIPTS/ViRAE.sh -m $file_path -o $output_dir ";
     $output = shell_exec($command);
 
     echo "<pre>$output</pre>";
