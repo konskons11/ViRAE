@@ -39,7 +39,7 @@ The parameters of the ViRAE standalone application are summarised in the followi
 
 ### Run examples
 
-In order to better comprehend the use and output of the ViRAE standalone application, we highly recommend inputting the -t flag only the first time you run it so as to deploy ViRAE on a small test dataset, wchih also verifies the installation of all prerequisites and downloads them automatically if needed.
+In order to better comprehend the use and output of the ViRAE standalone application, we highly recommend inputting the -t flag only the first time you run it so as to deploy ViRAE on a small test dataset, which also verifies the installation of all prerequisites and downloads them automatically if needed.
 
 ViRAE test mode run example:
 ```sh
