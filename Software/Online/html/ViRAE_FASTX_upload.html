@@ -70,7 +70,6 @@
 
 <body>
     <header>
-        <img src="../IMAGES/DUTH_logo.png" alt="Democritus University of Thrace Logo" class="logo" height="100" >
         <h1>ViRAE - NGS Read Decontamination Tool</h1>
         <a href="http://github.com" class="documentation-button">Documentation</a>
         <a href="https://biology.med.duth.gr/" class="contact-button">Contact</a>
@@ -88,10 +87,10 @@
 				<tr>
 					<td><input type="radio" name="reads_file_upload_option" id="reads_file_dialog_option" required onclick='unique_upload("reads_file_dialog","reads_file_sra_accession","reads_file_link");'>Select from file dialog<img src="../IMAGES/help_icon.png" height="20" class="hover-info" title="HELP INFO&#13;&#10;Supported file extensions:&#13;&#10;.fastq, .fq, .gz"></td>
 					<td><input type="radio" name="reads_file_upload_option" id="reads_file_sra_accession_option" required onclick='unique_upload("reads_file_sra_accession","reads_file_dialog","reads_file_link");'>SRA accession number from <a href="https://www.ncbi.nlm.nih.gov/sra" target="_blank">  NCBI SRA database </a><img src="../IMAGES/help_icon.png" height="20" class="hover-info" title="HELP INFO&#13;&#10;Examples of valid SRA accession numbers:&#13;&#10;SRR19551365&#13;&#10;SRR17439935&#13;&#10;ERR2368569"></td>
-					<td><input type="radio" name="reads_file_upload_option" id="reads_file_link_option" required onclick='unique_upload("reads_file_link","reads_file_dialog","reads_file_sra_accession");'>Direct download link address from <a href="https://filetransfer.io/" target="_blank">  Filetransfer </a><img src="../IMAGES/help_icon.png" height="20" class="hover-info" title="HELP INFO&#13;&#10;Examples of valid Filetranser links:&#13;&#10;https://filetransfer.io/data-package/Fl8aI9tA#link&#13;&#10;https://filetransfer.io/data-package/hBka0hnK/download&#13;&#10;https://filetransfer.io/data-package/4ezDEb0H"></td>
+					<td><input type="radio" name="reads_file_upload_option" id="reads_file_link_option" required onclick='unique_upload("reads_file_link","reads_file_dialog","reads_file_sra_accession");'>Direct download link address from <a href="https://drive.google.com/drive/my-drive" target="_blank"> Google Drive </a><img src="../IMAGES/help_icon.png" height="20" class="hover-info" title="HELP INFO&#13;&#10;Examples of valid Google Drive links:&#13;&#10;https://docs.google.com/spreadsheets/d/1a8ZvW-u4TUWP5kayoFmn5qoVXwWhgv/edit?usp=drive_link&#13;&#10;https://docs.google.com/spreadsheets/d/1a8ZvW-u4TUWP5kayo/edit?usp=sharing"></td>
 				</tr>
 				<tr>
-					<td><input type="file" name="reads_file_dialog" size="50" id="reads_file_dialog" disabled="disabled" accept=".fastq,.fq,.gz" required></td>
+					<td><input type="file" name="reads_file_dialog[]" size="50" id="reads_file_dialog" disabled="disabled" accept=".fastq,.fq,.gz" required multiple></td>
 					<td><input name="reads_file_sra_accession" size="50" id="reads_file_sra_accession" disabled="disabled"  required></td>
 					<td><input name="reads_file_link" size="50" id="reads_file_link" disabled="disabled"  required></td>
 				</tr>
@@ -101,7 +100,7 @@
 				<tr>
 					<td><input type="radio" name="ref_file_upload_option" id="ref_file_dialog_option" required onclick='unique_upload("ref_file_dialog","ref_file_dropdown_menu_options","ref_file_link");'>Select from file dialog<img src="../IMAGES/help_icon.png" height="20" class="hover-info" title="HELP INFO&#13;&#10;Supported file extensions:&#13;&#10;.fasta, .fa, .fna, .fsta, .gz"></td>
 					<td><input type="radio" name="ref_file_upload_option" id="ref_file_dropdown_menu" required onclick='unique_upload("ref_file_dropdown_menu_options","ref_file_dialog","ref_file_link");'>Select from a list of recommended references<img src="../IMAGES/help_icon.png" height="20" class="hover-info" title="HELP INFO&#13;&#10;Recommended reference files for NGS read decontamination:&#13;&#10;1. RiDB [contains 603370 rRNA sequences (16S, 18S, 23S, 28S) of several Archaea, Bacteria and Eukarya organisms from the non-redundant (Ref NR99) datasets of the SILVA database release 138.1]&#13;&#10;2. Homo sapiens ['Homo sapiens GRCh38' refers to the Genome Reference Consortium human genome build 38, which is a comprehensive and standardized representation of the human genome]"></td>
-					<td><input type="radio" name="ref_file_upload_option" id="ref_file_link_option" required onclick='unique_upload("ref_file_link","ref_file_dialog","ref_file_dropdown_menu_options");'>Direct download link address from <a href="https://filetransfer.io/" target="_blank">  Filetransfer </a><img src="../IMAGES/help_icon.png" height="20" class="hover-info" title="HELP INFO&#13;&#10;Examples of valid Filetranser links:&#13;&#10;https://filetransfer.io/data-package/Fl8aI9tA#link&#13;&#10;https://filetransfer.io/data-package/hBka0hnK/download&#13;&#10;https://filetransfer.io/data-package/4ezDEb0H"></td>
+					<td><input type="radio" name="ref_file_upload_option" id="ref_file_link_option" required onclick='unique_upload("ref_file_link","ref_file_dialog","ref_file_dropdown_menu_options");'>Direct download link address from <a href="https://drive.google.com/drive/my-drive" target="_blank"> Google Drive </a><img src="../IMAGES/help_icon.png" height="20" class="hover-info" title="HELP INFO&#13;&#10;Examples of valid Google Drive links:&#13;&#10;https://docs.google.com/spreadsheets/d/1a8ZvW-u4TUWP5kayoFmn5qoVXwWhgv/edit?usp=drive_link&#13;&#10;https://docs.google.com/spreadsheets/d/1a8ZvW-u4TUWP5kayo/edit?usp=sharing"></td>
 				</tr>
 				<tr>
 					<td><input type="file" name="ref_file_dialog" size="50" id="ref_file_dialog" disabled="disabled" accept=".fasta,.fa,.fna,.fsta,.gz" required></td>
