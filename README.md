@@ -125,7 +125,7 @@ Apart from the ViRAE standalone application, the user may utilize the [ViRAE onl
 2) submission of a valid SRA accession number (in the case of FASTQ input) or selection from a dropdown menu list of recommended reference files (in the case of FASTA input), or
 3) provision of the appropriate link address of the input FASTQ file(s) or FASTA file.
 
-![ViRAE_online guide]( "ViRAE online - Method 1 upload selection")
+![ViRAE_online guide](https://imgur.com/06xt99y.png "ViRAE online - Method 1 upload selection")
 
 As regards to the partial ViRAE deployment (Method 2), there are two available upload options, which are: 
 1) selection of the necessary BAM input file from a prompt file dialog, or
@@ -137,4 +137,4 @@ Submission of the required input files triggers the upload process and redirects
 
 **C) ViRAE implementation and output:** After successful upload of the appropriate input files, the back-end script execution of ViRAE begins and the user is informed about its progression in real time as displayed below. Upon ViRAE run completion, an overall summary is displayed at the current webpage, along with a download link corresponding to a zipped folder containing the clean reads and generated report files by ViRAE.
 
-![ViRAE_online guide]( "ViRAE online - ViRAE execution and download page")
+![ViRAE_online guide](https://imgur.com/vkihb41.png "ViRAE online - ViRAE execution and download page")
