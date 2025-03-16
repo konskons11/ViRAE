@@ -47,13 +47,14 @@ ViRAE test mode run example:
 ./ViRAE.sh -t
 ```
 
-For non-test run, the ViRAE standalone application may be fully or partially deployed upon execution depending on the available user input files. In the case of ViRAE full deployment, the directories of NGS reads (FASTQ format) and appropriate reference file (FASTA format) must be provided as arguments after the -i and -r flags respectively, in order to be able to perform all necessary alignments. The user also has the ability to adjust the mapping sensitivity of the incorporated BWA software by passing the desired level of alignment stringency as an integer number after the -l flag (default value 30 \| <30 loose, >30 stringent). 
+For non-test run, the VIRAE standalone application may be fully or partially deployed upon execution depending on the available user input files. In the case of VIRAE full deployment, the directories of NGS reads (FASTQ format) and appropriate reference file (FASTA format) must be provided as arguments after the -1 and -r flags (in case of SINGLE-END reads) or after the -1, -2 and -r flags (in case of PAIRED-END reads) respectively, in order to be able to perform all necessary alignments. The user also has the ability to adjust the mapping sensitivity of the incorporated BWA software by passing the desired level of alignment stringency as an integer number after the -l flag (default value 30 | <30 loose, >30 stringent).
 
 Full ViRAE deployment run examples:
 ```sh
-./ViRAE.sh -i reads.fastq -r ref.fasta -o ./
-./ViRAE.sh -i reads.fq.gz -r ref.fasta.gz -o ./
-./ViRAE.sh -i reads.fq.gz -r ref.fasta.gz -l 40 -o ./
+./VIRAE.sh -1 reads.fastq -r ref.fasta -o ./
+./VIRAE.sh -1 reads.fq.gz -r ref.fasta.gz -o ./
+./VIRAE.sh -1 R1.fq.gz -2 R2.fq.gz -r ref.fasta.gz -o ./
+./VIRAE.sh -1 reads.fq.gz -r ref.fasta.gz -l 40 -o ./
 ```
 
 For the alternative and faster partial deployment of ViRAE, in which the user may have already carried out the desired alignment with the mapping software of preference, the directory of a BAM file may only be provided after the -m flag, instead of FASTQ and FASTA files. Alongside the input BAM file, the user may optionally pass the output unmapped reads of the performed alignment in FASTQ or BAM format after the -u flag, for later use by the algorithm. 
