@@ -26,14 +26,14 @@ The ViRAE standalone application is a Bash shell script distributed for Linux an
 The parameters of the ViRAE standalone application are summarised in the following table:
 |Required arguments|Description|Deployment|
 |:---|:---|:---|
-|`-1 <string>`|directory of INPUT NGS READS file (Single-end OR 1st from Paired-end) (.fastq, .fq or .gz extension)|Full|
+|`-1 <string>`|directory of INPUT NGS READS file (Single-end OR 1^st from Paired-end) (.fastq, .fq or .gz extension)|Full|
 |`-r <string>`|directory of INPUT REFERENCE file (.fasta, .fa, .fna, .fsta or .gz extension)|Full|
 |`-m <string>`|directory of MAPPED NGS READS on REFERENCE file (.bam extension)|Partial|
 |`-o <string>`|directory of OUTPUT folder|Full & Partial|
 
 |Optional arguments|Description|Deployment|
 |:---|:---|:---|
-|`-2 <string>`|directory of INPUT NGS READS file (2nd from Paired-end) (.fastq, .fq or .gz extension)|Full|
+|`-2 <string>`|directory of INPUT NGS READS file (2^nd from Paired-end) (.fastq, .fq or .gz extension)|Full|
 |`-l <integer>`|alignment stringency value (default value 30 \| <30 loose, >30 stringent)|Full|
 |`-u <string>`|directory of UNMAPPED NGS READS on INPUT REFERENCE file (.bam, .fastq, .fq or .gz extension)|Partial|
 |`-t`|run ViRAE on a test dataset to verify installation|TEST MODE|
