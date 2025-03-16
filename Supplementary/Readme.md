@@ -2,10 +2,6 @@ Here you will find the supplementary material related to the ViRAE scientific pa
 
 **Supplementary figure 1:** Flowchart of the comparative virome methodology analysis performed in this study.
 
-**Supplementary figure 2:** Comparison of the total number of reads mapped on viral sequences, as calculated after the implementation of each method (RAW, BWA, SORTMERNA and ViRAE) separately on the examined RNA-seq samples and subsequent mapping of the treated RNA-seq data on the corresponding viral genes/genomes by BWA. The median values for this metric are displayed within the bar plots. The statistical analysis of the mean differences across the studied methods was performed by RM-ANOVA and Tukey’s multiple comparison testing, and the output statistical significance of ViRAE is indicated by (*** p-value < 0.001).
-
-**Supplementary figure 3:** Comparison of the coverage of viral sequences, as calculated after the implementation of each method (RAW, BWA, SORTMERNA and ViRAE) separately on the examined RNA-seq samples and subsequent mapping of the treated RNA-seq data on the corresponding viral genes/genomes by BWA. The dotted lines connecting the colorful dots on the graph depict the fluctuations of the viral coverage rates for the same RNA-seq sample, treated separately by each method. A small subsection of the diagram (viral coverage rates between 95% and 100%) is zoomed in for representation purposes, clearly displaying the corresponding plotted data on the right side. The statistical analysis of the mean differences across the studied methods was performed by RM-ANOVA and Tukey’s multiple comparison testing, and the output statistical significance of ViRAE is indicated by (* p-value < 0.05).
-
 **Supplementary file 1:** Selection and filtering of Next Generation Sequencing data related to viral metagenomics for the purposes of this study.
 
 **Supplementary file 2:** Metadata of RNA-seq samples and their corresponding viruses analysed in this study.
