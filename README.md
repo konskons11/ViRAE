@@ -123,7 +123,7 @@ Apart from the ViRAE standalone application, the user may utilize the [ViRAE onl
 **B) Input files upload:** Clicking on the ViRAE deployment method of preference, redirects the user to the upload webpage. Upon selection of full ViRAE deployment (Method 1), the webpage displays three different upload options to choose from, for the necessary FASTQ and FASTA files separately. These upload options, as displayed below, are: 
 1) selection of FASTQ or FASTA input file from a prompt file dialog,
 2) submission of a valid SRA accession number (in the case of FASTQ input) or selection from a dropdown menu list of recommended reference files (in the case of FASTA input), or
-3) provision of the appropriate link address, where the FASTQ or FASTA input file is stored.
+3) provision of the appropriate link address, where the FASTQ file(s) or FASTA file is stored.
 
 ![ViRAE_online guide](https://imgur.com/06xt99y.png "ViRAE online - Method 1 upload selection")
 
