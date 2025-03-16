@@ -118,7 +118,7 @@ Apart from the ViRAE standalone application, the user may utilize the [ViRAE onl
 
 **A) Deployment method selection:** Similarly to the standalone application, the user may choose to fully or partially deploy ViRAE depending on the available input through our online platform. If NGS reads and reference files are available in FASTQ and FASTA formats respectively, then the user should choose “Method 1” as displayed below, which corresponds to full ViRAE deployment. Alternatively, if the user has already performed the desired alignment between the NGS reads and reference file of preference, then “Method 2” should be selected, which stands for the faster partial deployment of ViRAE, with the sole input of the appropriate BAM file.
 
-![ViRAE_online guide](https://imgur.com/71zGdwa.png "ViRAE online - Deployment method selection")
+![ViRAE_online guide](https://i.imgur.com/71zGdwa.png?1 "ViRAE online - Deployment method selection")
 
 **B) Input files upload:** Clicking on the ViRAE deployment method of preference, redirects the user to the upload webpage. Upon selection of full ViRAE deployment (Method 1), the webpage displays three different upload options to choose from, for the necessary FASTQ and FASTA files separately. These upload options, as displayed below, are: 
 1) selection of FASTQ or FASTA input file from a prompt file dialog,
