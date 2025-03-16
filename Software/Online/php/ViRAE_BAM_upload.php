@@ -102,21 +102,32 @@ function uploadMethod($htmlParameter) {
         flush();
 
         if (move_uploaded_file($uploadFile['tmp_name'], $uploadFilePath)) {
-            return $uploadFilePath;
+            echo "<p>File $uploadFilename has been successfully uploaded !!! </p>";
         } else {
-            echo "<p>Error moving uploaded file.</p>";
+            echo "<p style='color: red;'>ERROR moving uploaded file.</p>";
         }
     } elseif (isset($_POST[$htmlParameter . "_link"])) {
         $uploadLink = $_POST[$htmlParameter . "_link"];
         
-        if (strpos($uploadLink, 'https://filetransfer.io/') === 0) {
-            $uploadLink = preg_replace("/#link$/", "/download", $uploadLink);
-            
-            if (!preg_match("/\/download$/", $uploadLink)) {
-                $uploadLink .= "/download";
-            }
+        // Check if the link is a Google Drive link
+        if (strpos($uploadLink, 'https://drive.google.com') === 0) {
+            // Extract the file ID from the Google Drive link
+            preg_match('/[-\w]{25,}/', $uploadLink, $idMatch);
+            if (!isset($idMatch[0])) {
+                $errorMessage = "ERROR: Please provide a valid Google Drive link! Click OK to be redirected to the ViRAE file upload page.";
 
-            // Extract the filename from the 'Content-Disposition' header
+                echo "<script>alert('$errorMessage');</script>";
+                echo "<meta http-equiv='refresh' content='1;url=https://srv-inseqt.med.duth.gr/ViRAE/HTML/ViRAE_FASTX_upload.html'>";
+                die();
+            }
+            $fileId = $idMatch[0];
+
+            // Generate the direct download link
+            $uploadLink = "https://drive.usercontent.google.com/download?id=" . $fileId . "&export=download&authuser=0";
+
+            echo "<p>Processing Google Drive file with ID: $fileId</p>";
+        
+            // Fetch headers to check for filenames (for links like FileTransfer.io)
             $headers = get_headers($uploadLink, 1);
             $contentDisposition = $headers['Content-Disposition'];
 
@@ -130,25 +141,27 @@ function uploadMethod($htmlParameter) {
                 shell_exec("aria2c -s 16 -x 16 -d $uploadDir $uploadLink");
                 flush();
 
+                $filesUploaded = [];
                 if (file_exists($uploadFilePath)) {
-                    return $uploadFilePath;
+                    $filesUploaded[] = $uploadFilename;
+                    // Final confirmation for successful uploads
+                    echo "<p>File upload completed successfully for " . implode(", ", $filesUploaded) . ".</p>";
                 } else {
-                    echo "<p>Error saving downloaded file.</p>";
+                    echo "<p style='color: red;'>ERROR saving $uploadFilename.</p>";
                 }
-            } else {
-                echo "<p>Link has probably expired.</p>";
             }
         } else {
-            echo "<p style='color: red;'>Invalid FileTransfer URL</p>";
+            echo "<p style='color: red;'>Link is invalid OR has restricted access.</p>";
         }
-    } else {
-        echo "<p style='color: red;'>Failed to upload file</p>";
-    }
-    
+    } 
+
     flush();
+
+    return $uploadFilePath;
 }
 
 function checkFileFormat($file_path) {
+    $fileName = pathinfo($file_path, PATHINFO_BASENAME);
     $file_extension = pathinfo($file_path, PATHINFO_EXTENSION);
     $header = '';
 
@@ -164,11 +177,11 @@ function checkFileFormat($file_path) {
     // Check if the first four bytes match the BAM magic number
     if ($header === "\x1F\x8B\x08\x04") {
         $bam_stats = shell_exec("samtools flagstat $file_path");
-        echo "<p>Upload successful! BAM file statistics</p>";
+        echo "<p>Upload successful! BAM file statistics of </p>";
         echo "<pre>$bam_stats</pre>";
         flush();
     } else {
-        echo "<p style='color: red;'>Invalid BAM formatted file</p>";
+        echo "<p style='color: red;'>ERROR: Invalid BAM formatted file</p>";
 
         if (file_exists($file_path)) {
             unlink($file_path);  // Check if the file exists and remove it
