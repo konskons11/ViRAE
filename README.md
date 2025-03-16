@@ -118,23 +118,23 @@ Apart from the ViRAE standalone application, the user may utilize the [ViRAE onl
 
 **A) Deployment method selection:** Similarly to the standalone application, the user may choose to fully or partially deploy ViRAE depending on the available input through our online platform. If NGS reads and reference files are available in FASTQ and FASTA formats respectively, then the user should choose “Method 1” as displayed below, which corresponds to full ViRAE deployment. Alternatively, if the user has already performed the desired alignment between the NGS reads and reference file of preference, then “Method 2” should be selected, which stands for the faster partial deployment of ViRAE, with the sole input of the appropriate BAM file.
 
-![ViRAE_online guide](https://imgur.com/71zGdwa.png "ViRAE online - Deployment method selection")
+![ViRAE_online guide]( "ViRAE online - Deployment method selection")
 
 **B) Input files upload:** Clicking on the ViRAE deployment method of preference, redirects the user to the upload webpage. Upon selection of full ViRAE deployment (Method 1), the webpage displays three different upload options to choose from, for the necessary FASTQ and FASTA files separately. These upload options, as displayed below, are: 
 1) selection of FASTQ or FASTA input file from a prompt file dialog,
 2) submission of a valid SRA accession number (in the case of FASTQ input) or selection from a dropdown menu list of recommended reference files (in the case of FASTA input), or
 3) provision of the appropriate link address of the input FASTQ file(s) or FASTA file.
 
-![ViRAE_online guide](https://imgur.com/06xt99y.png "ViRAE online - Method 1 upload selection")
+![ViRAE_online guide]( "ViRAE online - Method 1 upload selection")
 
 As regards to the partial ViRAE deployment (Method 2), there are two available upload options, which are: 
 1) selection of the necessary BAM input file from a prompt file dialog, or
 2) provision of the appropriate link address, where the necessary BAM input file is stored.
 
-![ViRAE_online guide](https://imgur.com/xUQG3CO.png "ViRAE online - Method 2 upload selection")
+![ViRAE_online guide]( "ViRAE online - Method 2 upload selection")
 
 Submission of the required input files triggers the upload process and redirects to a new webpage, where the user is informed about the upload progression in real time. In case of upload failure, the user is redirected automatically back to the upload webpage after clicking "OK" on the prompted warning message.
 
 **C) ViRAE implementation and output:** After successful upload of the appropriate input files, the back-end script execution of ViRAE begins and the user is informed about its progression in real time as displayed below. Upon ViRAE run completion, an overall summary is displayed at the current webpage, along with a download link corresponding to a zipped folder containing the clean reads and generated report files by ViRAE.
 
-![ViRAE_online guide](https://imgur.com/vkihb41.png "ViRAE online - ViRAE execution and download page")
+![ViRAE_online guide]( "ViRAE online - ViRAE execution and download page")
