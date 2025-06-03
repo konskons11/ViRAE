@@ -16,6 +16,6 @@ Here you will find the supplementary material related to the ViRAE scientific pa
 
 **Supplementary table 1 NEW:** Virus taxonomy and representation by RNA-seq samples in the analyzed data of this study.
 
-**Supplementary table 2 OLD:** Frequency and taxonomy of the most contaminant species in the examined RNA-seq samples.
+**Supplementary table 2 NEW:** Frequency and taxonomy of the most contaminant species in the examined RNA-seq samples.
 
 **Supplementary table 3 OLD:** Accession numbers and titles of the viral sequences deposited by Gil P. et al. in the NCBI GenBank database along with their corresponding SRS data accession numbers in the NCBI SRA database.
