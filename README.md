@@ -131,7 +131,7 @@ As regards to the partial ViRAE deployment (Method 2), there are two available u
 1) selection of the necessary BAM input file from a prompt file dialog, or
 2) provision of the appropriate link address, where the necessary BAM input file is stored.
 
-![ViRAE_online guide](https://i.imgur.com/xUQG3CO.png?3 "ViRAE online - Method 2 upload selection")
+![ViRAE_online guide](https://i.imgur.com/xUQG3CO.png "ViRAE online - Method 2 upload selection")
 
 Submission of the required input files triggers the upload process and redirects to a new webpage, where the user is informed about the upload progression in real time. In case of upload failure, the user is redirected automatically back to the upload webpage after clicking "OK" on the prompted warning message.
 
