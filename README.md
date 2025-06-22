@@ -7,7 +7,7 @@ Viral Reads Assembly Enhancer (ViRAE) is a context-based trimming bioinformatics
 
 The concept behind the ViRAE pipeline is outlined in the figure below:
 
-![ViRAE_pipeline](https://imgur.com/T5C1FnR.png "ViRAE pipeline")
+![ViRAE_pipeline](https://imgur.com/T5C1FnR.png?1 "ViRAE pipeline")
 
 _**IMPORTANT NOTE:**_
 ViRAE focuses on the identification and decontamination of partially mapped (chimeric) NGS reads on any given reference sequence(s). For optimum decontamination, we highly recommend downloading and inputting our [custom SILVA ribosomal database (RiDB)](https://github.com/konskons11/ViRAE/blob/main/Software/Offline/RiDB.fasta.gz) as reference file, containing 603370 seqs of 16S, 18S, 23S and 28S rRNAs from a wide variety of _Archaea_, _Bacteria_ and _Eukarya_ organisms. Noteworthy, _de novo_ assembly of the clean output reads after decontamination is optional, and therefore is not included in the main ViRAE pipeline or the program's prerequisites. However, the user may separately perform _de novo_ assembly on the clean output reads using the software of preference, with [MEGAHIT _de novo_ assembler](https://github.com/voutcn/megahit/releases/tag/v1.2.9) being highly recommended.
