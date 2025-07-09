@@ -128,7 +128,7 @@ Apart from the ViRAE standalone application, the user may utilize the [ViRAE onl
 
 The user also has the ability to adjust the "Alignment stringency" of the mapping software as well as the "Mapping quality cutoff" by setting the desired values at the respective slider menus.
 
-![ViRAE_online guide](https://i.imgur.com/06xt99y.png?2 "ViRAE online - Method 1 upload selection")
+![ViRAE_online guide](https://imgur.com/nDfu99D.png?2 "ViRAE online - Method 1 upload selection")
 
 As regards to the partial ViRAE deployment (Method 2), there are two available upload options, which are: 
 1) selection of the necessary BAM input file from a prompt file dialog, or
