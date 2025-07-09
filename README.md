@@ -34,8 +34,8 @@ The parameters of the ViRAE standalone application are summarised in the followi
 |Optional arguments|Description|Deployment|
 |:---|:---|:---|
 |`-2 <string>`|directory of INPUT NGS READS file (2<sup>nd</sup> from Paired-end) (.fastq, .fq or .gz extension)|Full|
-|`-l <integer>`|alignment stringency value (default value 30 \| <30 loose, >30 stringent)|Full|
-|`-q <integer>`|mapping quality cutoff value (default value 0)|Full|
+|`-l <integer>`|alignment stringency value (range 0-100, default value 30 \| <30 loose, >30 stringent)|Full|
+|`-q <integer>`|mapping quality cutoff value (range 0-60, default value 0)|Full|
 |`-u <string>`|directory of UNMAPPED NGS READS on INPUT REFERENCE file (.bam, .fastq, .fq or .gz extension)|Partial|
 |`-t`|run ViRAE on a test dataset to verify installation|TEST MODE|
 
