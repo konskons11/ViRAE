@@ -19,7 +19,7 @@ User manual
 
 ### Installation 
 
-The ViRAE standalone application is a Bash shell script distributed for Linux and MacOS systems and may be executed directly after making the downloaded ViRAE.sh file executable (e.g. command `chmod +x`). The prerequisites of ViRAE ([bwa 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) and [samtools 1.13](https://github.com/samtools/samtools/releases/tag/1.13)) will be verified for installation upon ViRAE execution and if not installed, they will be downloaded automatically by the program.
+The ViRAE standalone application is a Bash shell script distributed for Linux and MacOS systems and may be executed directly after making the downloaded ViRAE.sh file executable (e.g. command `chmod +x <ViRAE path>`). The prerequisites of ViRAE ([bwa 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) and [samtools 1.13](https://github.com/samtools/samtools/releases/tag/1.13)) will be verified for installation upon ViRAE execution and if not installed, they will be downloaded automatically by the program.
 
 ### Execution
 
