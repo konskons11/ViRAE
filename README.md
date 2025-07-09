@@ -94,7 +94,7 @@ ViRAE outputs 2 files, which are: i) the clean reads after processing as a GZIPP
 An overall summary of the ViRAE analysis is also provided at the end of the generated report file, which has the following line-by-line format:
 |Line header|Description|
 |:---|:---|
-|BWA alignment stringency|Alignment stringency value of BWA (default value 30 \| <30 loose, >30 stringent)|
+|BWA alignment stringency \| Mapping quality cutoff|Alignment stringency value of mapping software & mapping quality cutoff|
 |Total input reads|Total number of user input reads|
 |Total unmapped reads|Total number of unmapped reads|
 |Total mapped reads|Total number of mapped reads|
