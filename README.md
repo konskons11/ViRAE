@@ -40,14 +40,14 @@ The parameters of the ViRAE standalone application are summarised in the followi
 
 ### Run examples
 
-In order to better comprehend the use and output of the ViRAE standalone application, we highly recommend inputting the -t flag only the first time you run it so as to deploy ViRAE on a small test dataset, which also verifies the installation of all prerequisites and downloads them automatically if needed.
+In order to better comprehend the use and output of the ViRAE standalone application, we highly recommend inputting the `-t` flag only the first time you run it so as to deploy ViRAE on a small test dataset, which also verifies the installation of all prerequisites and downloads them automatically if needed.
 
 ViRAE test mode run example:
 ```sh
 ./ViRAE.sh -t
 ```
 
-For non-test run, the VIRAE standalone application may be fully or partially deployed upon execution depending on the available user input files. In the case of VIRAE full deployment, the directories of NGS reads (FASTQ format) and appropriate reference file (FASTA format) must be provided as arguments after the -1 and -r flags (in case of SINGLE-END reads) or after the -1, -2 and -r flags (in case of PAIRED-END reads) respectively, in order to be able to perform all necessary alignments. The user also has the ability to adjust the mapping sensitivity of the incorporated BWA software by passing the desired level of alignment stringency as an integer number after the -l flag (default value 30 | <30 loose, >30 stringent).
+For non-test run, the VIRAE standalone application may be fully or partially deployed upon execution depending on the available user input files. In the case of VIRAE full deployment, the directories of NGS reads (FASTQ format) and appropriate reference file (FASTA format) must be provided as arguments after the `-1` and `-r` flags (in case of SINGLE-END reads) or after the `-1`, `-2` and `-r` flags (in case of PAIRED-END reads) respectively, in order to be able to perform all necessary alignments. The user also has the ability to adjust the mapping sensitivity of the incorporated BWA software by passing the desired level of alignment stringency and mapping quality cutoff as integer numbers after the `-l` and `-q` flags respectively.
 
 Full ViRAE deployment run examples:
 ```sh
@@ -57,7 +57,7 @@ Full ViRAE deployment run examples:
 ./VIRAE.sh -1 reads.fq.gz -r ref.fasta.gz -l 40 -o ./
 ```
 
-For the alternative and faster partial deployment of ViRAE, in which the user may have already carried out the desired alignment with the mapping software of preference, the directory of a BAM file may only be provided after the -m flag, instead of FASTQ and FASTA files. Alongside the input BAM file, the user may optionally pass the output unmapped reads of the performed alignment in FASTQ or BAM format after the -u flag, for later use by the algorithm. 
+For the alternative and faster partial deployment of ViRAE, in which the user may have already carried out the desired alignment with the mapping software of preference, the directory of a BAM file may only be provided after the `-m` flag, instead of FASTQ and FASTA files. Alongside the input BAM file, the user may optionally pass the output unmapped reads of the performed alignment in FASTQ or BAM format after the `-u` flag, for later use by the algorithm. 
 
 Partial ViRAE deployment run examples:
 ```sh
@@ -94,7 +94,7 @@ ViRAE outputs 2 files, which are: i) the clean reads after processing as a GZIPP
 An overall summary of the ViRAE analysis is also provided at the end of the generated report file, which has the following line-by-line format:
 |Line header|Description|
 |:---|:---|
-|BWA alignment stringency \| Mapping quality cutoff|Alignment stringency value of mapping software & mapping quality cutoff|
+|BWA alignment stringency \| Mapping quality cutoff|Alignment stringency value & mapping quality cutoff|
 |Total input reads|Total number of user input reads|
 |Total unmapped reads|Total number of unmapped reads|
 |Total mapped reads|Total number of mapped reads|
