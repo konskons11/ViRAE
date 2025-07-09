@@ -55,7 +55,7 @@ Full ViRAE deployment run examples:
 ./VIRAE.sh -1 reads.fastq -r ref.fasta -o ./
 ./VIRAE.sh -1 reads.fq.gz -r ref.fasta.gz -o ./
 ./VIRAE.sh -1 R1.fq.gz -2 R2.fq.gz -r ref.fasta.gz -o ./
-./VIRAE.sh -1 reads.fq.gz -r ref.fasta.gz -l 40 -o ./
+./VIRAE.sh -1 reads.fq.gz -r ref.fasta.gz -l 40 -q 10 -o ./
 ```
 
 For the alternative and faster partial deployment of ViRAE, in which the user may have already carried out the desired alignment with the mapping software of preference, the directory of a BAM file may only be provided after the `-m` flag, instead of FASTQ and FASTA files. Alongside the input BAM file, the user may optionally pass the output unmapped reads of the performed alignment in FASTQ or BAM format after the `-u` flag, for later use by the algorithm. 
