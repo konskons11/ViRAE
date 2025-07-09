@@ -35,6 +35,7 @@ The parameters of the ViRAE standalone application are summarised in the followi
 |:---|:---|:---|
 |`-2 <string>`|directory of INPUT NGS READS file (2<sup>nd</sup> from Paired-end) (.fastq, .fq or .gz extension)|Full|
 |`-l <integer>`|alignment stringency value (default value 30 \| <30 loose, >30 stringent)|Full|
+|`-q <integer>`|mapping quality cutoff value (default value 0)|Full|
 |`-u <string>`|directory of UNMAPPED NGS READS on INPUT REFERENCE file (.bam, .fastq, .fq or .gz extension)|Partial|
 |`-t`|run ViRAE on a test dataset to verify installation|TEST MODE|
 
@@ -124,6 +125,7 @@ Apart from the ViRAE standalone application, the user may utilize the [ViRAE onl
 1) selection of FASTQ or FASTA input file from a prompt file dialog,
 2) submission of a valid SRA accession number (in the case of FASTQ input) or selection from a dropdown menu list of recommended reference files (in the case of FASTA input), or
 3) provision of the appropriate link address of the input FASTQ file(s) or FASTA file.
+The user also has the ability to adjust the "Alignment stringency" of the mapping software as well as the "Mapping quality cutoff" by setting the desired values at the respective slider menus.
 
 ![ViRAE_online guide](https://i.imgur.com/06xt99y.png?2 "ViRAE online - Method 1 upload selection")
 
