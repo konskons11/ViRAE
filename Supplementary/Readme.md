@@ -2,8 +2,6 @@ Here you will find the supplementary material related to the ViRAE scientific pa
 
 **Supplementary figure 1:** Flowchart of the comparative virome methodology analysis performed in this study.
 
-**Supplementary figure 2:** Histogram of the distribution of RNA-seq samples, which exhibited rRNA-virus chimeric phenomena in this study, based on the start and end positions of rRNA mapping, categorized according to the length percentile of rRNA-virus chimeric reads.
-
 **Supplementary file 1:** Selection and filtering of single-end Next Generation Sequencing data related to viral metagenomics for the purposes of this study.
 
 **Supplementary file 2:** Selection and filtering of paired-end Next Generation Sequencing data related to viral metagenomics for the purposes of this study.
