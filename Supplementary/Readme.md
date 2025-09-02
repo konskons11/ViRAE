@@ -2,7 +2,7 @@ Here you will find the supplementary material related to the ViRAE scientific pa
 
 **Supplementary figure 1:** Flowchart of the comparative virome methodology analysis performed in this study.
 
-**Supplementary figure 2:** Flowchart of the pilot analysis related to the improvement of viral metegenomics papers.
+**Supplementary figure 2:** Flowchart of the pilot analysis related to the improvement of viral metagenomics papers.
 
 **Supplementary file 1:** Selection and filtering of single-end Next Generation Sequencing data related to virome reasearch for the purposes of this study.
 
