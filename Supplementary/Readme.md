@@ -2,9 +2,11 @@ Here you will find the supplementary material related to the ViRAE scientific pa
 
 **Supplementary figure 1:** Flowchart of the comparative virome methodology analysis performed in this study.
 
-**Supplementary file 1:** Selection and filtering of single-end Next Generation Sequencing data related to viral metagenomics for the purposes of this study.
+**Supplementary figure 2:** Flowchart of the pilot analysis related to the improvement of viral metegenomics papers.
 
-**Supplementary file 2:** Selection and filtering of paired-end Next Generation Sequencing data related to viral metagenomics for the purposes of this study.
+**Supplementary file 1:** Selection and filtering of single-end Next Generation Sequencing data related to virome reasearch for the purposes of this study.
+
+**Supplementary file 2:** Selection and filtering of paired-end Next Generation Sequencing data related to virome reasearch for the purposes of this study.
 
 **Supplementary file 3:** Metadata of the viruses analysed in this study.
 
