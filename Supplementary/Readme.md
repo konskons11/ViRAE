@@ -14,7 +14,7 @@ Here you will find the supplementary material related to the ViRAE scientific pa
 
 **Supplementary file 5:** Metadata of the 5 randomly selected papers related to viral metagenomics research.
 
-**Supplementary file 6:** Enhanced viral genome _de novo_ assembly observed after the implementation of ViRAE on a small RNA-seq virome dataset published by _Gil P. et al_.
+**Supplementary file 6:** Analysis of _de novo_ assembly improvement after the implementation of ViRAE on a pilot small-sized RNA-seq dataset sourced from recent publications related to viral metagenomics research.
 
 **Supplementary table 1:** Virus taxonomy and representation by RNA-seq samples in the analyzed data of this study.
 
