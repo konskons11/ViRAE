@@ -140,4 +140,4 @@ Submission of the required input files triggers the upload process and redirects
 
 **C) ViRAE implementation and output:** After successful upload of the appropriate input files, the back-end script execution of ViRAE begins and the user is informed about its progression in real time as displayed below. Upon ViRAE run completion, an overall summary is displayed at the current webpage, along with a download link corresponding to a zipped folder containing the clean reads and generated report files by ViRAE.
 
-![ViRAE_online guide](https://i.imgur.com/vkihb41.png "ViRAE online - ViRAE execution and download page")
+![ViRAE_online guide](https://imgur.com/vkihb41.png "ViRAE online - ViRAE execution and download page")
