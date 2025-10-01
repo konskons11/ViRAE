@@ -112,6 +112,54 @@
 					<td><input name="ref_file_link" size="50" id="ref_file_link" disabled="disabled"  required></td>
 				</tr>
 			</table>
+			<h3>Parameters</h3>	
+			<table>
+				<!-- Slider: Alignment Stringency -->
+				<tr>
+					<td>Alignment stringency (range 0-100):</td>
+					<td>
+						<button type="button" id="align_minus">-</button>
+						<span id="align_val">30</span>
+						<button type="button" id="align_plus">+</button>
+					</td>
+					<td>
+						<input type="range"
+							id="alignment_stringency"
+							name="alignment_stringency"
+							min="0" max="100" value="30">
+					</td>
+					<td>
+						<img src="../IMAGES/help_icon.png" height="20" class="hover-info" title="HELP INFO&#13;&#10;Alignment stringency: Minimum alignment score threshold for mapping software. Alignments scoring below this value are discarded. Higher numbers enforce stricter, more confident alignments.">
+					</td>
+				</tr>
+		  
+				<!-- Slider: Mapping Quality Cutoff -->
+				<tr>
+					<td>Mapping quality cutoff (range 0-60):</td>
+					<td>
+						<button type="button" id="mapq_minus">-</button>
+						<span id="mapq_val">0</span>
+						<button type="button" id="mapq_plus">+</button>
+					</td>
+					<td>
+						<input type="range"
+							id="mapping_quality_cutoff"
+							name="mapping_quality_cutoff"
+							min="0" max="60" value="0">
+					</td>
+					<td>
+						<img src="../IMAGES/help_icon.png" height="20" class="hover-info" title="HELP INFO&#13;&#10;Mapping quality cutoff: Minimum MAPQ score filter. Reads with mapping quality below this value are removed. Higher values retain the most reliably mapped reads.">
+					</td>
+				</tr>
+
+				<!-- Reset to default -->
+				<tr>
+					<td colspan="3" style="text-align:left; padding-top:1em;">
+				    	<button type="button" id="reset_defaults">Reset to default</button>
+				    </td>
+				</tr>				
+			</table>
+			
 		</dl>
 		<p><input type="submit" value="Submit" id="submit_btn" onclick='submit_upload();'></p>
 		<p id="valid_message" ></p>
@@ -159,6 +207,49 @@
 				e.stopPropagation();
 				e.preventDefault();
 			}
+
+			// Utility to clamp & update both slider and display
+			function update(slider, display, delta) {
+				let v = Math.max(
+					parseInt(slider.min),
+					Math.min(parseInt(slider.max),
+					         parseInt(slider.value) + delta)
+				);
+				slider.value = display.textContent = v;
+			}			
+			
+			// Alignment stringency controls
+			const alignSlider = document.getElementById('alignment_stringency');
+			const alignVal    = document.getElementById('align_val');
+			document.getElementById('align_minus')
+			        .addEventListener('click', () => update(alignSlider, alignVal, -1));
+			document.getElementById('align_plus')
+			        .addEventListener('click', () => update(alignSlider, alignVal, +1));
+			alignSlider.addEventListener('input', () => update(alignSlider, alignVal, 0));			
+			
+			// Mapping quality cutoff controls
+			const mapqSlider = document.getElementById('mapping_quality_cutoff');
+			const mapqVal    = document.getElementById('mapq_val');
+			document.getElementById('mapq_minus')
+			        .addEventListener('click', () => update(mapqSlider, mapqVal, -1));
+			document.getElementById('mapq_plus')
+			        .addEventListener('click', () => update(mapqSlider, mapqVal, +1));
+			mapqSlider.addEventListener('input', () => update(mapqSlider, mapqVal, 0));
+			
+			// Reset both sliders to their defaults
+			document.getElementById('reset_defaults').addEventListener('click', () => {
+				// default values
+				const defaults = {
+				  alignment_stringency: 30,
+				  mapping_quality_cutoff: 0
+				};
+				// reset alignment_stringency
+				alignSlider.value = defaults.alignment_stringency;
+				alignVal.textContent = defaults.alignment_stringency;
+				// reset mapping_quality_cutoff
+				mapqSlider.value = defaults.mapping_quality_cutoff;
+				mapqVal.textContent = defaults.mapping_quality_cutoff;
+			});
 
 		</script>
 	</form>
