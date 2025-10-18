@@ -12,7 +12,7 @@ Here you will find the supplementary material related to the ViRAE scientific pa
 
 **Supplementary file 4:** Analysis of rRNA contamination and comparative analysis of _de novo_ assembly efficacy performed by MEGAHIT software based on specific metrics, as calculated after the implementation of the 4 examined methods (RAW, BWA, SORTMERNA and ViRAE) separately on the studied RNA-seq dataset.
 
-**Supplementary file 5:** Metadata of the 5 randomly selected papers related to viral metagenomics research.
+**Supplementary file 5:** Selection and filtering of data related to viral metagenomics papers for the purposes of this study alonside metadata of the final selected dataset.
 
 **Supplementary file 6:** Analysis of _de novo_ assembly improvement after the implementation of ViRAE on a pilot small-sized RNA-seq dataset sourced from recent publications related to viral metagenomics research.
 
