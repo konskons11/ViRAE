@@ -19,3 +19,5 @@ Here you will find the supplementary material related to the ViRAE scientific pa
 **Supplementary table 1:** Virus taxonomy and representation by RNA-seq samples in the analyzed data of this study.
 
 **Supplementary table 2:** Frequency and taxonomy of the most contaminant species in the examined RNA-seq samples.
+
+**Supplementary table 3:** Comparative report of wall-clock run time of the BWA, SORTMERNA, and ViRAE methods which were examined in this study.
