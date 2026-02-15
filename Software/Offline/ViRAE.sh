@@ -456,11 +456,65 @@ chimeric_reads_cleaning() {
         cat $output_directory/right_softclipped.fastq >> $output_directory/$mapped_input_filename.ViRAE_cleaned.fastq
         
         # PAIRED
-        ngs_layout_check=$(head -1000 $output_directory/$mapped_input_filename.ViRAE_cleaned.fastq | awk 'NR%4==1 && /\/2$/')
+        ngs_layout_check=$(head -100000 $output_directory/$mapped_input_filename.ViRAE_cleaned.fastq | awk 'NR%4==1 && /\/2$/')
         if [[ ! -z "$ngs_layout_check" ]] ; then 
             echo "Repairing and splitting pairs..."
-            awk 'BEGIN { OFS = "\n" } { name = $0; base_name = substr(name, 2); suffix = substr(base_name, length(base_name)-1, 2); base_id = substr(base_name, 1, length(base_name)-2); getline seq; getline plus; getline qual; record = name OFS seq OFS plus OFS qual; count[base_id]++; if (suffix == "/1") { read1_records[base_id] = record } else if (suffix == "/2") { read2_records[base_id] = record } } END { for (id in count) { if (count[id] == 2) { print read1_records[id] >> "'${output_directory}/${mapped_input_filename}'_1.ViRAE_cleaned.fastq" ; print read2_records[id] >> "'${output_directory}/${mapped_input_filename}'_2.ViRAE_cleaned.fastq" } else { if (id in read1_records) print read1_records[id] >> "'${output_directory}/${mapped_input_filename}'_singletons.ViRAE_cleaned.fastq" ; if (id in read2_records) print read2_records[id] >> "'${output_directory}/${mapped_input_filename}'_singletons.ViRAE_cleaned.fastq" } } }' $output_directory/$mapped_input_filename.ViRAE_cleaned.fastq
-            rm -rf $output_directory/$mapped_input_filename.ViRAE_cleaned.fastq
+            #awk 'BEGIN { OFS = "\n" } { name = $0; base_name = substr(name, 2); suffix = substr(base_name, length(base_name)-1, 2); base_id = substr(base_name, 1, length(base_name)-2); getline seq; getline plus; getline qual; record = name OFS seq OFS plus OFS qual; count[base_id]++; if (suffix == "/1") { read1_records[base_id] = record } else if (suffix == "/2") { read2_records[base_id] = record } } END { for (id in count) { if (count[id] == 2) { print read1_records[id] >> "'${output_directory}/${mapped_input_filename}'_1.ViRAE_cleaned.fastq" ; print read2_records[id] >> "'${output_directory}/${mapped_input_filename}'_2.ViRAE_cleaned.fastq" } else { if (id in read1_records) print read1_records[id] >> "'${output_directory}/${mapped_input_filename}'_singletons.ViRAE_cleaned.fastq" ; if (id in read2_records) print read2_records[id] >> "'${output_directory}/${mapped_input_filename}'_singletons.ViRAE_cleaned.fastq" } } }' $output_directory/$mapped_input_filename.ViRAE_cleaned.fastq
+            
+            IN_FILE="${output_directory}/${mapped_input_filename}.ZWA2_cleaned.fastq"
+            OUT_1="${output_directory}/${mapped_input_filename}_1.ZWA2_cleaned.fastq"
+            OUT_2="${output_directory}/${mapped_input_filename}_2.ZWA2_cleaned.fastq"
+            OUT_S="${output_directory}/${mapped_input_filename}_singletons.ZWA2_cleaned.fastq"
+            
+            cat "$IN_FILE" | \
+            paste - - - - | \
+            sort -k1,1 | \
+            awk -v out1="$OUT_1" -v out2="$OUT_2" -v outS="$OUT_S" '
+            BEGIN { FS="\t"; OFS="\n" }
+            {
+                curr_id = substr($1, 1, length($1)-2)
+
+                # Check if this ID matches the previous one we saw
+                if (curr_id == prev_id) {
+                    # === PAIR FOUND ===
+                    # Format the records back to 4 lines (replace tabs with newlines)
+                    gsub("\t", "\n", prev_rec)
+                    gsub("\t", "\n", $0)
+
+                    # Determine which is R1 and R2 based on the header suffix
+                    if (index(prev_rec, "/1") > 0) {
+                        print prev_rec >> out1
+                        print $0 >> out2
+                    } else {
+                        print $0 >> out1
+                        print prev_rec >> out2
+                    }
+
+                    # Clear the buffer so we don"t treat this as a singleton later
+                    prev_id = ""
+                    prev_rec = ""
+                } 
+                else {
+                    # If we have a previous record waiting, it implies it had no partner (Singleton)
+                    if (prev_id != "") {
+                        gsub("\t", "\n", prev_rec)
+                        print prev_rec >> outS
+                    }
+
+                    # Buffer the current record and wait for the next line
+                    prev_id = curr_id
+                    prev_rec = $0
+                }
+            }
+            END {
+                # If the file ends and we still have a record buffered, it is a singleton
+                if (prev_id != "") {
+                    gsub("\t", "\n", prev_rec)
+                    print prev_rec >> outS
+                }
+            }'
+			
+			rm -rf $output_directory/$mapped_input_filename.ViRAE_cleaned.fastq
         else
             mv $output_directory/$mapped_input_filename.ViRAE_cleaned.fastq $output_directory/${mapped_input_filename}_1.ViRAE_cleaned.fastq
         fi
