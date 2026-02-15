@@ -10,7 +10,7 @@ ViRAE (Viral Reads Assembly Enhancer) is a bioinformatics pipeline designed to o
 The primary scope of ViRAE is RNA viral metagenomics, a field critical for identifying pathogenic and symbiotic interactions in eukaryotic hosts. Its purpose is to recover valuable viral genetic information that is typically lost during standard quality control and state-of-the-art decontamination processes. By refining the input data before assembly, ViRAE aims to produce significantly longer and more complete viral contigs, enhancing the identification and characterization of viral communities.
 
 ## ViRAE vs. State-of-the-Art Methods
-Current state-of-the-art decontamination methods (e.g., mapping via the desired software on a a given reference) typically employ an "all-or-nothing" filtering approach. If a read maps partially, to a candidate contaminant reference (like rRNA), indicating that is a chimeric read, then the entire read is discarded, even if it contains genuine viral sequences. 
+Current state-of-the-art decontamination methods (e.g., mapping via the desired software on a a given reference) typically employ an "all-or-nothing" filtering approach. If a read maps partially to a candidate contaminant reference-indicating that is a chimeric read-, then the entire read is discarded, even if it contains genuine viral sequences. 
 
 ViRAE differentiates itself by applying a "surgical" trimming approach:
 1) Identification: It detects reads that are "soft-clipped" or partially mapped to a contaminant reference, therefore they are chimeric.
