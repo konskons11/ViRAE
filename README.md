@@ -13,7 +13,7 @@ The primary scope of ViRAE is RNA viral metagenomics, a field critical for ident
 Current state-of-the-art decontamination methods (e.g., mapping via the desired software on a a given reference) typically employ an "all-or-nothing" filtering approach. If a read maps partially to a candidate contaminant reference-indicating that is a chimeric read-, then the entire read is discarded, even if it contains genuine viral sequences. 
 
 ViRAE differentiates itself by applying a "surgical" trimming approach:
-1) Identification: It detects reads that are "soft-clipped" or partially mapped to a contaminant reference, therefore they are chimeric.
+1) Identification: It detects reads that are chimeric or "soft-clipped" (i.e partially mapped) to a contaminant reference (like rRNA).
 2) Recycling: Instead of discarding the whole read, ViRAE removes only the non-viral (contaminant) moiety.
 3) Enhancement: The remaining viral fragment is retained and utilized for _de novo_ assembly, upcycling data that other methods throw away.
 
