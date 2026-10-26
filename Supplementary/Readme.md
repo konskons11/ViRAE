@@ -16,8 +16,10 @@ Here you will find the supplementary material related to the ViRAE scientific pa
 
 **Supplementary file 6:** Analysis of _de novo_ assembly improvement after the implementation of ViRAE on a pilot small-sized RNA-seq dataset sourced from recent publications related to viral metagenomics research.
 
-**Supplementary table 1:** Virus taxonomy and representation by RNA-seq samples in the analyzed data of this study.
+**Supplementary table 1:** Comparison of the pilot version of ZWA versus the evolved ViRAE version in terms of software features as well as de novo assembly performance based on the Anopheles sacharovi mosquito RNA-seq sample (SRA accession number SRR13449040), its 28S and 18S rRNAs given as reference (GenBank accession numbers MT808434 & MT808462), and Xanthi rhabdovirus (GenBank accession number MW520377) genome used for testing.
 
-**Supplementary table 2:** Frequency and taxonomy of the most contaminant species in the examined RNA-seq samples.
+**Supplementary table 2:** Virus taxonomy and representation by RNA-seq samples in the analyzed data of this study.
 
-**Supplementary table 3:** Comparative report of wall-clock run time of the BWA, SORTMERNA, and ViRAE methods which were examined in this study.
+**Supplementary table 3:** Frequency and taxonomy of the most contaminant species in the examined RNA-seq samples.
+
+**Supplementary table 4:** Comparative report of wall-clock run time of the BWA, SORTMERNA, and ViRAE methods which were examined in this study.
