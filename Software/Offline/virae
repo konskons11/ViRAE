@@ -1,0 +1,597 @@
+#!/usr/bin/env nextflow
+nextflow.enable.dsl = 2
+
+/*
+================================================================================
+  ViRAE: Viral Reads Assembly Enhancer (Cross-Platform Nextflow DSL2 Pipeline)
+================================================================================
+*/
+
+// --- Helper Functions ---
+def getParam(List<String> keys, defaultValue = null) {
+    def foundKey = keys.find { key -> params.containsKey(key) && params[key] != null && params[key] != '' }
+    return foundKey ? params[foundKey] : defaultValue
+}
+
+def getExt(path) {
+    def p = path.toString()
+    return p.substring(p.lastIndexOf('.') + 1).toLowerCase()
+}
+
+def stripExt(path, ext) {
+    def f = file(path).getName()
+    def suffix = "." + ext
+    if (f.toLowerCase().endsWith(suffix.toLowerCase())) {
+        return f.substring(0, f.length() - suffix.length())
+    }
+    return f
+}
+
+def commonPrefix(String s1, String s2) {
+    int maxLen = Math.min(s1.length(), s2.length())
+    if (maxLen == 0) return ""
+    def mismatch = (0..<maxLen).find { i -> s1.charAt(i) != s2.charAt(i) }
+    return mismatch != null ? s1.substring(0, mismatch as Integer) : s1.substring(0, maxLen)
+}
+
+// --- PROCESSES ---
+
+process CREATE_TEST_DATA {
+    output:
+    path "test_reads.fastq", emit: reads
+    path "test_ref.fasta",   emit: ref
+
+    script:
+    '''
+    cat << 'EOF' > test_reads.fastq
+@H6FZJ:00138:04153
+ATCTATAGGCCTCAAATAATGTGAGACTACCCCCTAAATTTAAGCATATTAATAAGGGGAGGAAAAGAAACCAACCGGGATTCCCTGAGTAGCTGCGAGCGAAACGGGAGAAGCTCAGCACGTAGGGATGGCGCGAATGAACGCGTCTATCCGATTCCGTGTACTGGTACGAACCATC
++
+88:<<<<@8=9=>?@9==9<=<;;;<<<<=@@@3=<=8==8=8=<;;;<7=9<=9<@@7<<9>CC7CCC39196;09808=8<=8>>==<==<<<====<<<>8>>>7<<<299<<==>>=899<=7=>>7<<=<<6<>BB@>=<998<;;5;<<7<8==;;;=<<7<<<;<6;7<<<
+@H6FZJ:08307:02957
+ACAATAGGCCTCAAATAATGTGAGACTACCCCCTAAATTTAAGCATATTAATAAGGGGAGGAAAAGAAACCAACCGGGATTCCCTGAGTAGCTGCGAGCGAAACGGGAGAAGCTCAGCACGTAGGGATGGCGCGAATGAACGCGTCTATCCGATTCCGTGTACTGGTACGAACCATCATCT
++
+///)4985;8<:;;3;;1///:<@<<<<<===1==@7<<8><?>=<<<3735:79::099)///(//919*/./5;?49968;6;;<<?<=<;;;<<<<<<<1<=<5<?A9=>=><=@@=?;>BC8><=8999<;6;8918;;<<====<9=<<9=9=;<<<<<<6<<<<<8=6;;<<888
+@H6FZJ:07968:01470
+CAGTAGGCCTCAAATAATGTGTGGGTACCCCCTAAATTTAAGCATATTAATAAGGGGAGGAAGAGAAACTAACAAGGATTCCC
++
+:<<<>?9=9=<<=8<<7<==@==>8=<<<<<1<<<7<>7=9=A=<88188<<5;;<1;<7<9>><<<7<<A;><8<9=>6;<7
+@H6FZJ:08751:06531
+CAGTAGGCCTCAAATAATGTGTGGGTACCCCCTAAATTTAAGCATATTAATAAGGGGAGGAAGAGAAACTAACAAGGATTCCCTGAGTAGCTGCGAGCGAAACGGGAAGAGCTCAGCACGTAGGGGTGG
++
+88<==@9=9===B8==9===<<<A8<<>???3<<@8@@7<7<<;:88083::6;==5==9=8==?>A7<9908<0828>9>?9><<<<;<;;;<;;;<;<;6;<=8=:===><<<<==<;;8888*9>8
+@H6FZJ:00917:02215
+ATAGGCCTCAAATAATGTGAGACTACCCCCTAAATTTAAGCATATTAATAAGGGGAGGAAAAGAAACCAACCGGGATTCCCTGAGTAGCTGCGAGCGAAACGGGAGAAGCTCAGCACGTAGGGATGGCGCGAATGAACGCGTCTATCCGATTCCGTGTACTGGTACGAACCATCATCTACTGCCTTTGGTGTAAACAGTT
++
+>==<9?9<>==9=A>@<<<=>===<@<==3<=@9>=9=8;;;<=>9>=A=9=?>0880888)875.78?8=8<@7<<8<<6<<<<===;<<<=?>===B8<<<6<<<6<<<>@>=><?<===8==<8<=<;<6<<<7<>?>===;>:8===9?9>=====<=<><<;<7<8<;;<855;<===9==8=9>A88829==>9
+@H6FZJ:08310:11139
+AAGAAAGACACAAAAACCGAAGACAGTGAGAGAATGGTCGCCATGGCTAGGTGCCGGTACATGCCGCAATGGCATGCGCTTGCAATTTAATACCATGCTCTACCAGCGCGTCCAACCATATCTCTCTA
++
+8=<5<;864551<===7<95;55659896;<:455-5...)..;6.77=9===9<9=====?>9=<>8;:5<<<667::5;880;4;;6===9==<<<====9@====?@>9<8A8@>==<==<<<?=
+@H6FZJ:05825:11003
+CGAGATCTGTCGTCGGTGCAAGACCGTACGATCGGCATCATTATCCAGACTTCAACTCAATGACACGGGGCACGAGTCCCCGCGATTACAGAAGCCCGAACTTGTTCTGACCCGATATCCGGCAGACTGTACT
++
+==>===?<<;<===9==<<9===9888====A=9==>>==9=<=9===>=9==9<==>@C>@<==;4<<<<>=====7===<>>>9@>><<8>>8C>?9?;7==9<<<<=7?>==<<<8<8>>>>======<<
+@H6FZJ:06366:08617 
+AAGCAAAATTCACAAAGCGTAGGATTGTTCACCCTTCAAGGGAACGTGAGCTGGGTTTAGACCGTCGTGAGACAGGTTAGTTTTACAATCATCCAGGACAGAAGCCCGAACTTGTTCTGACCCGATATCCGGCAGACTGTACTGCTGAGGTGATTGCTGAAACTATTATGTGATTTCTGCCCAGTGCTCTGAATGTCAACGTGAAGAAATTCAAGCAAGCG
++
+;6<;;<<2:4;;788*78779;6;=69;6;<<<*817:48<4<8;;;<<<<;;;4;<7<=>?9=>==><<<<<;;6;7;;<<<2<<<5777:<7::59;;:<8;<<2<<5:;9?><@>>=>>7=<>8888<8==><<888>==<<<;;:7;;;<4:899:?5=<<>7<<:<<8880...571864337578959::;;8;;;:9-533&3+194:;=.433
+@H6FZJ:00597:02095
+GCGTTCCCAGTTAACGCTCCTATGTCGAACAAGATGTTCAGAGGGGGAATGCCAGACCGCCCGGTGCAGCAATTCAAAGCACCCGCTAAGGCGCACGGAGAGTACGCTGGAGATTGGTTCA
++
+==>992889=9<6<<?==;A>>>C>>A9?=9===<=9=<<<<1=<=<8<><8<<<;6::0;85;;<<>;<7=9==9====<6<<<<<7<8<<<<;>9><<<>@>==;;7><::8=9=9@><
+@H6FZJ:00760:12129 
+TATGTCGAACAAGATGTTCAGAGGGGGAATGCCAGACCGCCCGGTGCAGCAATTCAAAGCACCCGCTAAGGCGCACGGAGAGTACGCTGGAGATTGGTTCATCAATCATCCAGGACAGAAGCCCGAACTTGTTCTGACCCGATA
++
+<<;<<996::7<9888388555,???;7;;=7;;;9595*550:9:;:853<7>>7A=<<;5;<<::48187<==>8=<<<<=>>===9>==<7<8<8<>A<<;=>=<<8B>9=B=<<7=<4<<<8==8=<9>=>><3:8889/
+EOF
+
+    cat << 'EOF' > test_ref.fasta
+>MT808434 Anopheles sacharovi 28S
+ATCAATAGGCCTCAAATAATGTGAGACTACCCCCTAAATTTAAGCATATTAATAAGGGGAGGAAAAGAAACYAACMRGGATTCCCTGAGTAGCTGCGAGCGAAACGGGAGAAGCTCAGCACGTAGGGATGGCGCGAATGAACGCGTCTATCCGATTCCGTGTACTGGTACGAACCATCATCTACTGCCTTTGGTGTAAACAGTTCAAGTTCAACTTGAATGTGGCCTCGCTCCCATAGAGGGTGACAGGCCCGTAGAACGGCACGTGATTGGCAGTAGACGGGCGTACCATGGAGTCGTGTTGCTTGATAGTGCAGCACTAAGTGGGAGGTAAACTCCTTCTAAAGCTAAATACAACCATGAGACCGATAGCGAACAAGTACCGTGAGGGAAAGTTGAAAAGCACTCTGAATAGAGAGTCAAAGAGTACGTGAAACTGCCTAGGGGAACAAACCCGTTGAACTCAATAGACCGGGGCGGCGACATTCAGCCGCGCGTCAGTGCGCCTCCGGGCGTGCAGGCCGCGGTGCACTTGTCGACCTGCAGCGTACGGACATCGCGATCCATTACGAACGGGGCATTGGGGGTGCGCAAGCGCCTCCTAGCAATCCAACACTTGGTCCCAGACTCGTGCGGTCGACCCTCCAGTAGTGGCACTTAGCTCAGAAGGCCTGTGCCGCAAACGGGGGATTCGGAGGGCCTCCGGGCCTTCCGGAGTTCGGCCGAGTTCGGTGTACCGTTGGATGCGTGATGGACTCACACGGAACGGGGGTAGATGGAAGCGCATGCCATTGCGGCATGTACCGGCACCTAGCCATGGGCGACCATTCTCCTGATCGGCGATGTATAACACTTATTGAGGTACCTTCGGGACCCGTCTTGAAACACGGACCAAGAAGTCTATCTTGCGCGCAAGTCAATGGGCACTCTGGAGAAAACCCAAAGGCGAAGATAACACAACTGCTGTTGCGGGATTACGGGTGCACCACGGTCCTTCGCGGGACCGGCTAGCTGTGCGCCCCTCCATCCCCGGGTGTTGCACCAAATGGGGACCGTTCCGGCGGCGACCATGCGACATACCGTGAGCGCGTAGGATGTGACCCGAAAGATGGTGAACTATGCCTGATCAGGTTGAAGTCAGGGGAAACCCTGATGGAGGACCGAAGCAATTCTGACGTGCAAATCGATTGTCAGAGTTGGGCATAGGGGCGAAAGACCAATCGAACCATCTAGTAGCTGGTTCCCTCCGAAGTTTCCCTCAGGATAGCTGGAGCACGTAACATTTCGAGCCTTATTCTTATCTGGTAAAGCGAATGATTAGAGGCCTTAGGTTCGAAATGATCTTAACCTATTCTCAAACTATAAATGGGTACGGGATTGGGTAGCATGCTTTGATGATGCTACCCTCAAATCGATGAGTCGAAGCGAACGGTGCACCCGTCGCCCCCGGGGTGGCGGAATGCACCGGCTAGATATCGGTGTGCTTAGTGGGCCAAGTTTTGGTAAGCAGAACTGGTGCTGTGGGATGAACCAAACGCAATGTTAAGGCGCCCAAATAAACGACGCATCATAGATACCATAAAAGGTGTTGATTGCTAAAGACAGCAGGACGGTGGACATGGAAGTCGTCATCCGCTAAGGAGTGTGTAACAACTCACCTGCCGAAGCAATTAGCCCTGAAAATGGATGGCGCTTAAGTCGTTTGCCTATACATCGCCGCTAGCGGTAAAACGGGTAGCAAGCCGGCGTGCTGTGCTACTTCGAGACCCTAGTGAGTAGGAGGGTACGGTGGTGGCGTAGAAGTGCTTGGCGCAAGCCAACATGGAGCCGCCACTGGCACAGATCTTGGTGGTAGTAGCAAATATTCGAATGAGATCTTGGATGACTGAAGTGGAGGAGGGTTTCGTGTCAACAGCAGTTGAACACGAGTTAGCCAACCCTAAGCTATATGGGAAACCTGATTCATACGCGATCGCGATCAAGCGAAAGGGAATCCGGTTACAATTCCGGAGCCTGTTGAGTATACGTTTGCCTGGCGTGTTCGGTTCCTTCCGGGGGGTCGTACCGCCTTGCGATCATGGTAACATGAATCCTTTTCTTCGAGAAGCCAACGGGAGGTACTGGAAGAGTTTTCTTTTCTGTTTTACAGCCACCACTGACCATGGAAGTCTTTCGTAGAGAGATATGGTTGGACGCGCTGGTAGAGCATGGTATTAAATTGCTGTGTCGGTACTCTCCTCTTGGACCGTGAAAATCGAAGACTGGGGCACGCAAACTCTCAACAGCTTGTACCGAATCCGCAGCAGGTCTCCAAGGTTTAGAGTCTCTAGTCGATAGATCAATGTAGGTAAGGGAAGTCGGCAAACTAGATCCGTAACTTCGGGATAAGGATTGGCTCTGAAGGCTGAGCCGGCACGGTGTGTCGCAACGGTAACGGGCGTGTCCCCAACCCTCCGGGGGCGGGTGACTAGCGCCTGGCCCTGCGGACCCGGTCGGCACTGAACAGCCAGTTCAGAACTGGCACGGCTGAGGGAATCCGACTGTCTAATTAAAACAAAGCATTGTGATGGCCTTCAAAGGTATTGACACAATGTGATTTCTGCCCAGTGCTCTGAATGTCAACGTGAAGAAATTCAAGCAAGCGCGGGTAAACGGCGGGAGTAACTATGACTCTCTTAAGGTAGCCAAATGCCTCGTCATCTAATTAGTGACGCGCATGAATGGATTAACGAGATTCCCTCTGTCCCTATCTACTATCTAGCGAAACCACAGCCAAGGGAACGGGCTTGGAAACACTAGCGGGGAAAGAAGACCCTGTTGAGCTTGACTCTAGTCTGGCATTGTAAGGCGATATAAGAGGTGCAGAATAGGTGGGAGATCGGGTAAAACATTAACTCCCGTTCGCCAATGAGATACCACCACTCTTACTGTTGCCTTACTTACGTGATCGGGTGGAACAAGTGCGGGCCGCGTCCCTTGGTTCCGGCGCGCGTGCGCCCCAGCTCACGCTGGCGGCCGTACCGTCGTCGTCGGGGCCAGACCGGCCCAATGCACCGGGTTTCTCGTTCAGCGTTCAGCCATGTCGCCGCCCAGGCCCTGGCGTGCACGCGGCGCGGCGGTCACAATGCGGCCGGTGCCGGTGGAAACGCCGTCGCCTGCTGCAGTACGCCCCGCGCTGCTCACGCGCGCCGGCCAGCGGCACCCAAGACATCTGAACATCATACAGTATCCAAGTCATGGACATTGCCAGGTGCGGAGTTTGACTGGGGCGGTACATCTCCAAAACGATAACGGAGGTGTCCAAAGGTCAGCTCAGTGTGGACAGAAACCACACGCTGAGCATAAGGACAAAAGCTGGCTTGATCTCGAAGTTCAGTACACATTGAGACAGCGTAAGCTAGGCCTCACGATCCTTTTGGTTTAACGAGTTTTTAGCAAGAGGTGTCAGAAAAGTTACCACAGGGATAACTGGCTTGTGGCCGCCAAGCGTTCATAGCGACGTGGCTTTTTGATCCTTCGATGTCGGCTCTTCCTATCATTGTGAAGCAAAATTCACAAAGCGTAGGATTGTTCACCCTTTCAAGGGAACGTGAGCTGGGTTTAGACCGTCGTGAGACAGGTTAGTTTTACCCTACTGGTGTGCAAAGAGTAAGCTGCCTTAATGGAATTCCTGTGCAGTACGAGAGGAACCACAGGTACGGACCAATGGCTCAATACTAGTCCGACCGGACTTTGGTATGACGCTACGTCCGTCGGATTATGCCTGAACGCCTCTAAGGTCGTAACCGAACCAAGCCGGTAGCATTACTATAGGTGTTGGAAATTAAGTGGCCGCATAAATCTACAAGACTCGATAGCGTTATTATAACACTGTCGTCTTATTGAACACTCTAATACAGAGCCTTACCGAGCGGGACCATACGGGTAGTACCTAGATACGGGAACCCCGGTGGAACTGCCGATCCTCAATACATGATTTCGATACCTAAGACCACCTACACACGATAGGTTTACAGGCTGGGAGCTGCGCATTGCAGAGAGATGTACATTTCGATCCTTTCATGCTACCCACGCTTGCTGGTTGA
+>MT808462 Anopheles sacharovi 18S
+ATTCTGGTTGATCCTACCAGTAATATACGCTCGTCTCAAAGGTTAAGCCATGCATGTCTAAGTACAAACAGATTTAATGTGAAACCGCATAAGGCTCAGTATAACAGCTATAATTTACGAGATCATCACCTAAGTTACTTGGATAACTGTGGAAAATCTAGAGCTAATACATGCAAAATGCCAGGACCTCGCGGGACTGGTGCACTTATTAGTCAAACCAATCGCGGGGCTCGCGCCCCGTGCCATTGAGTTGAAGTCTGGATAATGATGCCGATCGTATGGTCTTGCACCGACGACAGATCTCGCAAATGTCTGCCCTATCAACTATTGATGGTAGTATCGAGGACTACCATGGTTACAACGGGTAACGGGGAATCAGGGTTCGATTCCGGAGAGGGAGCCTGAGAAATGGCTACCACATCCAAGGAAGGCAGCAGGCGCGTAAATTACCCAATCCCGGCACGGGGAGGTAGTGACGAGAAATAACAATATGAAACTCTTTAATGATGTTTCATAATTGGAATGAGTTGAGCATAAATCCTTTAGCAAGGATCAAGTGGAGGGCAAGTCTGGTGCCAGCAGCCGCGGTAATTCCAGCTCCACTAGCGTATATTAAAATTGTTGCGGTTAAAACGTTCGAAGTTGATTCTTGTCCAACACAGGCCGACACTGTCGACCCGGATCCGTCCGTGGTAGGTAGGTTCGATCGGATTCTGGTTGAGACTCAAATGGTGCGGTCGGGCGCGAAACCATTAGCATCGTGCCCTTCAACGGGTGCCTTCAAGTATGGAGCCCGACCGTTCTCGTTTACCTTGAACAAATTAGAGTGCTTCAAGCAGGCTCATGAATATATGGCCGAGAATAATCTTGCATGGAATAATGGAATATGACCTTGGTCTAAATGTTTCGTTGGTTTGTATACAGACTCAGAGGTAATGATTAACAGAAGTGGTTGGGGGCATTAGTATTACGGCGCGAGAGGTGAAATTCGTAGACCGTCGTAAGACTAACTGAAGCGAAAGCGTTTGCCATGGACACTTTCATTAATCAAGAACGAAAGTTAGAGTATCGAAGGCGATTAGATACCGCCCTAGTTCTAACCGTAAACGATGCCAGCTAGCAATTGGGAGACGCTACAACATAGGTGCTCTCAGTAGCTTCCGGGAAACCAAAGCTAGGTTCCGGGGGAAGTATGGTTGCAAAGTTGAAACTTAAAGGAATTGACGGAAAGGCACCACAATTGAAGTGGAGCCTGCGGCTTAATTTGACCCAACACGGGAAAACTTACCAGGTCCGAACTTATTGAGGTAAGACAGATTGAGAGCTCTTTCTCAAACTTAAGGGTAGTGGTGCATGGCCGTTCTTAGTTCGTGGATTGATTTGTCTGGTTTATTCCGATAACGAACGTGACTCACTCATGCTAACTAGAATACCAGTCAGCCTGTTGCGTTTTGATCTCTGTCCGGAGTGCCCCCGGGTGCGAAGGTAGAGGGAGTGCGACCTGACGTTCCGGCCCTGTGTGCGCAAGCATACTTGGCTAAGCTGCTTAGCAGGACAATTTGTGTTTAGCAAAATGAGACTGAGCGATAACAGGTCCGTGATGCCCTTAGATGTCCTGGGCTGCACGCGCGCTACAATGTGGGTATCAGCGTGTCTCCTATTCCGAAAGGAACGGGTAATCACTGAAACACTCACTTAGTGGGGATTATGGATTGCAATGGTCCATATGAACTCGGAATTTCTTGTAAGCGCTGGTCATTAGCTAGCGCTGAATACGTCCCTGCCTTTTGTACACACCGCCCGTCGCTACTACCGATGGATTATTTAGTGAGGTCTCTGGAGGTGATCGTTCGCATGCTCCCTCGCGGAGTAGCGTCTGCTTTGCTGAAGTTGACCGAACTTGATGATTTAGAGGAAGTAAAAGTCGTAACAAGGTTTCCGTAGGTGAACCTGCGGAAGGATCATTA
+EOF
+    '''
+}
+
+process BWA_INDEX {
+    tag "${ref.name}"
+
+    input:
+    path ref
+
+    output:
+    tuple path(ref), path("${ref}.*")
+
+    script:
+    """
+    if [ -f "${ref}.bwt" ] && [ -f "${ref}.amb" ] && [ -f "${ref}.ann" ] && [ -f "${ref}.pac" ] && [ -f "${ref}.sa" ]; then
+        echo "Reference already indexed."
+    else
+        bwa index ${ref} 2>/dev/null
+    fi
+    """
+}
+
+process BWA_MAP {
+    tag "${out_base}"
+
+    input:
+    tuple val(is_paired), path(reads)
+    tuple path(ref), path(ref_indices)
+    val stringency
+    val mapq
+    val out_base
+
+    output:
+    path "mapped_candidates.tsv", emit: mapped_tsv
+    path "unmapped.fastq",        emit: unmapped_fq
+    path "mapping_time.txt",      emit: mapping_time
+
+    script:
+    """
+    time (
+    if [ "${is_paired}" = "true" ]; then
+        bwa mem -t ${task.cpus} -v 0 -T ${stringency} ${ref} ${reads[0]} ${reads[1]} 2>/dev/null > bwa.sam
+        awk 'BEGIN {OFS="\\t"} { if (\$1 ~ /^@/) { print \$0; } else if (int(\$2/64)%2 == 1) { \$1 = \$1"/1"; print \$0 } else if (int(\$2/128)%2 == 1) { \$1 = \$1"/2"; print \$0 } else { \$1 = \$1"/1"; print \$0 } }' bwa.sam > modified_bwa.sam
+    else
+        bwa mem -t ${task.cpus} -v 0 -T ${stringency} ${ref} ${reads[0]} 2>/dev/null > bwa.sam
+        awk 'BEGIN {OFS="\\t"} { if (\$1 ~ /^@/) { print \$0; } else { \$1 = \$1"/1" ; print \$0 } }' bwa.sam > modified_bwa.sam
+    fi
+
+    samtools view -bS -F 2308 -q ${mapq} modified_bwa.sam > reads_mapped.bam
+    samtools view -bS -f 4 modified_bwa.sam > reads_unmapped.bam
+
+    samtools view reads_unmapped.bam | awk -F'\\t' '{print "@"\$1"\\n"\$10"\\n+\\n"\$11}' > unmapped.fastq
+    samtools view reads_mapped.bam | awk -F'\\t' '{print \$1,\$3,\$6,\$10,\$11,length(\$10)}' OFS="\\t" > mapped_candidates.tsv
+
+    rm -f bwa.sam modified_bwa.sam reads_mapped.bam reads_unmapped.bam
+    ) 3>&2 2>mapping_time.txt
+    """
+}
+
+process BAM_PARSE {
+    tag "${mapped_bam.name}"
+
+    input:
+    path mapped_bam
+    path unmapped_input
+    val mapq
+
+    output:
+    path "mapped_candidates.tsv", emit: mapped_tsv
+    path "unmapped.fastq",        emit: unmapped_fq
+    path "mapping_time.txt",      emit: mapping_time
+
+    script:
+    """
+    time (
+    samtools view -h ${mapped_bam} > bwa.sam
+    check_ngs_layout=\$(samtools view -f 0x1 -c bwa.sam)
+    if [ "\$check_ngs_layout" -eq 0 ]; then
+        awk 'BEGIN {OFS="\\t"} { if (\$1 ~ /^@/) { print \$0; } else { \$1 = \$1"/1" ; print \$0 } }' bwa.sam > modified_bwa.sam
+    else
+        awk 'BEGIN {OFS="\\t"} { if (\$1 ~ /^@/) { print \$0; } else if (int(\$2/64)%2 == 1) { \$1 = \$1"/1"; print \$0 } else if (int(\$2/128)%2 == 1) { \$1 = \$1"/2"; print \$0 } else { \$1 = \$1"/1"; print \$0 } }' bwa.sam > modified_bwa.sam
+    fi
+
+    samtools view -bS -F 2308 -q ${mapq} modified_bwa.sam > reads_mapped.bam
+
+    if [ -f "${unmapped_input}" ] && [ "${unmapped_input.name}" != "NO_UNMAPPED_FILE" ]; then
+        ext="\$(echo "${unmapped_input.name}" | awk -F. '{print tolower(\$NF)}')"
+        if [ "\$ext" = "bam" ]; then
+            samtools view -h ${unmapped_input} > unmapped.sam
+            if [ "\$check_ngs_layout" -eq 0 ]; then
+                awk 'BEGIN {OFS="\\t"} { if (\$1 ~ /^@/) { print \$0; } else { \$1 = \$1"/1" ; print \$0 } }' unmapped.sam > unmapped_modified.sam
+            else
+                awk 'BEGIN {OFS="\\t"} { if (\$1 ~ /^@/) { print \$0; } else if (int(\$2/64)%2 == 1) { \$1 = \$1"/1"; print \$0 } else if (int(\$2/128)%2 == 1) { \$1 = \$1"/2"; print \$0 } else { \$1 = \$1"/1"; print \$0 } }' unmapped.sam > unmapped_modified.sam
+            fi
+            samtools view -bS -f 4 unmapped_modified.sam > reads_unmapped.bam
+            samtools view reads_unmapped.bam | awk -F'\\t' '{print "@"\$1"\\n"\$10"\\n+\\n"\$11}' > unmapped.fastq
+            rm -f unmapped.sam unmapped_modified.sam reads_unmapped.bam
+        elif [ "\$ext" = "fastq" ] || [ "\$ext" = "fq" ]; then
+            awk 'NR % 4 == 1 { read_id = \$1; sub(/\\/[12]\$/, "", read_id); if (read_ids[read_id] == "") { read_ids[read_id] = "/1" } else { read_ids[read_id] = "/2" }; if (read_ids[read_id] == "/1") { print \$1"/1"; getline; print \$0; getline; print \$1"/1"; getline; print \$0 } else if (read_ids[read_id] == "/2") { print \$1"/2"; getline; print \$0; getline; print \$1"/2"; getline; print \$0 } }' ${unmapped_input} > unmapped.fastq
+        elif [ "\$ext" = "gz" ]; then
+            zcat < ${unmapped_input} | awk 'NR % 4 == 1 { read_id = \$1; sub(/\\/[12]\$/, "", read_id); if (read_ids[read_id] == "") { read_ids[read_id] = "/1" } else { read_ids[read_id] = "/2" }; if (read_ids[read_id] == "/1") { print \$1"/1"; getline; print \$0; getline; print \$1"/1"; getline; print \$0 } else if (read_ids[read_id] == "/2") { print \$1"/2"; getline; print \$0; getline; print \$1"/2"; getline; print \$0 } }' > unmapped.fastq
+        fi
+    else
+        touch unmapped.fastq
+    fi
+
+    samtools view reads_mapped.bam | awk -F'\\t' '{print \$1,\$3,\$6,\$10,\$11,length(\$10)}' OFS="\\t" > mapped_candidates.tsv
+    rm -f bwa.sam modified_bwa.sam reads_mapped.bam
+    ) 3>&2 2>mapping_time.txt
+    """
+}
+
+process CHIMERA_CLEAN_REPAIR {
+    tag "${out_base}"
+    publishDir path: { publish_path }, mode: 'copy', pattern: "*.fastq.gz"
+
+    input:
+    path mapped_tsv
+    path unmapped_fq
+    val out_base
+    val is_paired_hint
+    val publish_path
+
+    output:
+    path "${out_base}*.ViRAE_cleaned.fastq.gz", emit: cleaned_fastqs
+    path "fully_mapped.tsv",                  emit: fully_mapped
+    path "chimeric.tsv",                      emit: chimeric
+    path "chimeric_softclipped.fastq",        emit: chimeric_fq
+    path "cleaning_time.txt",                 emit: cleaning_time
+
+    script:
+    """
+    time (
+    echo "Cleaning chimeric reads, please wait..."
+
+    awk -F'\\t' '
+    BEGIN { OFS="\\t" }
+    {
+        read_id=\$1; ref_id=\$2; cigar=\$3; seq=\$4; qual=\$5; seq_len=\$6
+        
+        if (cigar !~ /S/) {
+            print read_id, ref_id, cigar, seq, seq_len, seq, seq_len, 1, seq_len, "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" > "fully_mapped.tsv"
+            next
+        }
+
+        split(cigar, c_op, /[0-9]+/)
+        split(cigar, c_len, /[A-Z]/)
+        
+        if (c_op[2] == "S") {
+            l_len = c_len[1]; l_start = 1; l_end = l_len
+            l_seq = substr(seq, 1, l_len); l_qual = substr(qual, 1, l_len)
+        } else {
+            l_len = "-"; l_start = "-"; l_end = "-"; l_seq = "-"; l_qual = "-"
+        }
+        
+        last = length(c_op)
+        if (c_op[last] == "S") {
+            r_len = c_len[last-1]; r_start = seq_len - r_len + 1; r_end = seq_len
+            r_seq = substr(seq, r_start, r_len); r_qual = substr(qual, r_start, r_len)
+        } else {
+            r_len = "-"; r_start = "-"; r_end = "-"; r_seq = "-"; r_qual = "-"
+        }
+        
+        map_start = (l_len != "-") ? l_end + 1 : 1
+        map_end   = (r_len != "-") ? r_start - 1 : seq_len
+        map_len   = map_end - map_start + 1
+        map_seq   = substr(seq, map_start, map_len)
+        
+        print read_id, ref_id, cigar, seq, seq_len, map_seq, map_len, map_start, map_end, l_start, l_end, l_seq, l_qual, l_len, r_start, r_end, r_seq, r_qual, r_len > "chimeric.tsv"
+        
+        if (l_len != "-") {
+            print "@" read_id ":" l_start "-" l_end "\\n" l_seq "\\n+\\n" l_qual > "chimeric_softclipped.fastq"
+        }
+        if (r_len != "-") {
+            print "@" read_id ":" r_start "-" r_end "\\n" r_seq "\\n+\\n" r_qual > "chimeric_softclipped.fastq"
+        }
+    }' ${mapped_tsv}
+
+    touch fully_mapped.tsv chimeric.tsv chimeric_softclipped.fastq
+
+    out_fastq="${out_base}.ViRAE_cleaned.fastq"
+    touch "\$out_fastq"
+
+    if [ -f "${unmapped_fq}" ]; then
+        cat "${unmapped_fq}" > "\$out_fastq"
+    fi
+    if [ -f "chimeric_softclipped.fastq" ]; then
+        cat "chimeric_softclipped.fastq" >> "\$out_fastq"
+    fi
+
+    check_paired="${is_paired_hint}"
+    if [ "\$check_paired" != "true" ]; then
+        if head -10000 "\$out_fastq" | awk 'NR%4==1 && /\\/2\$/' | grep -q .; then
+            check_paired="true"
+        fi
+    fi
+
+    if [ "\$check_paired" = "true" ]; then
+        echo "Repairing and splitting pairs using disk-backed sort..."
+        out1="${out_base}_1.ViRAE_cleaned.fastq"
+        out2="${out_base}_2.ViRAE_cleaned.fastq"
+        outs="${out_base}_singletons.ViRAE_cleaned.fastq"
+
+        cat "\$out_fastq" | paste - - - - | sort -k1,1 | awk -v out1="\$out1" -v out2="\$out2" -v outS="\$outs" '
+        BEGIN { FS="\\t"; OFS="\\n" }
+        {
+            curr_id = substr(\$1, 1, length(\$1)-2)
+
+            if (curr_id == prev_id) {
+                gsub("\\t", "\\n", prev_rec)
+                gsub("\\t", "\\n", \$0)
+
+                if (index(prev_rec, "/1") > 0) {
+                    print prev_rec > out1
+                    print \$0 > out2
+                } else {
+                    print \$0 > out1
+                    print prev_rec > out2
+                }
+                prev_id = ""
+                prev_rec = ""
+            } else {
+                if (prev_id != "") {
+                    gsub("\\t", "\\n", prev_rec)
+                    print prev_rec > outS
+                }
+                prev_id = curr_id
+                prev_rec = \$0
+            }
+        }
+        END {
+            if (prev_id != "") {
+                gsub("\\t", "\\n", prev_rec)
+                print prev_rec > outS
+            }
+        }'
+        rm -f "\$out_fastq"
+        gzip -f "\$out1" "\$out2" "\$outs"
+    else
+        mv "\$out_fastq" "${out_base}_1.ViRAE_cleaned.fastq"
+        gzip -f "${out_base}_1.ViRAE_cleaned.fastq"
+    fi
+    ) 3>&2 2>cleaning_time.txt
+    """
+}
+
+process WRITE_REPORT {
+    tag "REPORT"
+    publishDir path: { publish_path }, mode: 'copy', pattern: "*.gz"
+
+    input:
+    path fully_mapped
+    path chimeric
+    path mapped_tsv
+    path unmapped_fq
+    path chimeric_fq
+    path mapping_time
+    path cleaning_time
+    val stringency
+    val mapq
+    val publish_path
+
+    output:
+    path "ViRAE_cleaning_report.out.gz"
+
+    script:
+    """
+    bwa_time=\$(awk '\$1 == "real" {print \$NF}' ${mapping_time} | awk -F'm|s' '{total=(\$1*60)+\$2 ; print total}')
+    bwa_time=\${bwa_time:-0}
+    cleaning_time=\$(awk '\$1 == "real" {print \$NF}' ${cleaning_time} | awk -F'm|s' '{total=(\$1*60)+\$2 ; print total}')
+    cleaning_time=\${cleaning_time:-0}
+    virae_execution_time=\$(echo "\$bwa_time + \$cleaning_time" | bc -l)
+
+    total_unmapped_reads_count=\$((\$(wc -l < ${unmapped_fq} | bc)/4))
+    total_mapped_reads_count=\$(wc -l < ${mapped_tsv} | bc)
+    total_input_reads_count=\$((total_unmapped_reads_count+total_mapped_reads_count))
+
+    softclipped_reads_count=\$(awk -F'\\t' '\$3 ~ /S/' ${mapped_tsv} | wc -l | bc)
+
+    if [ "\$total_mapped_reads_count" -gt 0 ]; then
+        percent_softclipped=\$(LC_NUMERIC="en_US.UTF-8" printf "%.2f" \$(bc -l <<< \$softclipped_reads_count/\$total_mapped_reads_count*100))
+        fully_mapped_reads_count=\$((total_mapped_reads_count-softclipped_reads_count))
+        percent_fully_mapped=\$(LC_NUMERIC="en_US.UTF-8" printf "%.2f" \$(bc -l <<< \$fully_mapped_reads_count/\$total_mapped_reads_count*100))
+    else
+        percent_softclipped=0; fully_mapped_reads_count=0; percent_fully_mapped=0
+    fi
+
+    if [ -s "${chimeric}" ]; then
+        avg_mapped_bases=\$(awk -F'\\t' '{mapped+=\$7} END {if (NR>0) print mapped/NR; else print 0}' ${chimeric})
+        pct_avg_mapped_bases=\$(awk -F'\\t' '{percent+=\$7/\$5*100} END {if (NR>0) print percent/NR; else print 0}' ${chimeric})
+        discarded_softclipped=\$(awk -F'\\t' '\$10 == "-" && \$15 == "-"' ${chimeric} | wc -l | bc)
+    else
+        avg_mapped_bases=0; pct_avg_mapped_bases=0; discarded_softclipped=0
+    fi
+
+    if [ "\$softclipped_reads_count" -gt 0 ]; then
+        pct_discarded_softclipped=\$(LC_NUMERIC="en_US.UTF-8" printf "%.2f" \$(bc -l <<< \$discarded_softclipped/\$softclipped_reads_count*100))
+        cleaned_softclipped=\$((softclipped_reads_count-discarded_softclipped))
+        pct_cleaned_softclipped=\$(LC_NUMERIC="en_US.UTF-8" printf "%.2f" \$(bc -l <<< \$cleaned_softclipped/\$softclipped_reads_count*100))
+    else
+        pct_discarded_softclipped=0; cleaned_softclipped=0; pct_cleaned_softclipped=0
+    fi
+
+    total_discarded_count=\$((discarded_softclipped+fully_mapped_reads_count))
+    extracted_softclipped=\$((\$(wc -l < ${chimeric_fq} | bc)/4))
+    total_clean_count=\$((extracted_softclipped+total_unmapped_reads_count))
+
+    header=\$(echo -e "Read_ID\\tRefID\\tCIGAR\\tRead_seq\\tRead_seqlength\\tMapped_seq\\tMapped_seq_length\\tMapped_start\\tMapped_end\\tLeft_unmapped_seq_start\\tLeft_unmapped_seq_end\\tLeft_unmapped_seq\\tLeft_unmapped_seq_quality\\tLeft_unmapped_seqlength\\tRight_unmapped_seq_start\\tRight_unmapped_seq_end\\tRight_unmapped_seq\\tRight_unmapped_seq_quality\\tRight_unmapped_seqlength")
+    footer=\$(echo -e "(-) Sequence discarded, (/1) first in pair or single-end, (/2) second in pair\\nBWA alignment stringency | Mapping quality cutoff\\t${stringency} | ${mapq}\\nTotal input reads\\t\$total_input_reads_count\\nTotal unmapped reads\\t\$total_unmapped_reads_count\\nTotal mapped reads\\t\$total_mapped_reads_count\\nFully mapped reads\\t\$fully_mapped_reads_count\\nFully mapped reads/Total mapped reads (%)\\t\$percent_fully_mapped\\nPartially mapped (chimeric) reads\\t\$softclipped_reads_count\\nPartially mapped (chimeric) reads/Total mapped reads (%)\\t\$percent_softclipped\\nAverage mapped bases\\t\$avg_mapped_bases\\nAverage mapped bases/Average read length (%)\\t\$pct_avg_mapped_bases\\nViRAE cleaned chimeric reads\\t\$cleaned_softclipped\\nViRAE cleaned chimeric reads/Chimeric reads (%)\\t\$pct_cleaned_softclipped\\nTotal clean reads (Unmapped+ViRAE cleaned)\\t\$total_clean_count\\nViRAE discarded chimeric reads\\t\$discarded_softclipped\\nViRAE discarded chimeric reads/Chimeric reads (%)\\t\$pct_discarded_softclipped\\nTotal discarded reads (Fully mapped+ViRAE discarded)\\t\$total_discarded_count\\nExecution time (seconds)\\t\$virae_execution_time")
+
+    cat <(echo "\$header") ${fully_mapped} ${chimeric} <(echo "\$footer") > ViRAE_cleaning_report.out
+    gzip -f ViRAE_cleaning_report.out
+    """
+}
+
+// --- WORKFLOW ENTRYPOINT ---
+workflow {
+    
+    // Parameter Extraction & Validation
+    def reads1_val   = getParam(['1', 'reads1'])
+    def reads2_val   = getParam(['2', 'reads2'])
+    def ref_val      = getParam(['r', 'ref'])
+    def mapped_val   = getParam(['m', 'mapped'])
+    def unmapped_val = getParam(['u', 'unmapped'])
+    def outdir_val   = getParam(['o', 'output', 'outdir'], './') // Default to current directory
+    def stringency   = (getParam(['l', 'alignment_stringency'], 30) as Integer)
+    def mapq         = (getParam(['q', 'mapping_quality_cutoff'], 0) as Integer)
+    def test_val     = getParam(['t', 'test'])
+    boolean is_test  = (test_val != null) // True if flag is present
+
+    boolean is_full    = (reads1_val && ref_val && !mapped_val && !unmapped_val)
+    boolean is_partial = (!reads1_val && !ref_val && mapped_val)
+
+    if (!is_full && !is_partial && !is_test) {
+        error """
+================================================================================
+ ViRAE: Viral Reads Assembly Enhancer (Nextflow Pipeline)
+================================================================================
+ Invalid command line arguments!
+
+ Full deployment:
+   --reads1 (or --1)  : Single or paired R1 reads (.fastq, .fq, .gz)
+   --ref    (or --r)  : Reference file (.fasta, .fa, .fna, .fsta, .gz)
+   [--outdir / --o]   : (Optional) Output directory
+   [--reads2 / --2]   : (Optional) Paired R2 reads (.fastq, .fq, .gz)
+   [--l]              : (Optional) Alignment stringency (0-100, default: 30)
+   [--q]              : (Optional) Mapping quality cutoff (0-60, default: 0)
+
+ Partial deployment:
+   --mapped (or --m)  : Pre-mapped BAM file (.bam)
+   [--outdir / --o]   : (Optional) Output directory
+   [--unmapped / --u] : (Optional) Unmapped reads (.bam, .fastq, .fq, .gz)
+   [--q]              : (Optional) Mapping quality cutoff (0-60, default: 0)
+
+ Test deployment:
+   --test   (or --t)  : Automatically generate and run a 10-read test dataset
+================================================================================
+"""
+    }
+
+    String output_subfolder = ""
+    String out_base_name    = ""
+    boolean is_paired       = false
+
+    // Route logic based on mode
+    if (is_test) {
+        log.info "\n!!! ViRAE test mode !!!"
+        log.info "!!! INPUT READS: 10 reads from Anopheles sacharovi mosquito sample (SRA: SRR13449040) !!!"
+        log.info "!!! INPUT REF: Anopheles sacharovi 28S (GenBank: MT808434) and 18S (GenBank: MT808462) rRNAs !!!\n"
+
+        out_base_name = "test_reads"
+        output_subfolder = "ViRAE-test_reads_ON_test_ref"
+        def publish_path = "${outdir_val}/${output_subfolder}"
+
+        CREATE_TEST_DATA()
+        
+        def reads_ch = CREATE_TEST_DATA.out.reads.map { file -> tuple(false, [file]) }
+        
+        BWA_INDEX(CREATE_TEST_DATA.out.ref)
+        BWA_MAP(reads_ch, BWA_INDEX.out, stringency, mapq, out_base_name)
+        
+        CHIMERA_CLEAN_REPAIR(
+            BWA_MAP.out.mapped_tsv,
+            BWA_MAP.out.unmapped_fq,
+            out_base_name,
+            false,
+            publish_path
+        )
+        
+        WRITE_REPORT(
+            CHIMERA_CLEAN_REPAIR.out.fully_mapped,
+            CHIMERA_CLEAN_REPAIR.out.chimeric,
+            BWA_MAP.out.mapped_tsv,
+            BWA_MAP.out.unmapped_fq,
+            CHIMERA_CLEAN_REPAIR.out.chimeric_fq,
+            BWA_MAP.out.mapping_time,
+            CHIMERA_CLEAN_REPAIR.out.cleaning_time,
+            stringency,
+            mapq,
+            publish_path
+        )
+
+    } else if (is_full) {
+        def ext1 = getExt(reads1_val)
+        def ext2 = reads2_val ? getExt(reads2_val) : ""
+        def ext_ref = getExt(ref_val)
+
+        if (!['fastq', 'fq', 'gz'].contains(ext1)) {
+            error "Invalid fastq file1: ${reads1_val}! Supported: .fastq, .fq, .gz"
+        }
+        if (reads2_val && !['fastq', 'fq', 'gz'].contains(ext2)) {
+            error "Invalid fastq file2: ${reads2_val}! Supported: .fastq, .fq, .gz"
+        }
+        if (!['fasta', 'fa', 'fna', 'fsta', 'gz'].contains(ext_ref)) {
+            error "Invalid reference file: ${ref_val}! Supported: .fasta, .fa, .fna, .fsta, .gz"
+        }
+
+        if (reads1_val && !reads2_val) {
+            out_base_name = stripExt(reads1_val, ext1)
+            is_paired = false
+        } else {
+            def f1 = stripExt(reads1_val, ext1)
+            def f2 = stripExt(reads2_val, ext1)
+            out_base_name = commonPrefix(f1, f2)
+            is_paired = true
+        }
+
+        def ref_fn = stripExt(ref_val, ext_ref)
+        output_subfolder = "ViRAE-${out_base_name}_ON_${ref_fn}"
+        
+        def publish_path = "${outdir_val}/${output_subfolder}"
+
+        def ref_ch = Channel.fromPath(ref_val, checkIfExists: true)
+        def reads_files = is_paired ? [file(reads1_val, checkIfExists: true), file(reads2_val, checkIfExists: true)] : [file(reads1_val, checkIfExists: true)]
+        def reads_ch = Channel.of(tuple(is_paired, reads_files))
+
+        BWA_INDEX(ref_ch)
+        BWA_MAP(reads_ch, BWA_INDEX.out, stringency, mapq, out_base_name)
+        
+        CHIMERA_CLEAN_REPAIR(
+            BWA_MAP.out.mapped_tsv,
+            BWA_MAP.out.unmapped_fq,
+            out_base_name,
+            is_paired,
+            publish_path
+        )
+        
+        WRITE_REPORT(
+            CHIMERA_CLEAN_REPAIR.out.fully_mapped,
+            CHIMERA_CLEAN_REPAIR.out.chimeric,
+            BWA_MAP.out.mapped_tsv,
+            BWA_MAP.out.unmapped_fq,
+            CHIMERA_CLEAN_REPAIR.out.chimeric_fq,
+            BWA_MAP.out.mapping_time,
+            CHIMERA_CLEAN_REPAIR.out.cleaning_time,
+            stringency,
+            mapq,
+            publish_path
+        )
+
+    } else if (is_partial) {
+        def ext_mapped = getExt(mapped_val)
+        if (ext_mapped != 'bam') {
+            error "Invalid mapped reads file: ${mapped_val}! Must have .bam extension."
+        }
+        if (unmapped_val) {
+            def ext_unmapped = getExt(unmapped_val)
+            if (!['bam', 'fastq', 'fq', 'gz'].contains(ext_unmapped)) {
+                error "Invalid unmapped reads file: ${unmapped_val}! Supported: .bam, .fastq, .fq, .gz"
+            }
+        }
+        out_base_name = stripExt(mapped_val, ext_mapped)
+        output_subfolder = "ViRAE-${out_base_name}"
+        
+        def publish_path = "${outdir_val}/${output_subfolder}"
+
+        def mapped_ch = Channel.fromPath(mapped_val, checkIfExists: true)
+        def unmapped_ch = unmapped_val ? Channel.fromPath(unmapped_val, checkIfExists: true) : Channel.value(file('NO_UNMAPPED_FILE'))
+
+        BAM_PARSE(mapped_ch, unmapped_ch, mapq)
+        
+        CHIMERA_CLEAN_REPAIR(
+            BAM_PARSE.out.mapped_tsv,
+            BAM_PARSE.out.unmapped_fq,
+            out_base_name,
+            false,
+            publish_path
+        )
+        
+        WRITE_REPORT(
+            CHIMERA_CLEAN_REPAIR.out.fully_mapped,
+            CHIMERA_CLEAN_REPAIR.out.chimeric,
+            BAM_PARSE.out.mapped_tsv,
+            BAM_PARSE.out.unmapped_fq,
+            CHIMERA_CLEAN_REPAIR.out.chimeric_fq,
+            BAM_PARSE.out.mapping_time,
+            CHIMERA_CLEAN_REPAIR.out.cleaning_time,
+            0,
+            mapq,
+            publish_path
+        )
+    }
+}
