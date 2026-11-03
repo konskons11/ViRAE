@@ -82,13 +82,13 @@ For standard data processing, ViRAE may be fully or partially deployed depending
 Full ViRAE deployment run examples:
 ```sh
 # Single-end reads
-nextflow run main.nf -profile local --1 reads.fastq --r ref.fasta --o ./results
+nextflow run virae.nf -profile local --1 reads.fastq --r ref.fasta --o ./results
 
 # Paired-end gzipped reads
-nextflow run main.nf -profile local --1 R1.fq.gz --2 R2.fq.gz --r ref.fasta.gz --o ./results
+nextflow run virae.nf -profile local --1 R1.fq.gz --2 R2.fq.gz --r ref.fasta.gz --o ./results
 
 # Paired-end reads with custom mapping sensitivity parameters
-nextflow run main.nf -profile local --1 reads_1.fq.gz --2 reads_2.fq.gz --r ref.fasta.gz --l 40 --q 10 --o ./results
+nextflow run virae.nf -profile local --1 reads_1.fq.gz --2 reads_2.fq.gz --r ref.fasta.gz --l 40 --q 10 --o ./results
 ```
 
 **Partial ViRAE deployment:** If you have already aligned your reads using a mapping software of your choice, you can bypass the alignment step and provide the pre-mapped BAM file directly. You may also provide a separate unmapped sequence file if your mapping tool outputs them independently.
@@ -96,10 +96,10 @@ nextflow run main.nf -profile local --1 reads_1.fq.gz --2 reads_2.fq.gz --r ref.
 Partial ViRAE deployment run examples:
 ```sh
 # Pre-mapped BAM only
-nextflow run main.nf -profile local --m mapped.bam --o ./results
+nextflow run virae.nf -profile local --m mapped.bam --o ./results
 
 # Pre-mapped BAM with a separate unmapped sequences file
-nextflow run main.nf -profile local --m mapped.bam --u unmapped.fq.gz --o ./results
+nextflow run virae.nf -profile local --m mapped.bam --u unmapped.fq.gz --o ./results
 ```
 
 **Resuming execution:** If a run is interrupted or fails (e.g. due to system disconnect), simply append the `-resume` flag to your original command. Nextflow will immediately pick up execution exactly where it left off, preventing the need to rerun lengthy mapping steps.
