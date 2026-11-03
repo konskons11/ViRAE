@@ -54,22 +54,16 @@ User manual
 
 The ViRAE standalone application is now deployed as a modern, highly scalable **Nextflow DSL2** pipeline compatible with Linux, macOS, and Windows (via WSL2), which requires [Nextflow](https://www.nextflow.io/) (v22.10.0 or later). 
 
-To get started, clone the repository and activate a Nextflow environment:
+If you have already installed the prerequisites (bwa 0.7.17 and samtools 1.13) in your system's PATH, you can execute the pipeline natively using `-profile local`, which is the fastest execution method. Alternatively, ViRAE comes with built-in profiles in `nextflow.config` file to automatically handle all dependencies seamlessly via Conda/Mamba, Docker or Singularity.
+
+To get started, clone the repository:
 ```sh
 # Clone the repository
 git clone https://github.com/konskons11/ViRAE.git
 cd ViRAE/Software/Offline
-
-# Create and activate an environment containing Nextflow and Mamba
-conda create -n nextflow_env -c conda-forge -c bioconda nextflow mamba
-conda activate nextflow_env
 ```
-
-NOTE
-Note: When executed with the -profile conda flag, Nextflow will automatically download and isolate the required prerequisites (bwa 0.7.17 and samtools 1.13) into a localized Conda environment before execution.
-
-and Conda/Mamba to automatically handle all software dependencies seamlessly without requiring `sudo` privileges.
-
+_NOTE: If you do not have Nextflow installed on your system, you can quickly set it up via Conda: 
+`conda create -n nextflow_env -c conda-forge -c bioconda nextflow mamba` followed by `conda activate nextflow_env`._
 
 ### Execution
 
@@ -97,7 +91,7 @@ ViRAE test mode run example:
 ```sh
 nextflow run virae.nf -profile local --t
 ```
-_Note: Apple Silicon macOS users may need to prepend CONDA_SUBDIR=osx-64 to the command to resolve bwa architecture compatibility)._
+_PROFILE TIP: If you want Nextflow to manage dependencies automatically instead of using local installations, simply replace `-profile local` with `-profile conda`, `-profile docker`, or `-profile singularity` in any of the commands below. (Apple Silicon macOS users running Conda may need to prepend `CONDA_SUBDIR=osx-64` to the command to resolve bwa architecture compatibility)._
 
 For standard data processing, ViRAE may be fully or partially deployed depending on your available inputs.
 
