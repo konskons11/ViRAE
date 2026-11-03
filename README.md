@@ -41,7 +41,7 @@ To get started, clone the repository:
 git clone https://github.com/konskons11/ViRAE.git
 cd ViRAE/Software/Offline
 ```
-_NOTE: If you do not have Nextflow installed on your system, you can quickly set it up via Conda as follows:
+_NOTE: If you do not have Nextflow installed on your system, you can quickly set it up via Conda as follows:_
 ```sh
 conda create -n nextflow_env -c conda-forge -c bioconda nextflow mamba
 conda activate nextflow_env
