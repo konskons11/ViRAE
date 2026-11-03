@@ -24,27 +24,6 @@ The concept behind the ViRAE pipeline is outlined in the figure below:
 _**IMPORTANT NOTE:**_
 ViRAE focuses on the identification and decontamination of partially mapped (chimeric) NGS reads on any given reference sequence(s). For optimum decontamination, we highly recommend downloading and inputting our [custom SILVA ribosomal database (RiDB)](https://github.com/konskons11/ViRAE/blob/main/Software/Offline/RiDB.fasta.gz) as reference file, containing 603370 seqs of 16S, 18S, 23S and 28S rRNAs from a wide variety of _Archaea_, _Bacteria_ and _Eukarya_ organisms. Noteworthy, _de novo_ assembly of the clean output reads after decontamination is optional, and therefore is not included in the main ViRAE pipeline or the program's prerequisites. However, the user may separately perform _de novo_ assembly on the clean output reads using the software of preference, with [MEGAHIT _de novo_ assembler](https://github.com/voutcn/megahit/releases/tag/v1.2.9) being highly recommended.
 
-## Overview
-ViRAE (Viral Reads Assembly Enhancer) is a bioinformatics pipeline designed to optimize the _de novo_ assembly of viral genomes from metagenomic data. It represents a significant evolution of the [Zero-Waste Algorithm (ZWA)](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1009304), specifically engineered to address and mitigate artificial chimeric reads, which arise during Short-Read Sequencing (SRS) library preparation due to PCR amplification and Reverse Transcription steps. These artificial chimeras are in essense hybrids, where unrelated genomic regions between viral and non-viral sequences are erroneously fused together, therefore creating contamination with an SRS dataset. 
-
-## Scope and Purpose
-The primary scope of ViRAE is RNA viral metagenomics, a field critical for identifying pathogenic and symbiotic interactions in eukaryotic hosts. Its purpose is to recover valuable viral genetic information that is typically lost during standard quality control and state-of-the-art decontamination processes. By refining the input data before assembly, ViRAE aims to produce significantly longer and more complete viral contigs, enhancing the identification and characterization of viral communities.
-
-## ViRAE vs. State-of-the-Art Methods
-Current state-of-the-art decontamination methods (e.g., mapping via the desired software on a a given reference) typically employ an "all-or-nothing" filtering approach. If a read maps partially to a candidate contaminant reference-indicating that is a chimeric read-, then the entire read is discarded, even if it contains genuine viral sequences. 
-
-ViRAE differentiates itself by applying a "surgical" trimming approach:
-1) Identification: It detects reads that are chimeric or "soft-clipped" (i.e partially mapped) to a contaminant reference (like rRNA).
-2) Recycling: Instead of discarding the whole read, ViRAE removes only the non-viral (contaminant) moiety.
-3) Enhancement: The remaining viral fragment is retained and utilized for _de novo_ assembly, upcycling data that other methods throw away.
-
-The concept behind the ViRAE pipeline is outlined in the figure below:
-
-![ViRAE_pipeline](https://imgur.com/T5C1FnR.png?3 "ViRAE pipeline")
-
-_**IMPORTANT NOTE:**_
-ViRAE focuses on the identification and decontamination of partially mapped (chimeric) NGS reads on any given reference sequence(s). For optimum decontamination, we highly recommend downloading and inputting our [custom SILVA ribosomal database (RiDB)](https://github.com/konskons11/ViRAE/blob/main/Software/Offline/RiDB.fasta.gz) as reference file, containing 603370 seqs of 16S, 18S, 23S and 28S rRNAs from a wide variety of _Archaea_, _Bacteria_ and _Eukarya_ organisms. Noteworthy, _de novo_ assembly of the clean output reads after decontamination is optional, and therefore is not included in the main ViRAE pipeline or the program's prerequisites. However, the user may separately perform _de novo_ assembly on the clean output reads using the software of preference, with [MEGAHIT _de novo_ assembler](https://github.com/voutcn/megahit/releases/tag/v1.2.9) being highly recommended.
-
 User manual
 =======
 
@@ -54,7 +33,7 @@ User manual
 
 The ViRAE standalone application is now deployed as a modern, highly scalable **Nextflow DSL2** pipeline compatible with Linux, macOS, and Windows (via WSL2), which requires [Nextflow](https://www.nextflow.io/) (v22.10.0 or later). 
 
-If you have already installed the prerequisites (bwa 0.7.17 and samtools 1.13) in your system's PATH, you can execute the pipeline natively using `-profile local`, which is the fastest execution method. Alternatively, ViRAE comes with built-in profiles in `nextflow.config` file to automatically handle all dependencies seamlessly via Conda/Mamba, Docker or Singularity.
+If you have already installed the prerequisites ([bwa 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) and [samtools 1.13](https://github.com/samtools/samtools/releases/tag/1.13)) in your system's PATH, you can execute the pipeline natively using `-profile local`, which is the fastest execution method. Alternatively, ViRAE comes with built-in profiles in `nextflow.config` file to automatically handle all dependencies seamlessly via Conda/Mamba, Docker or Singularity.
 
 To get started, clone the repository:
 ```sh
