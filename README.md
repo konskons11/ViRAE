@@ -43,7 +43,7 @@ cd ViRAE/Software/Offline
 ```
 _NOTE: If you do not have Nextflow installed on your system, you can quickly set it up via Conda as follows:
 ```sh
-conda create -n nextflow_env -c conda-forge -c bioconda nextflow mamba`  `
+conda create -n nextflow_env -c conda-forge -c bioconda nextflow mamba
 conda activate nextflow_env
 ```
 
