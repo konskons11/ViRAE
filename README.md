@@ -49,7 +49,7 @@ conda activate nextflow_env
 
 ### Execution
 
-The parameters of the ViRAE Nextflow pipeline are summarized in the following table. You can use standard double-dash parameters (e.g. --reads1, --ref) or legacy shorthand flags (e.g. --1, --r):
+The parameters of the ViRAE Nextflow pipeline are summarized in the following table. You can use standard double-dash parameters (e.g. `--reads1`, `--ref`) or legacy shorthand flags (e.g. `--1`, `--r`):
 |Required arguments|Description|Deployment|
 |:---|:---|:---|
 |`--reads1 (or --1)`|directory of INPUT NGS READS file (Single-end OR 1<sup>st</sup> from Paired-end) (.fastq, .fq or .gz extension)|Full|
