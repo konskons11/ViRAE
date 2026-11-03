@@ -24,6 +24,27 @@ The concept behind the ViRAE pipeline is outlined in the figure below:
 _**IMPORTANT NOTE:**_
 ViRAE focuses on the identification and decontamination of partially mapped (chimeric) NGS reads on any given reference sequence(s). For optimum decontamination, we highly recommend downloading and inputting our [custom SILVA ribosomal database (RiDB)](https://github.com/konskons11/ViRAE/blob/main/Software/Offline/RiDB.fasta.gz) as reference file, containing 603370 seqs of 16S, 18S, 23S and 28S rRNAs from a wide variety of _Archaea_, _Bacteria_ and _Eukarya_ organisms. Noteworthy, _de novo_ assembly of the clean output reads after decontamination is optional, and therefore is not included in the main ViRAE pipeline or the program's prerequisites. However, the user may separately perform _de novo_ assembly on the clean output reads using the software of preference, with [MEGAHIT _de novo_ assembler](https://github.com/voutcn/megahit/releases/tag/v1.2.9) being highly recommended.
 
+## Overview
+ViRAE (Viral Reads Assembly Enhancer) is a bioinformatics pipeline designed to optimize the _de novo_ assembly of viral genomes from metagenomic data. It represents a significant evolution of the [Zero-Waste Algorithm (ZWA)](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1009304), specifically engineered to address and mitigate artificial chimeric reads, which arise during Short-Read Sequencing (SRS) library preparation due to PCR amplification and Reverse Transcription steps. These artificial chimeras are in essense hybrids, where unrelated genomic regions between viral and non-viral sequences are erroneously fused together, therefore creating contamination with an SRS dataset. 
+
+## Scope and Purpose
+The primary scope of ViRAE is RNA viral metagenomics, a field critical for identifying pathogenic and symbiotic interactions in eukaryotic hosts. Its purpose is to recover valuable viral genetic information that is typically lost during standard quality control and state-of-the-art decontamination processes. By refining the input data before assembly, ViRAE aims to produce significantly longer and more complete viral contigs, enhancing the identification and characterization of viral communities.
+
+## ViRAE vs. State-of-the-Art Methods
+Current state-of-the-art decontamination methods (e.g., mapping via the desired software on a a given reference) typically employ an "all-or-nothing" filtering approach. If a read maps partially to a candidate contaminant reference-indicating that is a chimeric read-, then the entire read is discarded, even if it contains genuine viral sequences. 
+
+ViRAE differentiates itself by applying a "surgical" trimming approach:
+1) Identification: It detects reads that are chimeric or "soft-clipped" (i.e partially mapped) to a contaminant reference (like rRNA).
+2) Recycling: Instead of discarding the whole read, ViRAE removes only the non-viral (contaminant) moiety.
+3) Enhancement: The remaining viral fragment is retained and utilized for _de novo_ assembly, upcycling data that other methods throw away.
+
+The concept behind the ViRAE pipeline is outlined in the figure below:
+
+![ViRAE_pipeline](https://imgur.com/T5C1FnR.png?3 "ViRAE pipeline")
+
+_**IMPORTANT NOTE:**_
+ViRAE focuses on the identification and decontamination of partially mapped (chimeric) NGS reads on any given reference sequence(s). For optimum decontamination, we highly recommend downloading and inputting our [custom SILVA ribosomal database (RiDB)](https://github.com/konskons11/ViRAE/blob/main/Software/Offline/RiDB.fasta.gz) as reference file, containing 603370 seqs of 16S, 18S, 23S and 28S rRNAs from a wide variety of _Archaea_, _Bacteria_ and _Eukarya_ organisms. Noteworthy, _de novo_ assembly of the clean output reads after decontamination is optional, and therefore is not included in the main ViRAE pipeline or the program's prerequisites. However, the user may separately perform _de novo_ assembly on the clean output reads using the software of preference, with [MEGAHIT _de novo_ assembler](https://github.com/voutcn/megahit/releases/tag/v1.2.9) being highly recommended.
+
 User manual
 =======
 
@@ -31,57 +52,90 @@ User manual
 
 ### Installation 
 
-The ViRAE standalone application is a Bash shell script distributed for Linux and MacOS systems and may be executed directly after making the downloaded ViRAE.sh file executable (e.g. command `chmod +x <ViRAE path>`). The prerequisites of ViRAE ([bwa 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) and [samtools 1.13](https://github.com/samtools/samtools/releases/tag/1.13)) will be verified for installation upon ViRAE execution and if not installed, they will be downloaded automatically by the program.
+The ViRAE standalone application is now deployed as a modern, highly scalable **Nextflow DSL2** pipeline compatible with Linux, macOS, and Windows (via WSL2), which requires [Nextflow](https://www.nextflow.io/) (v22.10.0 or later). 
+
+To get started, clone the repository and activate a Nextflow environment:
+```sh
+# Clone the repository
+git clone https://github.com/konskons11/ViRAE.git
+cd ViRAE/Software/Offline
+
+# Create and activate an environment containing Nextflow and Mamba
+conda create -n nextflow_env -c conda-forge -c bioconda nextflow mamba
+conda activate nextflow_env
+```
+
+NOTE
+Note: When executed with the -profile conda flag, Nextflow will automatically download and isolate the required prerequisites (bwa 0.7.17 and samtools 1.13) into a localized Conda environment before execution.
+
+and Conda/Mamba to automatically handle all software dependencies seamlessly without requiring `sudo` privileges.
+
 
 ### Execution
 
-The parameters of the ViRAE standalone application are summarised in the following table:
+The parameters of the ViRAE Nextflow pipeline are summarized in the following table. You can use standard double-dash parameters (e.g. --reads1, --ref) or legacy shorthand flags (e.g. --1, --r):
 |Required arguments|Description|Deployment|
 |:---|:---|:---|
-|`-1 <string>`|directory of INPUT NGS READS file (Single-end OR 1<sup>st</sup> from Paired-end) (.fastq, .fq or .gz extension)|Full|
-|`-r <string>`|directory of INPUT REFERENCE file (.fasta, .fa, .fna, .fsta or .gz extension)|Full|
-|`-m <string>`|directory of MAPPED NGS READS on REFERENCE file (.bam extension)|Partial|
-|`-o <string>`|directory of OUTPUT folder|Full & Partial|
+|`--reads1 (or --1)`|directory of INPUT NGS READS file (Single-end OR 1<sup>st</sup> from Paired-end) (.fastq, .fq or .gz extension)|Full|
+|`--ref (or --r)`|directory of INPUT REFERENCE file (.fasta, .fa, .fna, .fsta or .gz extension)|Full|
+|`--mapped (or --m)`|directory of MAPPED NGS READS on REFERENCE file (.bam extension)|Partial|
+|`--outdir (or --o)`|directory of OUTPUT folder|Full & Partial|
 
 |Optional arguments|Description|Deployment|
 |:---|:---|:---|
-|`-2 <string>`|directory of INPUT NGS READS file (2<sup>nd</sup> from Paired-end) (.fastq, .fq or .gz extension)|Full|
-|`-l <integer>`|alignment stringency value (range 0-100, default value 30 \| <30 loose, >30 stringent)|Full|
-|`-q <integer>`|mapping quality cutoff value (range 0-60, default value 0)|Full|
-|`-u <string>`|directory of UNMAPPED NGS READS on INPUT REFERENCE file (.bam, .fastq, .fq or .gz extension)|Partial|
-|`-t`|run ViRAE on a test dataset to verify installation|TEST MODE|
+|`--reads2 (or --2)`|directory of INPUT NGS READS file (2<sup>nd</sup> from Paired-end) (.fastq, .fq or .gz extension)|Full|
+|`--l <integer>`|alignment stringency value (range 0-100, default value 30 \| <30 loose, >30 stringent)|Full|
+|`--q <integer>`|mapping quality cutoff value (range 0-60, default value 0)|Full|
+|`--unmapped (or --u)`|directory of UNMAPPED NGS READS on INPUT REFERENCE file (.bam, .fastq, .fq or .gz extension)|Partial|
+|`--test (or --t)`|run ViRAE on a test dataset to verify installation|TEST MODE|
 
 ### Run examples
 
-In order to better comprehend the use and output of the ViRAE standalone application, we highly recommend inputting the `-t` flag only the first time you run it so as to deploy ViRAE on a small test dataset, which also verifies the installation of all prerequisites and downloads them automatically if needed.
+To familiarize yourself with the Nextflow execution, we highly recommend running the test mode first. The test dataset is generated automatically on the fly.
 
-ViRAE test mode run example:
+ViRAE test mode run example: 
 ```sh
-./ViRAE.sh -t
+nextflow run virae.nf -profile local --t
 ```
+_Note: Apple Silicon macOS users may need to prepend CONDA_SUBDIR=osx-64 to the command to resolve bwa architecture compatibility)._
 
-For non-test run, the VIRAE standalone application may be fully or partially deployed upon execution depending on the available user input files. In the case of VIRAE full deployment, the directories of NGS reads (FASTQ format) and appropriate reference file (FASTA format) must be provided as arguments after the `-1` and `-r` flags (in case of SINGLE-END reads) or after the `-1`, `-2` and `-r` flags (in case of PAIRED-END reads) respectively, in order to be able to perform all necessary alignments. The user also has the ability to adjust the mapping sensitivity of the incorporated BWA software by passing the desired level of alignment stringency and mapping quality cutoff as integer numbers after the `-l` and `-q` flags respectively.
+For standard data processing, ViRAE may be fully or partially deployed depending on your available inputs.
+
+**Full ViRAE deployment:** Provide the paths to your raw NGS reads and reference file. ViRAE will handle the BWA indexing and mapping automatically. You may pass parameters either as standard Nextflow flags or within a .yaml config file.  
 
 Full ViRAE deployment run examples:
 ```sh
-./VIRAE.sh -1 reads.fastq -r ref.fasta -o ./
-./VIRAE.sh -1 reads.fq.gz -r ref.fasta.gz -o ./
-./VIRAE.sh -1 R1.fq.gz -2 R2.fq.gz -r ref.fasta.gz -o ./
-./VIRAE.sh -1 reads.fq.gz -r ref.fasta.gz -l 40 -q 10 -o ./
+# Single-end reads
+nextflow run main.nf -profile local --1 reads.fastq --r ref.fasta --o ./results
+
+# Paired-end gzipped reads
+nextflow run main.nf -profile local --1 R1.fq.gz --2 R2.fq.gz --r ref.fasta.gz --o ./results
+
+# Paired-end reads with custom mapping sensitivity parameters
+nextflow run main.nf -profile local --1 reads_1.fq.gz --2 reads_2.fq.gz --r ref.fasta.gz --l 40 --q 10 --o ./results
 ```
 
-For the alternative and faster partial deployment of ViRAE, in which the user may have already carried out the desired alignment with the mapping software of preference, the directory of a BAM file may only be provided after the `-m` flag, instead of FASTQ and FASTA files. Alongside the input BAM file, the user may optionally pass the output unmapped reads of the performed alignment in FASTQ or BAM format after the `-u` flag, for later use by the algorithm. 
+**Partial ViRAE deployment:** If you have already aligned your reads using a mapping software of your choice, you can bypass the alignment step and provide the pre-mapped BAM file directly. You may also provide a separate unmapped sequence file if your mapping tool outputs them independently.
 
 Partial ViRAE deployment run examples:
 ```sh
-./ViRAE.sh -m mapped.bam -o ./
-./ViRAE.sh -m mapped.bam -u unmapped.bam -o ./
-./ViRAE.sh -m mapped.bam -u unmapped.fq.gz -o ./
+# Pre-mapped BAM only
+nextflow run main.nf -profile local --m mapped.bam --o ./results
+
+# Pre-mapped BAM with a separate unmapped sequences file
+nextflow run main.nf -profile local --m mapped.bam --u unmapped.fq.gz --o ./results
 ```
+
+**Resuming execution:** If a run is interrupted or fails (e.g. due to system disconnect), simply append the `-resume` flag to your original command. Nextflow will immediately pick up execution exactly where it left off, preventing the need to rerun lengthy mapping steps.
 
 ### Output
 
-ViRAE outputs 2 files, which are: i) the clean reads after processing as a GZIPPED FASTQ file with the suffix "_ViRAE_cleaned.fastq.gz_", and ii) a detailed cleaning report file named "_ViRAE_cleaning_report.out.gz_". The generated GZIPPED FASTQ file contains all the clean reads by ViRAE and may be used separately for _de novo_ assembly or other downstream analysis. The generated report file is a multi-column file, which provides further information and details on the cleaning performed by ViRAE, in the following format:
+ViRAE outputs 2 files per execution, stored within a subfolder inside your specified `--outdir`:
+
+1. The clean reads after processing as a GZIPPED FASTQ file with the suffix "ViRAE_cleaned.fastq.gz" (split into _1, _2, and _singletons for paired-end inputs).
+2. A detailed cleaning report file named "ViRAE_cleaning_report.out.gz".
+
+The generated GZIPPED FASTQ file contains all the clean reads curated by ViRAE and may be used directly for de novo assembly or other downstream analysis. The generated report file is a multi-column file, which provides further information and details on the cleaning performed by ViRAE, in the following format:
 |Column header|Description|
 |:---|:---|
 |Read_ID|Unique read sequence identifier|
